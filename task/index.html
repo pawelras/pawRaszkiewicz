@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This website allows you to use 3 different Geolocation APIs">
+    <meta name="author" content="Pawel Raszkiewicz">
+    <title>Geolocation API</title>
+</head>
+<body>
+    
+
+    <table>
+        <thead>
+            <tr>
+                <th>Feature Name</th>
+                <th> Description</th>
+                <th>Use</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>Neigbours</td>
+                <td>
+                    <span>Returns all neighbours for a country:</span>
+                    <select id="neigboursCountry">
+                        <option value="FR">France</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="PL">Poland</option>
+                        <option value="ES">Spain</option>
+                    </select>
+                </td>
+                <td> <input id="getNeigboursBttn" type="button" value="Send Enquiry"/></td>
+            </tr>
+
+            <tr>
+                <td>Children</td>
+                <td>Returns the list of countries in a continent:
+                    <select id="childrenContinent">
+                        <option value="6255146">Africa</option>
+                        <option value="6255150">South America</option>
+                        <option value="6255149">North America</option>
+                        <option value="6255148">Europe</option>
+                        <option value="6255147">Asia</option>
+                    </select>
+                </td>
+                <td> <input id="getChildrenBttn" type="button" value="Send Enquiry"/></td>
+            </tr>
+
+            <tr>
+                <td>Wikipedia Results</td>
+                <td>Returns a list of Wikipedia Searches
+                    <input id="query" type="text"/>
+                </td>
+                <td> <input id="getWikiBttn" type="button" value="Send Enquiry"/></td>
+            </tr>
+
+
+        <table></table>
+
+
+        </tbody>
+    </table>
+
+    <section>
+        <h2 id="neighboursResultsHeader">Neighbours Results</h2>
+        <div id="neighboursResults"></div>
+    </section>
+
+    <section >
+        <h2>Children Results</h2>
+        <div id="childrenResults"></div>
+    </section>
+
+    <section>
+        <h2>Wiki Results</h2>
+        <div id="wikiResults"></div>
+    </section>
+
+    <script src="libs/js/jquery-3.6.0.min.js"></script>
+    <script src="libs/js/script.js"></script>
+</body>
+</html>
