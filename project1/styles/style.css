@@ -24,3 +24,9 @@ header {
     background-color: aliceblue;
 }
 
+#current-location {
+    /* display: none */
+    background-color: white;
+    display: block;
+}
+
