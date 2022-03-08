@@ -1,5 +1,7 @@
-html {
+html, body {
     box-sizing: border-box;
+    padding: 0;
+    height: 100%;
 }
 
 header {
@@ -9,14 +11,9 @@ header {
 }
 
 #map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-  
-
+  height: 96vh;
+    
+   
 }
 
 .countryInfo {
@@ -24,9 +21,8 @@ header {
     background-color: aliceblue;
 }
 
-#current-location {
-    /* display: none */
+/* #current-location {
     background-color: white;
     display: block;
-}
+} */
 

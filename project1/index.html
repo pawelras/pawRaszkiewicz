@@ -7,80 +7,176 @@
     <title>Document</title>
     <link href="styles/style.css" rel="stylesheet" />
     <link href="libs/js/leaflet/leaflet.css" rel="stylesheet" />
+    <link href="libs/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <img src="img/logo-small1.png" width="200px">
-        <h1>Company <br> Name</h1>
-        <select id="countryList">
-            <option>Select Country</option>
-            
-        </select>
-    </header>
 
-    <main>
-        <div class="countryInfo">
-            <table>
-                <caption>Your location</caption>
-                <tr>
-                    <th>Latitude:</th>
-                    <td id="lat"></td>
-                </tr>
+    <div class="container-fluid h-100 my-0">
 
-                <tr>
-                    <th>Longitude:</th>
-                    <td id="lng"></td>
-                </tr>
+        <div class="row border align-items-center">
+            <div class="col-md-8">
+                
+                        <div id="locationBar" class="row justify-content-between align-items-center">
+                            <div id="radar" class="col-xl-2 col-12">
+                                <button class="btn btn-success"><img width="25px" src="img/radar-pvmbg.gif" /> &nbsp; My Location</span>
+                            </div>
 
-                <tr>
-                    <th>City</th>
-                    <td id="city"></td>
-                </tr>
+                            <div class="col-xl-2 col-6">
+                                <span><b>Latitude:</b></span>
+                                <span id="lat"></span>
+                            </div>
+                                
+                            <div class="col-xl-3 col-6">
+                                <span><b>Longitude:</b></span>
+                                <span id="lng"></span>
+                            </div>
+                            
+                            <div class="col-xl-2 col-6">
+                                <span><b>City:</b></span>
+                                <span id="city"></span>
+                            </div>
+                            
+                            <div class="col-xl-2 col-6">
+                                <span><b>Country:</b></span>
+                                <span id="country"></span>
+                            </div>
+                        </div>
 
-                <tr>
-                    <th>Country</th>
-                    <td id="country"></td>
-                </tr>
-                </table>
+                
+            </div>
+                
+            <div class="col-md-4">
+                <div>
+                <select class="form-select" id="countryList">    
+                </select>
+                </div>
+            </div>
+
+
         </div>
-        <div class="countryInfo">
-            <h2 id="country-name-header">Name of the Country</h2>
-            <table>
-                <tr>
-                    <th>Area (km <sup>2</sup>)</th>
-                    <td id="area">Area</td>
-                </tr>
-
-                <tr>
-                    <th>Capital</th>
-                    <td id="capital">Capital</td>
-                </tr>
-
-                <tr>
-                    <th>Languages Spoken</th>
-                    <td id="languages">Languages</td>
-                </tr>
-
-                <tr>
-                    <th>Population</th>
-                    <td id="population">Population</td>
-                </tr>
-
-                <tr>
-                    <th>Continent</th>
-                    <td id="continent">Continent Name</td>
-                </tr>
-            </table>
-            
-        </div>
-        <div>Photos</div>
-        <div>Attractions</div>
-        <div id="map">
         
-    </main>
+        <div class="row border">
 
-    <footer>Company info</footer>
+            <div class="col-xl-8" id="map"></div>
+
+            
+            <div class="col-xl-4" class="sidebar">
+                
+                
+                <div>
+                    <img style="max-width: 100%" src="img/mapify3.png">
+                    
+                </div>
+                <div class="col mt-3" >
+                <h2 id="country-name-header"></h2>
+                </div>
+                <div class="px-3">
+                    <button class="btn btn-outline-success col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <h5>Demographics &#9661;</h5>
+                      </button>
+
+                    <div class="collapse" id="collapseOne">
+                        <table class="table">
+                            <tr>
+                                <th>Area (km <sup>2</sup>)</th>
+                                <td id="area"></td>
+                                <!-- <td id="loader" rowspan="8"><img width="200px" style="display: inline-block; margin: auto" src="img/loading.gif"/></td> -->
+
+                            </tr>
+
+                            <tr>
+                                <th>Capital</th>
+                                <td id="capitalCity"></td>
+                                
+                            </tr>
+
+                            <tr>
+                                <th>Languages Spoken</th>
+                                <td id="languages"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Population</th>
+                                <td id="population"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Continent</th>
+                                <td id="continent"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Currency</th>
+                                <td id="currency"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Flag</th>
+                                <td id="flag"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Coat of Arms</th>
+                                <td id="coatOfArms"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    
+                </div>
+                <div>Photos, add local time</div>
+                <div class="px-3">
+                    <button class="btn btn-outline-success col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5>Weather &#9661;</h5>
+                    </button>
+                    <div class="collapse" id="collapseTwo">
+                        
+                        <table>
+                            <thead>
+                                <td>Temp</td>
+                                <td colspan="2">Weather</td>
+                                <td>Humidity</td>
+                                <td>Pressure</td>
+                            </thead>
+                            <tr>
+                                <td id="temp"></td>
+                                <td id="weather"></td>
+                                <td id="weatherDescr"></td>
+                                <td id="humidity"></td>
+                                <td id="pressure"></td>
+                                <tr>
+                                <td id="sunrise"></td>
+                                <td id="sunset"></td>
+                            </tr>
+                            </tr>
+                        </table>
+                        
+                    </div>
+                </div>
+                <div id="legend">
+                    <table>
+                        <caption>Legend</caption>
+
+                        <tr>
+                        <td><img width="25px" src="img/locationIcon.png" /></td>
+                        <td>Your Location</td>
+                        </tr>
+
+                        <tr>
+                            <td><img width="25px" src="img/capitalIcon.png" /></td>
+                            <td>Capital</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+               
+    </div>
+
+    <script src="libs/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
     <script src="libs/js/jquery-3.6.0.min.js"></script>
     <script src="libs/js/leaflet/leaflet.js"></script>
     <script src="libs/js/script.js"></script>

@@ -1,6 +1,5 @@
 <?php
 
-
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);
 
@@ -8,14 +7,14 @@
 
     $decode = json_decode(file_get_contents('../../geoData/countryBorders.geo.json'), true);
     $countries_array = $decode["features"];
-	
+    
    function getBorderCoordinates($element) {
        return $element["properties"]["iso_a2"] == $_REQUEST['countryISO'];
 
   }
 
-  $data = array_filter($countries_array, "getBorderCoordinates");
-  $decode["features"] = $data;
+  $data = array_values(array_filter($countries_array, "getBorderCoordinates"));
+  $decode = $data[0]["geometry"];
     
     $output['status']['code'] = "200";
     $output['status']['name'] = "ok";
@@ -30,3 +29,4 @@
     echo json_encode($output);
 
 ?>
+
