@@ -4,33 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mapify</title>
+    <meta name="description" content="Web app allowing you to display information about chosen country including basic details weather and top photos">
     <link href="styles/style.css" rel="stylesheet" />
     <link href="libs/js/leaflet/leaflet.css" rel="stylesheet" />
     <link href="libs/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 
-
+    <div id="loader">
+    </div>
+    <!-- Main container -->
     <div class="container-fluid h-100 my-0">
-
+        <!-- top bar -->
         <div class="row border align-items-center">
+            <!-- location bar -->
             <div class="col-md-8">
                 
-                        <div id="locationBar" class="row justify-content-between align-items-center">
-                            <div id="radar" class="col-xl-2 col-12">
-                                <button class="btn btn-success"><img width="25px" src="img/radar-pvmbg.gif" /> &nbsp; My Location</span>
-                            </div>
+                <div id="locationBar" class="row justify-content-between align-items-center">
+                    <div id="radar" class="col-xl-2 col-12">
+                        <button class="btn btn-success"><img width="25px" src="img/radar-pvmbg.gif" /> &nbsp; My Location</span>
+                    </div>
 
-                            <div class="col-xl-2 col-6">
-                                <span><b>Latitude:</b></span>
-                                <span id="lat"></span>
-                            </div>
+                    <div class="col-xl-2 col-6">
+                        <span><b>Latitude:</b></span>
+                        <span id="lat"></span>
+                    </div>
                                 
-                            <div class="col-xl-3 col-6">
-                                <span><b>Longitude:</b></span>
-                                <span id="lng"></span>
-                            </div>
+                    <div class="col-xl-3 col-6">
+                        <span><b>Longitude:</b></span>
+                        <span id="lng"></span>
+                    </div>
                             
                             <div class="col-xl-2 col-6">
                                 <span><b>City:</b></span>
@@ -41,139 +45,153 @@
                                 <span><b>Country:</b></span>
                                 <span id="country"></span>
                             </div>
-                        </div>
+                       </div>
 
                 
             </div>
                 
-            <div class="col-md-4">
-                <div>
-                <select class="form-select" id="countryList">    
-                </select>
-                </div>
-            </div>
+                    <div class="col-md-4">
+                    <div>
+                    <select class="form-select" id="countryList">    
+                    </select>
+                    </div>
+                    </div>
 
 
-        </div>
+                    </div>
         
-        <div class="row border">
+                    <div class="row ">
 
-            <div class="col-xl-8" id="map"></div>
+                    <div class="col-xl-8" id="map"></div>
 
             
-            <div class="col-xl-4" class="sidebar">
+                    <div class="col-xl-4 sidebar" class="">
                 
                 
-                <div>
-                    <img style="max-width: 100%" src="img/mapify3.png">
+                    <div>
+                    <!-- add homepage link before deploying -->
+                    <a href="#"><img style="max-width: 100%" src="img/mapify3.png"></a>
                     
-                </div>
-                <div class="col mt-3" >
-                <h2 id="country-name-header"></h2>
-                </div>
-                <div class="px-3">
-                    <button class="btn btn-outline-success col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        <h5>Demographics &#9661;</h5>
-                      </button>
-
-                    <div class="collapse" id="collapseOne">
-                        <table class="table">
-                            <tr>
-                                <th>Area (km <sup>2</sup>)</th>
-                                <td id="area"></td>
-                                <!-- <td id="loader" rowspan="8"><img width="200px" style="display: inline-block; margin: auto" src="img/loading.gif"/></td> -->
-
-                            </tr>
-
-                            <tr>
-                                <th>Capital</th>
-                                <td id="capitalCity"></td>
-                                
-                            </tr>
-
-                            <tr>
-                                <th>Languages Spoken</th>
-                                <td id="languages"></td>
-                            </tr>
-
-                            <tr>
-                                <th>Population</th>
-                                <td id="population"></td>
-                            </tr>
-
-                            <tr>
-                                <th>Continent</th>
-                                <td id="continent"></td>
-                            </tr>
-
-                            <tr>
-                                <th>Currency</th>
-                                <td id="currency"></td>
-                            </tr>
-
-                            <tr>
-                                <th>Flag</th>
-                                <td id="flag"></td>
-                            </tr>
-
-                            <tr>
-                                <th>Coat of Arms</th>
-                                <td id="coatOfArms"></td>
-                            </tr>
-
-                        </table>
                     </div>
-                    
-                </div>
-                <div>Photos, add local time</div>
-                <div class="px-3">
-                    <button class="btn btn-outline-success col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <h5>Weather &#9661;</h5>
-                    </button>
-                    <div class="collapse" id="collapseTwo">
-                        
-                        <table>
-                            <thead>
-                                <td>Temp</td>
-                                <td colspan="2">Weather</td>
-                                <td>Humidity</td>
-                                <td>Pressure</td>
-                            </thead>
-                            <tr>
-                                <td id="temp"></td>
-                                <td id="weather"></td>
-                                <td id="weatherDescr"></td>
-                                <td id="humidity"></td>
-                                <td id="pressure"></td>
+                    <div class="col mt-3" >
+                    <h2 id="country-name-header" class="text-center"></h2>
+                    </div>
+
+                    <div class="accordion " id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Country Details
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <table class="table">
                                 <tr>
-                                <td id="sunrise"></td>
-                                <td id="sunset"></td>
-                            </tr>
-                            </tr>
-                        </table>
-                        
+                                    <th>Area (km <sup>2</sup>)</th>
+                                    <td id="area"></td>
+                                                    
+                                </tr>
+                
+                                <tr>
+                                    <th>Capital</th>
+                                    <td id="capitalCity"></td>
+                                    
+                                </tr>
+                
+                                <tr>
+                                    <th>Languages Spoken</th>
+                                    <td id="languages"></td>
+                                </tr>
+                
+                                <tr>
+                                    <th>Population</th>
+                                    <td id="population"></td>
+                                </tr>
+                
+                                <tr>
+                                    <th>Continent</th>
+                                    <td id="continent"></td>
+                                </tr>
+                
+                                <tr>
+                                    <th>Currency</th>
+                                    <td id="currency"></td>
+                                </tr>
+                
+                                <tr>
+                                    <th>Flag</th>
+                                    <td id="flag"></td>
+                                </tr>
+                
+                                <tr>
+                                    <th>Coat of Arms</th>
+                                    <td id="coatOfArms"></td>
+                                </tr>
+                
+                            </table>
+                        </div>
+                      </div>
                     </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Current Weather
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            
+                            <table class="table"> 
+                                <thead>
+                                    <td>Temp</td>
+                                    <td colspan="2">Weather</td>
+                                    <td>Humidity</td>
+                                    <td>Pressure</td>
+                                </thead>
+                                <tr>
+                                    <td id="temp"></td>
+                                    <td id="weatherDescr"></td>
+                                    <td id="weather"></td>
+                                    <td id="humidity"></td>
+                                    <td id="pressure"></td>
+                                   
+                                </tr>
+                            </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Country Photos
+                        </button>
+                      </h2>
+                      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">               
+                            </div>
+                            <sub>powered by Pixabay</sub>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  
+               
+                    <div class="col-12" id="legend">
+                    <h5>Legend</h5>
+                
+                            <span><img width="25px" src="img/locationIcon.png" />Your Location</span>
+                            <span><img width="25px" src="img/capitalIcon.png" />Capital<span>
+                       
                 </div>
-                <div id="legend">
-                    <table>
-                        <caption>Legend</caption>
-
-                        <tr>
-                        <td><img width="25px" src="img/locationIcon.png" /></td>
-                        <td>Your Location</td>
-                        </tr>
-
-                        <tr>
-                            <td><img width="25px" src="img/capitalIcon.png" /></td>
-                            <td>Capital</td>
-                        </tr>
-
-                    </table>
-                </div>
+                
             </div>
         </div>
 
-               
+    <!-- main container end  -->
     </div>
 
     <script src="libs/bootstrap-5.0.2-dist/js/bootstrap.js"></script>

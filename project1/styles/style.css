@@ -11,18 +11,31 @@ header {
 }
 
 #map {
-  height: 96vh;
+  height: 95vh;
     
    
 }
 
-.countryInfo {
-    width: 400px;
-    background-color: aliceblue;
+
+
+#loader {
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	background: #ffffff url('../img/loadin_gif.gif') no-repeat center;
+	z-index: 999;
+}
+#loader div {
+    /* z-index: 1; */
+    position: absolute;
+    bottom: 30vh;
+    left: 45vw;
+    color: #91ca46;
+
 }
 
-/* #current-location {
-    background-color: white;
-    display: block;
-} */
-
+#legend {
+    text-align: center;
+    margin-top: 5vh;
+    margin-bottom: auto;
+}

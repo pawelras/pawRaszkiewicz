@@ -1,6 +1,8 @@
 //Creating a map
 
-let map = L.map('map').locate({setView: true, maxZoom: 7, minZoom: 6});
+
+
+let map = L.map('map').locate({setView: true, maxZoom: 5, minZoom: 10});
 
 
 // L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=X3eTl1pQfAaR1PxRqddg', {
@@ -9,7 +11,7 @@ let map = L.map('map').locate({setView: true, maxZoom: 7, minZoom: 6});
 // }).addTo(map);
 
 var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 8,
+	maxZoom: 5,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
@@ -23,7 +25,7 @@ $.ajax({
             
 		if (result.status.name == "ok") {
 			
-			console.log(result);
+			
 			let countryNames = Object.keys(result.data);
 			countryNames.sort();
 			
@@ -137,7 +139,7 @@ $('#countryList').on('change', function getCountryInfo() {
 			
 			if (result.status.name == "ok") {
 			
-			console.log(result.data);
+		
 			renderCountryDetails(result.data[0]);
 
 			$.ajax({
@@ -153,7 +155,6 @@ $('#countryList').on('change', function getCountryInfo() {
 					
 					if (result.status.name == "ok") {
 					
-					console.log(result);
 					$('#flag').html('<img width=50px src="' + result.data[0].flags.svg + '" />'); 
 					$('#coatOfArms').html('<img width=50px src="' + result.data[0].coatOfArms.svg + '" />')
 					
@@ -250,8 +251,8 @@ $('#countryList').on('change', function getCountryInfo() {
 					
 					if (result.status.name == "ok") {
 					
-					console.log(result);
 					renderWeather(result.data);
+					return result;
 								
 					}
 				
@@ -259,7 +260,9 @@ $('#countryList').on('change', function getCountryInfo() {
 				error: function(jqXHR, textStatus, errorThrown) {
 					console.log(errorThrown);
 				}
+				
 			})
+						
 		})
 
 		
@@ -269,18 +272,18 @@ $('#countryList').on('change', function getCountryInfo() {
 	
 })
 
-function renderCountryDetails(result) {
+function renderCountryDetails(data) {
 	
 	$('#country-name-header').html($('#countryList option:selected').text());
 	$('#loader').remove();
-	$('#area').html(result.areaInSqKm);	
-	$('#capitalCity').html(result.capital);
+	$('#area').html(data.areaInSqKm);	
+	$('#capitalCity').html(data.capital);
 
-	renderLanguageNames(result.languages);
+	renderLanguageNames(data.languages);
 
-	$('#population').html(result.population);
-	$('#continent').html(result.continentName);
-	$('#currency').html(result.currencyCode);
+	$('#population').html(data.population);
+	$('#continent').html(data.continentName);
+	$('#currency').html(data.currencyCode);
 
 }
 
@@ -311,6 +314,88 @@ function renderLanguageNames(langCodes) {
 
 }
 
+
+$('#countryList').on('change', () => {
+
+		
+		$.ajax({
+			url: 'libs/php/getCountryPhotos.php',
+			type: 'GET',
+			dataType: 'json',
+			data: {
+				countryName: $('#countryList option:selected').text()
+			},
+		
+			success: function(result) {
+		
+				
+				if (result.status.name == "ok") {
+							
+				renderCapitalPhotos(result.data.hits);
+					
+					
+				}
+			
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		
+		})
+		
+		
+})
+
+function renderCapitalPhotos(urlArray) {
+
+	// <div class="carousel-inner"><div class="carousel-item active"><img src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&h=350" class="d-block w-100" alt="..."></div><div class="carousel-inner"><div class="carousel-item active"><img src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&h=350" class="d-block w-100" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button></div>
+
+	console.log(urlArray);
+	$('#carouselControls').html('');
+
+	let htmlString = '<div class="carousel-inner">'
+
+
+	urlArray.forEach((element, index) => {
+
+			if (index=== 0) {
+
+			htmlString += '<div class="carousel-item active"><img height="300px" src=' + element.webformatURL + 'class="d-block w-100 img-fluid" alt="..."></div>';
+
+		} else {
+			htmlString += '<div class="carousel-item"><img height="300px" src=' + element.webformatURL + ' class="d-block w-100 img-fluid" alt="..."></div>';
+		}
+
+		
+
+	})
+
+	htmlString += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
+
+	
+	$('#carouselControls').html(htmlString);
+
+	
+	// $('#carouselControls').append('<div class="carousel-inner">')
+
+	// urlArray.forEach((element, index) => {
+
+	// 	if (index=== 0) {
+
+	// 		$('#carouselControls').append('<div class="carousel-item active"><img src=' + element.webformatURL + ' class="d-block w-100" alt="..."></div>')
+
+	// 	} else {
+	// 		$('#carouselControls').append('<div class="carousel-item"><img src=' + element.webformatURL + ' class="d-block w-100" alt="..."></div>')
+	// 	}
+	// 	let photoHtml = '<div class="carousel-item active"><img src=' + element.webformatURL + ' class="d-block w-100" alt="..."></div>'
+		
+		
+	// })
+
+	// $('#carouselControls').append('<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>')
+
+}
+
 $('#countryList').on('change', function getCountryBorders() {
 
     $.ajax({
@@ -324,10 +409,10 @@ $('#countryList').on('change', function getCountryBorders() {
         success: function(result) {
             
             if (result.status.name == "ok") {
-            console.log(result.data);
+            
             //let coordinates = Object.values(result.data.features)[0].geometry.coordinates; //removes country number key
             
-            //console.log(coordinates);
+            
             renderCountryBorders(result.data);
                         
             }
@@ -381,8 +466,6 @@ function renderCountryBorders(coordinates) {
 
 function renderWeather (data) {
 
-	console.log(data);
-
 		$('#temp').html(Math.round(data.main.temp - 271) + '&#176; C');
 		$('#weatherDescr').html(data.weather[0].main);
 		$('#weather').html('<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" >');
@@ -398,6 +481,8 @@ function renderWeather (data) {
 
 map.on('click', function(e) {
    
+	console.log(e.latlng.lat);
+	console.log(e.latlng.lng);
 
 	$.ajax({
 		url: 'libs/php/reverseGeocoding.php',
@@ -412,6 +497,7 @@ map.on('click', function(e) {
 
 			
 			if (result.status.name == "ok") {
+			console.log(result);
 						
 			let countryCode = result.data.results[0].components["ISO_3166-1_alpha-2"];
 			
@@ -429,27 +515,7 @@ map.on('click', function(e) {
 	})
 });
 
-$.ajax({
-	url: 'libs/php/getCapitalPhotos.php',
-	type: 'GET',
-	dataType: 'json',
-	data: {
-		cityName: 'London'
-	},
-
-	success: function(result) {
-
-		
-		if (result.status.name == "ok") {
-					
-		console.log(result)
-			
-			
-		}
-	
-	},
-	error: function(jqXHR, textStatus, errorThrown) {
-		console.log(errorThrown);
-	}
-
-})
+preloader = document.getElementById('loader');
+      function preLoaderHandler(){
+          preloader.style.display = 'none';
+      }
