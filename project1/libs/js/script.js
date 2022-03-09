@@ -1,3 +1,10 @@
+// preloader = document.getElementById('loader');
+//       function preLoaderHandler(){
+//           preloader.style.display = 'none';
+//       }
+
+// preLoaderHandler();
+
 //Creating a map
 let map = L.map('map').locate({setView: true, maxZoom: 5, minZoom: 10});
 
@@ -491,7 +498,4 @@ map.on('click', function(e) {
 	})
 });
 
-preloader = document.getElementById('loader');
-      function preLoaderHandler(){
-          preloader.style.display = 'none';
-      }
+
