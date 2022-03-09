@@ -1,7 +1,4 @@
 //Creating a map
-
-
-
 let map = L.map('map').locate({setView: true, maxZoom: 5, minZoom: 10});
 
 
@@ -39,7 +36,7 @@ $.ajax({
 	
 	},
 	error: function(jqXHR, textStatus, errorThrown) {
-		console.log(errorThrown);
+		console.log(jqXHR);
 	}
 })
 .then(function getLocation() {
@@ -92,7 +89,7 @@ $.ajax({
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				
-				console.log(errorThrown);
+				console.log(jqXHR);
 			}
 	
 		})
@@ -163,7 +160,7 @@ $('#countryList').on('change', function getCountryInfo() {
 				
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
-					console.log(errorThrown);
+					console.log(jqXHR);
 				}
 			})
 
@@ -176,7 +173,7 @@ $('#countryList').on('change', function getCountryInfo() {
 		
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log(errorThrown);
+			console.log(jqXHR);
 		}
 
 	}).then(result => {
@@ -228,7 +225,7 @@ $('#countryList').on('change', function getCountryInfo() {
 			
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log(errorThrown);
+				console.log(jqXHR);
 			}
 	
 		})
@@ -258,7 +255,7 @@ $('#countryList').on('change', function getCountryInfo() {
 				
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
-					console.log(errorThrown);
+					console.log(jqXHR);
 				}
 				
 			})
@@ -338,7 +335,7 @@ $('#countryList').on('change', () => {
 			
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log(errorThrown);
+				console.log(jqXHR);
 			}
 		
 		})
@@ -347,8 +344,6 @@ $('#countryList').on('change', () => {
 })
 
 function renderCapitalPhotos(urlArray) {
-
-	// <div class="carousel-inner"><div class="carousel-item active"><img src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&h=350" class="d-block w-100" alt="..."></div><div class="carousel-inner"><div class="carousel-item active"><img src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&h=350" class="d-block w-100" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button></div>
 
 	console.log(urlArray);
 	$('#carouselControls').html('');
@@ -376,24 +371,7 @@ function renderCapitalPhotos(urlArray) {
 	$('#carouselControls').html(htmlString);
 
 	
-	// $('#carouselControls').append('<div class="carousel-inner">')
-
-	// urlArray.forEach((element, index) => {
-
-	// 	if (index=== 0) {
-
-	// 		$('#carouselControls').append('<div class="carousel-item active"><img src=' + element.webformatURL + ' class="d-block w-100" alt="..."></div>')
-
-	// 	} else {
-	// 		$('#carouselControls').append('<div class="carousel-item"><img src=' + element.webformatURL + ' class="d-block w-100" alt="..."></div>')
-	// 	}
-	// 	let photoHtml = '<div class="carousel-item active"><img src=' + element.webformatURL + ' class="d-block w-100" alt="..."></div>'
-		
-		
-	// })
-
-	// $('#carouselControls').append('<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>')
-
+	
 }
 
 $('#countryList').on('change', function getCountryBorders() {
@@ -419,7 +397,7 @@ $('#countryList').on('change', function getCountryBorders() {
         
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            
             console.log(jqXHR);
         }
     })
@@ -471,9 +449,7 @@ function renderWeather (data) {
 		$('#weather').html('<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" >');
 		$('#humidity').html(data.main.humidity + '%');
 		$('#pressure').html(data.main.pressure+ 'hPa');
-		// $('#sunrise').html(result);
-		// $('#sunset').html(result);
-
+		
 }
 
 
@@ -509,7 +485,7 @@ map.on('click', function(e) {
 		
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log(errorThrown);
+			console.log(jqXHR);
 		}
 
 	})
