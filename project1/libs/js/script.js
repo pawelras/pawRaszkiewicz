@@ -1,5 +1,9 @@
 $( document ).ready(function() {
 
+	$('#toggleButton').on('click', function() {
+		$('#sidebar').toggle();
+	})
+
 	preloader = document.getElementById('loader');
 		function preLoaderHandler(){
 			preloader.style.display = 'none';
@@ -8,18 +12,16 @@ $( document ).ready(function() {
 	preLoaderHandler();
 
 	//Creating a map
-	let map = L.map('map').locate({setView: true, maxZoom: mapMaxZoom, minZoom: mapMinZoom});
+	let map = L.map('map').locate({setView: true, maxZoom: 10, minZoom: 7});
 
 
-	L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=X3eTl1pQfAaR1PxRqddg', {
-		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-		minZoom: mapMinZoom,
-        maxZoom: mapMaxZoom,
-	}).addTo(map);
+	// L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=X3eTl1pQfAaR1PxRqddg', {
+	// 	attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+		maxZoom: 7
+	// }).addTo(map);
 
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		minZoom: mapMinZoom,
-        maxZoom: mapMaxZoom,
+	var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 10,
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 
