@@ -11,6 +11,8 @@
     <link href="libs/js/leaflet/leaflet.css" rel="stylesheet" />
     <link href="libs/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="node_modules/leaflet-easybutton/src/easy-button.css">
+    <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">
 
 </head>
 <body>
@@ -69,8 +71,8 @@
         <div class="row ">
             
             
-            <div id="sidebar"class="col-xl-3 background pt-3">   
-                <div id="hideInfoButton" class=" col-12 text-end"><img width="30px" src="img/hide.png"> Hide Info</div>        
+            <div id="sidebar"class="col-lg-3 background pt-3">   
+                <div id="hideInfoButton" class=" col-12 text-end mb-2"><img width="30px" src="img/hide.png"> Hide Details Tab</div>        
                 <div>
                 <!-- add homepage link before deploying -->
                     <a href="#"><img style="max-width: 100%" src="img/mapify.png"></a> 
@@ -185,9 +187,10 @@
                         </h2>
                         <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                           <div class="accordion-body legendBody">
-                            <div><img width="25px" src="img/locationIcon.png" />Your Location</div>
-                            <div><img width="25px" src="img/capitalIcon.png" />Capital</div>
-                            <div><span class="borderLine"><b>&#9135;&#9135;&#9135;</b></span> Country Border</div>
+                            <div><img width="25px" src="img/locationIcon.png" /> Your Location</div>
+                            <div><img width="25px" src="img/capitalIcon.png" /> Capital</div>
+                            <div><span class="borderLine"><b>&#9135;&#9135;&#9135;</b></span>&nbsp;Border</div>
+                            <div><img width="25px" src="img/plane.png" /> Airport</div>
                           </div>
                         </div>
                       </div>
@@ -208,6 +211,7 @@
     <script src="libs/js/jquery-3.6.0.min.js"></script>
     <script src="libs/js/leaflet/leaflet.js"></script>
     <script src="node_modules/leaflet-easybutton/src/easy-button.js"></script>
-    <script src="libs/js/script.js"></script>
+    <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script type="module" src="libs/js/script.js"></script>
 </body>
 </html>

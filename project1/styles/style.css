@@ -30,7 +30,7 @@ header {
 	z-index: 999;
 }
 #loader div {
-    /* z-index: 1; */
+
     position: absolute;
     bottom: 30vh;
     left: 45vw;
@@ -53,8 +53,6 @@ header {
     font-size: inherit;
 }
 
-
-
 .accordion-item {
     border: 1px solid rgba(35, 65, 100, .15)
 }
@@ -72,12 +70,12 @@ header {
 .accordion-button:focus {
     box-shadow: inherit;
 }
-
+/* 
 @media (max-width: 767px) {
     .accordion-body h3 {
         font-size: calc(.95rem + 1.5vw);
     }
-}
+} */
 
 .borderLine {
     color: red;
@@ -86,6 +84,7 @@ header {
 .legendBody {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 
@@ -102,6 +101,7 @@ header {
 
   #hideInfoButton {
       cursor: pointer!important;
+      
   }
 
   #showInfoButton {

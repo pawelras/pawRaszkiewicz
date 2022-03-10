@@ -1,24 +1,23 @@
+import { renderCountryDetails, renderCountryPhotos, renderWeather } from './functions.js';
+
+
 $( document ).ready(function() {
 
 	
-	preloader = document.getElementById('loader');
-		function preLoaderHandler(){
-			preloader.style.display = 'none';
+	
+	function preLoaderHandler(){
+		document.getElementById('loader').style.display = 'none';
 		}
 
 	preLoaderHandler();
 
 	//Creating a map
-	let map = L.map('map').locate({setView: true, maxZoom: 10, minZoom: 7});
+	let map = L.map('map').locate({setView: true, maxZoom: 12, minZoom: 5});
 
-
-
-	var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 10,
+	let OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 12,
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
-
-	var helloPopup = L.popup().setContent('Hello World!');
 
 	L.easyButton('<img width="50px" src="img/details.png">', function(btn, map){
 
@@ -67,7 +66,7 @@ $( document ).ready(function() {
 
 		} else {
 		
-		$('#locationBar').html('Geolocation is not supported by this browser and some features might be disabled. Please choose a country from the dropdow menu ');
+		$('#locationBar').html('Geolocation is not supported by this browser and some features might be disabled. Please choose a country from the dropdow menu or click on the map.');
 		}
 		function success(position) {
 
@@ -122,8 +121,8 @@ $( document ).ready(function() {
 					$('#countryList').val(countryCode).change();
 				})
 		
-		})
-		.catch(error => console.log(error));
+			})
+			.catch(error => console.log(error));
 		
 			
 			
@@ -131,16 +130,14 @@ $( document ).ready(function() {
 		
 		function fail()
 			{
-				$('#locationBar').html('Could not obtain location and some eatures might be disabled. Please choose a country from the dropdow menu ');
+				$('#locationBar').html('Could not obtain location and some eatures might be disabled. Please choose a country from the dropdow menu or click on the map.');
 			
 			}
 	})
+	.catch(error => console.log(error));
+
 	
-	;
-
 	//Fetching Country info from API
-
-
 	let capitalMarker;
 	$('#countryList').on('change', function getCountryInfo() {
 		
@@ -185,11 +182,8 @@ $( document ).ready(function() {
 					}
 				})
 
-
 				return result
 				
-					
-					
 				}
 			
 			},
@@ -229,7 +223,7 @@ $( document ).ready(function() {
 							iconAchor: [15, 50]
 				
 				
-						})
+						});
 
 						
 						capitalMarker = L.marker([capitalCoordinates.lat, capitalCoordinates.lng], {icon: capitalIcon}).addTo(map).bindTooltip(capitalName, 
@@ -237,8 +231,6 @@ $( document ).ready(function() {
 								permanent: true, 
 								direction: 'right'
 							});
-
-			
 					
 					return result;					
 						
@@ -251,9 +243,6 @@ $( document ).ready(function() {
 		
 			})
 			.then(result =>{
-
-				console.log(result.data.results[0].geometry.lat);
-				console.log(result.data.results[0].geometry.lng);
 
 				$.ajax({
 					url: 'libs/php/getWeather.php',
@@ -282,6 +271,38 @@ $( document ).ready(function() {
 				})
 							
 			})
+			.then(() => {
+				$.ajax({
+					url: 'libs/php/getAirports.php',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						countryISO: $('#countryList').val()
+					},
+		
+					success: function(result) {
+		
+						
+						if (result.status.name == "ok") {
+						
+							
+							renderAirports(result.data.response);	
+						
+							
+							
+						}
+					
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.log(jqXHR);
+					}
+		
+				})
+
+			}
+
+			)
+			.catch(error => console.log(error))
 
 			
 
@@ -290,48 +311,39 @@ $( document ).ready(function() {
 		
 	})
 
-	function renderCountryDetails(data) {
+	
+	let markers;
+
+	function renderAirports(data) {
 		
-		$('#country-name-header').html($('#countryList option:selected').text());
-		$('#loader').remove();
-		$('#area').html(data.areaInSqKm);	
-		$('#capitalCity').html(data.capital);
+		if (markers) {
+			markers.clearLayers()
+		}
 
-		renderLanguageNames(data.languages);
+		let airportIcon = L.icon({
+			iconUrl: "img/plane.png",
+			iconSize: [30,30],
+			iconAchor: [15, 50]
 
-		$('#population').html(data.population);
-		$('#continent').html(data.continentName);
-		$('#currency').html(data.currencyCode);
 
-	}
-
-	function renderLanguageNames(langCodes) {
-
-		langCodesArray = langCodes.split(',');
-
-		const unsupportedLanguageCodes = ['ay', 'rom', 'mos', 'iu', 'sg', 'sre', 'wuu', 'dta', 'pap', 'ktu', 'aa', 'sid', 'fj', 'frp', 'man', 'wof', 'ff', 'kl', 'pov', 'cab', 'miq', 'as', 'bho', 'sat', 'ks', 'kok', 'do', 'mni', 'sit', 'sa', 'lus', 'nc', 'sc', 'rmm', 'swk', 'bm', 'snk', 'mey', 'gag', 'ber', 'vmw', 'hz', 'se', 'brh', 'ho', 'mey', 'tpi', 'ay', 'lo', 'hil', 'war', 'pam', 'bik', 'pag', 'mrw', 'tsg', 'mdh', 'cbk', 'krj', 'sgd', 'msb', 'akl', 'ibg', 'yka', 'mta', 'mwl', 'xal', 'cau', 'ady', 'kv', 'ce', 'tyv', 'cv', 'udm', 'tut', 'mns', 'bua', 'myv', 'mdf', 'chm', 'ba', 'inh', 'tut', 'kbd', 'krc', 'av', 'sah', 'nog', 'tem', 'men', 'tpi', 'ts', 'ss', 've', 'nr', 'fia', 'srn', 'hns', 'se', 'sma', 'arc', 'nan', 'hak', 'hna', 'kbp', 'dag', 'zza', 'lun', 'lue', 'nd', 'bal', 'ilo', 'bik', 'abx', 'za', 'toi', 'bi', 'zza', 'tet', 'bho'];
-		
-		let filteredLanguages = langCodesArray.filter(element => !unsupportedLanguageCodes.includes(element))
-		
-		let languageName = new Intl.DisplayNames(['en'], {
-			type: 'language'
 		});
 
-		$('#languages').html('');  
 
-		let array = [];
-		filteredLanguages.forEach(element => {
+		markers = new L.MarkerClusterGroup();
 
-			
-			array.push(languageName.of(element))
-			return array;	 	
+		data.forEach(element => {
+			let marker = L.marker([element.lat, element.lng], {icon: airportIcon});
+			marker.bindTooltip(element.name, 
+    			{permanent: true, 
+        		direction: 'right'
+    			});
 
-		})
+			markers.addLayer(marker);
+		});
 
-		$('#languages').html(array.join(', '));
 
-	}
-
+		map.addLayer(markers);
+	};
 
 	$('#countryList').on('change', () => {
 
@@ -349,7 +361,7 @@ $( document ).ready(function() {
 					
 					if (result.status.name == "ok") {
 								
-					renderCapitalPhotos(result.data.hits);
+					renderCountryPhotos(result.data.hits);
 						
 						
 					}
@@ -364,36 +376,7 @@ $( document ).ready(function() {
 			
 	})
 
-	function renderCapitalPhotos(urlArray) {
 
-		console.log(urlArray);
-		$('#carouselControls').html('');
-
-		let htmlString = '<div class="carousel-inner">'
-
-
-		urlArray.forEach((element, index) => {
-
-				if (index=== 0) {
-
-				htmlString += '<div class="carousel-item active"><img height="300px" src=' + element.webformatURL + 'class="d-block w-100 img-fluid" alt="..."></div>';
-
-			} else {
-				htmlString += '<div class="carousel-item"><img height="300px" src=' + element.webformatURL + ' class="d-block w-100 img-fluid" alt="..."></div>';
-			}
-
-			
-
-		})
-
-		htmlString += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
-
-		
-		$('#carouselControls').html(htmlString);
-
-		
-		
-	}
 
 	$('#countryList').on('change', function getCountryBorders() {
 
@@ -409,8 +392,7 @@ $( document ).ready(function() {
 				
 				if (result.status.name == "ok") {
 				
-				//let coordinates = Object.values(result.data.features)[0].geometry.coordinates; //removes country number key
-				
+								
 				
 				renderCountryBorders(result.data);
 							
@@ -463,24 +445,14 @@ $( document ).ready(function() {
 	}
 
 
-	function renderWeather (data) {
-
-			$('#temp').html(Math.round(data.main.temp - 271) + '&#176; C');
-			$('#weatherDescr').html(data.weather[0].main);
-			$('#weather').html('<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" >');
-			$('#humidity').html(data.main.humidity + '%');
-			$('#pressure').html(data.main.pressure+ 'hPa');
-			
-	}
+	
 
 
 	//choose country on click
 
 	map.on('click', function(e) {
 	
-		console.log(e.latlng.lat);
-		console.log(e.latlng.lng);
-
+		
 		$.ajax({
 			url: 'libs/php/reverseGeocoding.php',
 			type: 'POST',
@@ -494,14 +466,12 @@ $( document ).ready(function() {
 
 				
 				if (result.status.name == "ok") {
-				console.log(result);
+				
 							
 				let countryCode = result.data.results[0].components["ISO_3166-1_alpha-2"];
 				
 				$('#countryList').val(countryCode).change()
-				
-					
-					
+									
 				}
 			
 			},
