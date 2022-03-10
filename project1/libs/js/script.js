@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 
-	$('#toggleSidebar').on('click', function() {
+	$('#toggleButton').on('click', function() {
 		$('#sidebar').toggle();
 	})
 
