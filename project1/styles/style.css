@@ -83,3 +83,7 @@ header {
     display: flex;
     justify-content: space-between;
 }
+
+#toggleButton {
+    pointer-events: auto;
+}
