@@ -1,1 +1,15 @@
-{}
+{
+  "name": "project1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "fa-icons": "^0.2.0",
+    "leaflet-easybutton": "^2.4.0"
+  }
+}

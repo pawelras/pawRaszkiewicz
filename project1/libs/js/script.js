@@ -17,12 +17,18 @@ $( document ).ready(function() {
 
 	// L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=X3eTl1pQfAaR1PxRqddg', {
 	// 	attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-		maxZoom: 7
+		// maxZoom: 7
 	// }).addTo(map);
 
 	var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 10,
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	}).addTo(map);
+
+	var helloPopup = L.popup().setContent('Hello World!');
+
+	L.easyButton('fa-globe', function(btn, map){
+		helloPopup.setLatLng(map.getCenter()).openOn(map);
 	}).addTo(map);
 
 
