@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapify</title>
     <meta name="description" content="Web app allowing you to display information about chosen country including basic details weather and top photos">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link href="styles/style.css" rel="stylesheet" />
     <link href="libs/js/leaflet/leaflet.css" rel="stylesheet" />
     <link href="libs/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 
-    <!-- <div id="loader"> -->
+    <div id="loader">
     </div>
     <!-- Main container -->
     <div class="container-fluid h-100 my-0">
@@ -64,20 +65,22 @@
         
         <!-- Beginning of main content -->
         <div class="row ">
-            <div class="col-xl-8" id="map">
+            <div class="col-xl-9" id="map">
+                
+                
             </div>
             
-            <div class="col-xl-4">           
+            <div class="col-xl-3 background">           
                 <div>
                 <!-- add homepage link before deploying -->
                     <a href="#"><img style="max-width: 100%" src="img/mapify3.png"></a> 
                 </div>
 
                 <div class="col mt-3" >
-                    <h2 id="country-name-header" class="text-center"></h2>
+                    <h2 id="country-name-header" class="text-center mb-4"></h2>
                 </div>
 
-                <div class="accordion " id="accordionExample">
+                <div class="accordion mb-4" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Country Details
@@ -87,7 +90,7 @@
                             <div class="accordion-body">
                                 <table class="table">
                                     <tr>
-                                        <th>Area (km <sup>2</sup>)</th>
+                                        <th>Area (km<sup>2</sup>)</th>
                                         <td id="area"></td>
                                                         
                                     </tr>
@@ -174,18 +177,24 @@
                         </div>
                       </div>
                     </div>
-                </div>
-
-            
-               
-                <div class="col-12" id="legend">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Map Legend
+                          </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                          <div class="accordion-body legendBody">
+                            <div><img width="25px" src="img/locationIcon.png" />Your Location</div>
+                            <div><img width="25px" src="img/capitalIcon.png" />Capital</div>
+                            <div><span class="borderLine"><b>&#9135;&#9135;&#9135;</b></span> Country Border</div>
+                          </div>
+                        </div>
+                      </div>
                     
-                    <h5>Legend</h5>
-                    <span><img width="25px" src="img/locationIcon.png" />Your Location</span>
-                    <span><img width="25px" src="img/capitalIcon.png" />Capital<span>
-                       
-                </div>
-                
+                    
+                </div>                        
+               
             </div>
         </div>
 

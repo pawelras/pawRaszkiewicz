@@ -36,6 +36,50 @@ header {
 
 #legend {
     text-align: center;
-    margin-top: 5vh;
+    padding-top: 5vh;
     margin-bottom: auto;
+}
+
+.singleCol {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.accordion-button {
+    font-size: inherit;
+}
+
+
+
+.accordion-item {
+    border: 1px solid rgba(35, 65, 100, .15)
+}
+
+.accordion-button:not(.collapsed) {
+    color: inherit;
+    background: rgba(56, 181, 83, 1)!important;
+    color: white!important;
+}
+
+.accordion-button:not(.collapsed)::after  {
+    filter: brightness(00%) invert(70%);
+}
+
+.accordion-button:focus {
+    box-shadow: inherit;
+}
+
+@media (max-width: 767px) {
+    .accordion-body h3 {
+        font-size: calc(.95rem + 1.5vw);
+    }
+}
+
+.borderLine {
+    color: red;
+}
+
+.legendBody {
+    display: flex;
+    justify-content: space-between;
 }
