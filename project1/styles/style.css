@@ -88,15 +88,14 @@ header {
     justify-content: space-between;
 }
 
-<<<<<<< HEAD
+
 #toggleButton {
     pointer-events: auto;
 }
-=======
+
   #sidebar {
       display: none;
   }
   #toggleButton {
       pointer-events: auto;
   }
->>>>>>> temp
