@@ -96,6 +96,12 @@ header {
   #sidebar {
       display: none;
   }
-  #toggleButton {
-      pointer-events: auto;
+  #showInfoButton {
+     padding-top: 10px;
+     height: 70px; 
+     width: 70px;  
+  }
+
+  #hideInfoButton {
+      cursor: pointer!important;
   }

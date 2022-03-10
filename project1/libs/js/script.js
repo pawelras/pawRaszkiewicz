@@ -1,9 +1,6 @@
 $( document ).ready(function() {
 
-	$('#toggleButton').on('click', function() {
-		$('#sidebar').toggle();
-	})
-
+	
 	preloader = document.getElementById('loader');
 		function preLoaderHandler(){
 			preloader.style.display = 'none';
@@ -15,10 +12,6 @@ $( document ).ready(function() {
 	let map = L.map('map').locate({setView: true, maxZoom: 10, minZoom: 7});
 
 
-	// L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=X3eTl1pQfAaR1PxRqddg', {
-	// 	attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-		// maxZoom: 7
-	// }).addTo(map);
 
 	var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 10,
@@ -27,9 +20,18 @@ $( document ).ready(function() {
 
 	var helloPopup = L.popup().setContent('Hello World!');
 
-	L.easyButton('fa-globe', function(btn, map){
-		helloPopup.setLatLng(map.getCenter()).openOn(map);
-	}).addTo(map);
+	L.easyButton('<img width="50px" src="img/details.png">', function(btn, map){
+
+		$('#sidebar').show(1000);
+
+		$('#showInfoButton').hide(1000);
+	}, 'Show Details', 'showInfoButton').addTo(map);
+
+	$('#hideInfoButton').on('click', function() {
+		$('#sidebar').hide(1000);
+		$('#showInfoButton').show(1000);
+	})
+
 
 
 	$.ajax({
@@ -129,7 +131,7 @@ $( document ).ready(function() {
 		
 		function fail()
 			{
-				$('#locationBar').html('Could not obtain locationnd and some eatures might be disabled. Please choose a country from the dropdow menu ');
+				$('#locationBar').html('Could not obtain location and some eatures might be disabled. Please choose a country from the dropdow menu ');
 			
 			}
 	})
