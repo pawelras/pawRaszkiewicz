@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapify</title>
-    <meta name="description" content="Web app allowing you to display information about chosen country including basic details weather and top photos">
+    <meta name="description" content="Web app allowing you to display information about country you are currently in or a chosen country including basic details weather and top photos">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link href="styles/style.css" rel="stylesheet" />
     <link href="libs/js/leaflet/leaflet.css" rel="stylesheet" />
@@ -74,8 +74,7 @@
             <div id="sidebar"class="col-lg-3 background pt-3">   
                 <div id="hideInfoButton" class=" col-12 text-end mb-2"><img width="30px" src="img/hide.png"> Hide Details Tab</div>        
                 <div>
-                <!-- add homepage link before deploying -->
-                    <a href="#"><img style="max-width: 100%" src="img/mapify.png"></a> 
+                    <a href="/mapify"><img style="max-width: 100%" src="img/mapify.png"></a> 
                 </div>
                 
                 <div class="col mt-3" >
@@ -212,6 +211,6 @@
     <script src="libs/js/leaflet/leaflet.js"></script>
     <script src="node_modules/leaflet-easybutton/src/easy-button.js"></script>
     <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-    <script type="module" src="libs/js/script.js"></script>
+    <script src="libs/js/script.js"></script>
 </body>
 </html>

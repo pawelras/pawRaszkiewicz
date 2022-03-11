@@ -1,17 +1,15 @@
-import { renderCountryDetails, renderCountryPhotos, renderWeather } from './functions.js';
-
-
 $( document ).ready(function() {
 
-	
-	
+	//preloader removal
 	function preLoaderHandler(){
 		document.getElementById('loader').style.display = 'none';
 		}
 
 	preLoaderHandler();
 
-	//Creating a map
+	
+	//leaflet map and buttons
+
 	let map = L.map('map').locate({setView: true, maxZoom: 12, minZoom: 5});
 
 	let OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -19,20 +17,26 @@ $( document ).ready(function() {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 
-	L.easyButton('<img width="50px" src="img/details.png">', function(btn, map){
+	L.easyButton('<img width="30px" src="img/details.png">', function(btn, map) {
 
 		$('#sidebar').show(1000);
-
 		$('#showInfoButton').hide(1000);
+		
 	}, 'Show Details', 'showInfoButton').addTo(map);
+
 
 	$('#hideInfoButton').on('click', function() {
 		$('#sidebar').hide(1000);
 		$('#showInfoButton').show(1000);
+
+		//reload the map after hiding sidebar
+		setTimeout(() => {
+			map.invalidateSize();
+		}, 1000);
+		
 	})
 
-
-
+	//Loading country list
 	$.ajax({
 		url: 'libs/php/getCountries.php',
 		type: 'GET',
@@ -58,7 +62,8 @@ $( document ).ready(function() {
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log(jqXHR);
 		}
-	})
+	}) 
+	//Setting current location
 	.then(function getLocation() {
 
 		if (navigator.geolocation) {
@@ -113,6 +118,7 @@ $( document ).ready(function() {
 				}
 		
 			})
+			//Changing dropdown value to current country and triggering onchange events
 			.then( (result) => {
 				let countryCode = result.data.results[0].components["ISO_3166-1_alpha-2"];
 				
@@ -123,24 +129,22 @@ $( document ).ready(function() {
 		
 			})
 			.catch(error => console.log(error));
-		
-			
-			
+				
 		}
 		
 		function fail()
 			{
-				$('#locationBar').html('Could not obtain location and some eatures might be disabled. Please choose a country from the dropdow menu or click on the map.');
+				$('#locationBar').html('Could not obtain your location and some features might be disabled. Please choose a country from the dropdow menu or click on the map.');
 			
 			}
 	})
 	.catch(error => console.log(error));
 
 	
-	//Fetching Country info from API
+	//Start of onchange events
 	let capitalMarker;
 	$('#countryList').on('change', function getCountryInfo() {
-		
+		//Getting country info
 		$.ajax({
 			url: 'libs/php/getCountryInfo.php',
 			type: 'POST',
@@ -195,10 +199,9 @@ $( document ).ready(function() {
 			
 			let capitalName = result.data[0].capital;
 		
-
 			let capitalString = capitalName.split(' ').length <= 1 ? capitalName : capitalName.split(' ').join('%20');
 			
-
+			//Retrieving capital's coordinates
 			$.ajax({
 				url: 'libs/php/forwardGeocoding.php',
 				type: 'POST',
@@ -208,8 +211,7 @@ $( document ).ready(function() {
 				},
 		
 				success: function(result) {
-		
-					
+							
 					if (result.status.name == "ok") {
 						
 						if (capitalMarker) {
@@ -243,7 +245,7 @@ $( document ).ready(function() {
 		
 			})
 			.then(result =>{
-
+				//Retrieving and renderig current weather
 				$.ajax({
 					url: 'libs/php/getWeather.php',
 					type: 'POST',
@@ -272,6 +274,7 @@ $( document ).ready(function() {
 							
 			})
 			.then(() => {
+				//Retrieving and rendering airports
 				$.ajax({
 					url: 'libs/php/getAirports.php',
 					type: 'POST',
@@ -299,54 +302,14 @@ $( document ).ready(function() {
 		
 				})
 
-			}
+			})
+			.catch(error => console.log(error));
 
-			)
-			.catch(error => console.log(error))
-
-			
-
-		})
-		
-		
+		}).catch(error => console.log(error));
 	})
 
-	
-	let markers;
-
-	function renderAirports(data) {
-		
-		if (markers) {
-			markers.clearLayers()
-		}
-
-		let airportIcon = L.icon({
-			iconUrl: "img/plane.png",
-			iconSize: [30,30],
-			iconAchor: [15, 50]
-
-
-		});
-
-
-		markers = new L.MarkerClusterGroup();
-
-		data.forEach(element => {
-			let marker = L.marker([element.lat, element.lng], {icon: airportIcon});
-			marker.bindTooltip(element.name, 
-    			{permanent: true, 
-        		direction: 'right'
-    			});
-
-			markers.addLayer(marker);
-		});
-
-
-		map.addLayer(markers);
-	};
-
+	//Retrieving and rendering country photos
 	$('#countryList').on('change', () => {
-
 			
 			$.ajax({
 				url: 'libs/php/getCountryPhotos.php',
@@ -357,13 +320,11 @@ $( document ).ready(function() {
 				},
 			
 				success: function(result) {
-			
-					
+								
 					if (result.status.name == "ok") {
 								
 					renderCountryPhotos(result.data.hits);
-						
-						
+												
 					}
 				
 				},
@@ -371,10 +332,8 @@ $( document ).ready(function() {
 					console.log(jqXHR);
 				}
 			
-			})
-			
-			
-	})
+			})				
+		})
 
 
 
@@ -391,9 +350,7 @@ $( document ).ready(function() {
 			success: function(result) {
 				
 				if (result.status.name == "ok") {
-				
-								
-				
+					
 				renderCountryBorders(result.data);
 							
 				}
@@ -403,52 +360,11 @@ $( document ).ready(function() {
 				
 				console.log(jqXHR);
 			}
-		})
+		});
 
-	})
+	});
 
-
-
-
-
-	let countryBorder;
-
-	function renderCountryBorders(coordinates) {
-
-		// if (coordinates.length <=1) {
-		// 		for (let i = 0; i < coordinates[0].length; i++) {
-		// 		let temp = coordinates[0][i][0]
-		// 		coordinates[0][i][0] = coordinates[0][i][1];
-		// 		coordinates[0][i][1] = temp;} //reversing coordinates for leaflet
-				
-		// } else 
-
-
-		// {for (let i = 0; i < coordinates.length; i++) { //for countries with more than one separate teritories
-			
-		// 	for (let j = 0; j < coordinates[i][0].length; j++) {
-		// 		let temp = coordinates[i][0][j][0];
-		// 		coordinates[i][0][j][0] = coordinates[i][0][j][1];
-		// 		coordinates[i][0][j][1] = temp;
-
-		// 	}
-			
-		// }}
-
-		
-		if (countryBorder) {
-			countryBorder.remove();
-		}
-		countryBorder = L.geoJSON(coordinates, {color:'red'}).addTo(map);
-		map.fitBounds(countryBorder.getBounds());
-		
-	}
-
-
-	
-
-
-	//choose country on click
+	//Choosing country on click
 
 	map.on('click', function(e) {
 	
@@ -466,8 +382,7 @@ $( document ).ready(function() {
 
 				
 				if (result.status.name == "ok") {
-				
-							
+											
 				let countryCode = result.data.results[0].components["ISO_3166-1_alpha-2"];
 				
 				$('#countryList').val(countryCode).change()
@@ -481,5 +396,132 @@ $( document ).ready(function() {
 
 		})
 	});
+
+
+	//Redering Functions
+
+	let markers;
+	function renderAirports(data) {
+		
+		if (markers) {
+			markers.clearLayers()
+		}
+
+		let airportIcon = L.icon({
+			iconUrl: "img/plane.png",
+			iconSize: [30,30],
+			iconAchor: [15, 50]
+		});
+
+
+		markers = new L.MarkerClusterGroup();
+
+		data.forEach(element => {
+
+			let marker = L.marker([element.lat, element.lng], {icon: airportIcon});
+			marker.bindTooltip(element.name, 
+    			{permanent: true, 
+        		direction: 'right'
+    			});
+
+			markers.addLayer(marker);
+		});
+
+
+		map.addLayer(markers);
+	};
+
+
+	let countryBorder;
+	function renderCountryBorders(coordinates) {
+
+				
+		if (countryBorder) {
+			countryBorder.remove();
+		}
+		countryBorder = L.geoJSON(coordinates, {color:'green'}).addTo(map);
+		map.fitBounds(countryBorder.getBounds());
+		
+	}
+
+	
+
+	function renderCountryDetails (data) {
+		
+		$('#country-name-header').html($('#countryList option:selected').text());
+		$('#loader').remove();
+		$('#area').html(data.areaInSqKm);	
+		$('#capitalCity').html(data.capital);
+	
+		renderLanguageNames(data.languages);
+	
+		$('#population').html(data.population);
+		$('#continent').html(data.continentName);
+		$('#currency').html(data.currencyCode);
+	
+	};
+	
+	function renderLanguageNames(langCodes) {
+	
+		let langCodesArray = langCodes.split(',');
+	
+		const unsupportedLanguageCodes = ['ay', 'rom', 'mos', 'iu', 'sg', 'sre', 'wuu', 'dta', 'pap', 'ktu', 'aa', 'sid', 'fj', 'frp', 'man', 'wof', 'ff', 'kl', 'pov', 'cab', 'miq', 'as', 'bho', 'sat', 'ks', 'kok', 'do', 'mni', 'sit', 'sa', 'lus', 'nc', 'sc', 'rmm', 'swk', 'bm', 'snk', 'mey', 'gag', 'ber', 'vmw', 'hz', 'se', 'brh', 'ho', 'mey', 'tpi', 'ay', 'lo', 'hil', 'war', 'pam', 'bik', 'pag', 'mrw', 'tsg', 'mdh', 'cbk', 'krj', 'sgd', 'msb', 'akl', 'ibg', 'yka', 'mta', 'mwl', 'xal', 'cau', 'ady', 'kv', 'ce', 'tyv', 'cv', 'udm', 'tut', 'mns', 'bua', 'myv', 'mdf', 'chm', 'ba', 'inh', 'tut', 'kbd', 'krc', 'av', 'sah', 'nog', 'tem', 'men', 'tpi', 'ts', 'ss', 've', 'nr', 'fia', 'srn', 'hns', 'se', 'sma', 'arc', 'nan', 'hak', 'hna', 'kbp', 'dag', 'zza', 'lun', 'lue', 'nd', 'bal', 'ilo', 'abx', 'za', 'toi', 'bi', 'zza', 'tet', 'bho'];
+		
+		let filteredLanguages = langCodesArray.filter(element => !unsupportedLanguageCodes.includes(element))
+		
+		let languageName = new Intl.DisplayNames(['en'], {
+			type: 'language'
+		});
+	
+		$('#languages').html('');  
+	
+		let array = [];
+		filteredLanguages.forEach(element => {
+				
+			array.push(languageName.of(element))
+			return array;	 	
+	
+		})
+	
+		$('#languages').html(array.join(', '));
+	
+	}
+	
+	function renderCountryPhotos(urlArray) {
+			
+		$('#carouselControls').html('');
+	
+		let htmlString = '<div class="carousel-inner">'
+		
+		urlArray.forEach((element, index) => {
+	
+				if (index=== 0) {
+	
+				htmlString += '<div class="carousel-item active"><img height="300px" src=' + element.webformatURL + 'class="d-block w-100 img-fluid" alt="..."></div>';
+	
+			} else {
+				htmlString += '<div class="carousel-item"><img height="300px" src=' + element.webformatURL + ' class="d-block w-100 img-fluid" alt="..."></div>';
+			}
+	
+			
+	
+		})
+	
+		htmlString += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
+	
+		$('#carouselControls').html(htmlString);
+		
+	}
+	
+	
+	function renderWeather(data) {
+	
+		$('#temp').html(Math.round(data.main.temp - 271) + '&#176; C');
+		$('#weatherDescr').html(data.weather[0].main);
+		$('#weather').html('<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" >');
+		$('#humidity').html(data.main.humidity + '%');
+		$('#pressure').html(data.main.pressure+ 'hPa');
+		
+	}
 
 });
