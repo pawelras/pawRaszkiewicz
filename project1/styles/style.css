@@ -70,11 +70,14 @@ html, body {
   
 #showInfoButton {
     display: none;
+  }
+
+  #showInfoButton, #toggleCitiesButton, #toggleAirportsButton, #toggleCapitalButton {
+    
     padding-top: 5px;
     height: 40px; 
     width: 40px;  
   }
-
   #hideInfoButton {
       cursor: pointer!important;
   }

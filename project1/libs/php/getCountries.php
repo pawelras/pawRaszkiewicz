@@ -8,7 +8,7 @@
     $decode = json_decode(file_get_contents('../../geoData/countryBorders.geo.json'), true);
 
 	$countries_array = $decode["features"];
-    
+ 
 
     foreach($countries_array as $element) {
         $key = $element["properties"]["name"];
@@ -22,6 +22,7 @@
     $output['status']['description'] = "success";
     $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
     $output['data'] = $result_array;
+    
 
     header('Content-Type: application/json; charset=UTF-8');
 

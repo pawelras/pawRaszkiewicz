@@ -17,12 +17,42 @@ $( document ).ready(function() {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 
+	
 	L.easyButton('<img width="30px" src="img/details.png">', function(btn, map) {
 
 		$('#sidebar').show(1000);
 		$('#showInfoButton').hide(1000);
 		
 	}, 'Show Details', 'showInfoButton').addTo(map);
+
+	L.easyButton('<img width="30px" src="img/town.png">', function(btn, map) {
+
+		if(map.hasLayer(citiesMarkers)){
+			map.removeLayer(citiesMarkers)
+		 }
+		 else {map.addLayer(citiesMarkers)}
+		
+	}, 'Hide/Show Citites', 'toggleCitiesButton').addTo(map);
+
+	L.easyButton('<img width="30px" src="img/plane.png">', function(btn, map) {
+
+		if(map.hasLayer(airportMarkers)){
+			map.removeLayer(airportMarkers)
+		 }
+		 else {map.addLayer(airportMarkers)}
+		
+	}, 'Hide/Show Airports', 'toggleAirportsButton').addTo(map);
+
+	L.easyButton('<img width="30px" src="img/capitalIcon.png">', function(btn, map) {
+
+		if(map.hasLayer(capitalMarker)){
+			map.removeLayer(capitalMarker)
+		 }
+		 else {map.addLayer(capitalMarker)}
+		
+	}, 'Hide/Show Capital', 'toggleCapitalButton').addTo(map);
+
+	map.setView(new L.LatLng(40.52, 34.34), 2);
 
 
 	$('#hideInfoButton').on('click', function() {
@@ -46,7 +76,7 @@ $( document ).ready(function() {
 				
 			if (result.status.name == "ok") {
 				
-				
+								
 				let countryNames = Object.keys(result.data);
 				countryNames.sort();
 				
@@ -221,8 +251,8 @@ $( document ).ready(function() {
 
 						let capitalIcon = L.icon({
 							iconUrl: "https://img.icons8.com/ios/50/000000/city.png",
-							iconSize: [30,30],
-							iconAchor: [15, 50]
+							iconSize: [50,50],
+							iconAchor: [25, 50]
 				
 				
 						});
@@ -231,7 +261,7 @@ $( document ).ready(function() {
 						capitalMarker = L.marker([capitalCoordinates.lat, capitalCoordinates.lng], {icon: capitalIcon}).addTo(map).bindTooltip(capitalName, 
 							{
 								permanent: true, 
-								direction: 'right'
+								direction: 'bottom'
 							});
 					
 					return result;					
@@ -364,10 +394,65 @@ $( document ).ready(function() {
 
 	});
 
+	//getting country bounding box
+	$('#countryList').on('change', function getBoundingBox() {
+
+		$.ajax({
+			url: 'libs/php/getBoundingBox.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				countryISO: $('#countryList').val()
+			},
+
+			success: function(result) {
+				
+				if (result.status.name == "ok") {
+
+					return result	
+							
+				}
+			
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				
+				console.log(jqXHR);
+			}
+		})
+		.then(result => {
+
+			$.ajax({
+				url: 'libs/php/getCities.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					countryISO: $('#countryList').val(),
+					boderBox: result.data[1]
+				},
+	
+				success: function(result) {
+					
+					if (result.status.name == "ok") {
+							
+					renderCities(result.data.geonames);
+								
+					}
+				
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					
+					console.log(jqXHR);
+				}
+			})
+
+		});
+
+	});
+
 	//Choosing country on click
 
 	map.on('click', function(e) {
-	
+			
 		
 		$.ajax({
 			url: 'libs/php/reverseGeocoding.php',
@@ -399,12 +484,61 @@ $( document ).ready(function() {
 
 
 	//Redering Functions
+	let citiesMarkers;
 
-	let markers;
+	function renderCities(data) {
+		
+		if (citiesMarkers) {
+			citiesMarkers.clearLayers()
+		}
+
+		let cityIcon = L.icon({
+			iconUrl: "img/town.png",
+			iconSize: [50,50],
+			iconAchor: [25, 50]
+		});
+
+
+		citiesMarkers = new L.MarkerClusterGroup();
+
+		
+		data.forEach(element => {
+			
+			if (element.countrycode !== $('#countryList').val()) {
+				
+				return
+			}
+
+			if (element.fcodeName === "capital of a political entity") {
+				
+				return
+			}
+			
+			let marker = L.marker([element.lat, element.lng], {icon: cityIcon});
+			marker.bindTooltip(element.name, 
+    			{permanent: true, 
+        		direction: 'bottom'
+    			});
+
+			let htmlString = '<a target="_blank" href="http://' + element.wikipedia + '"><img width="50px" style="border-radius: 20px;" src="img/wikipedia.jpg"></a>'
+				
+			marker.bindPopup(htmlString);
+			citiesMarkers.addLayer(marker);
+		});
+
+
+		map.addLayer(citiesMarkers);
+	}
+
+
+
+
+
+	let airportMarkers;
 	function renderAirports(data) {
 		
-		if (markers) {
-			markers.clearLayers()
+		if (airportMarkers) {
+			airportMarkers.clearLayers()
 		}
 
 		let airportIcon = L.icon({
@@ -414,7 +548,7 @@ $( document ).ready(function() {
 		});
 
 
-		markers = new L.MarkerClusterGroup();
+		airportMarkers = new L.MarkerClusterGroup();
 
 		data.forEach(element => {
 
@@ -424,11 +558,11 @@ $( document ).ready(function() {
         		direction: 'right'
     			});
 
-			markers.addLayer(marker);
+			airportMarkers.addLayer(marker);
 		});
 
 
-		map.addLayer(markers);
+		map.addLayer(airportMarkers);
 	};
 
 
@@ -450,12 +584,12 @@ $( document ).ready(function() {
 		
 		$('#country-name-header').html($('#countryList option:selected').text());
 		$('#loader').remove();
-		$('#area').html(data.areaInSqKm);	
+		$('#area').html(Number(data.areaInSqKm).toLocaleString());	
 		$('#capitalCity').html(data.capital);
 	
 		renderLanguageNames(data.languages);
 	
-		$('#population').html(data.population);
+		$('#population').html(Number(data.population).toLocaleString());
 		$('#continent').html(data.continentName);
 		$('#currency').html(data.currencyCode);
 	
