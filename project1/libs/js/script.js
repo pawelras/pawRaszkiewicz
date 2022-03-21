@@ -17,54 +17,80 @@ $( document ).ready(function() {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 
-	
-	L.easyButton('<img width="30px" src="img/details.png">', function(btn, map) {
 
-		$('#sidebar').show(1000);
-		$('#showInfoButton').hide(1000);
+	L.easyButton('<img width="30px" src="img/geography.png">', function(btn, map) {
+
+		$('#geographyModal').modal('show');
 		
-	}, 'Show Details', 'showInfoButton').addTo(map);
+	}, 'Geography', 'geographyButton').addTo(map);
 
-	L.easyButton('<img width="30px" src="img/town.png">', function(btn, map) {
+
+	L.easyButton('<img width="30px" src="img/demographic.png">', function(btn, map) {
+
+		$('#demographicsModal').modal('show');
+		
+	}, 'Demographics', 'demographicsButton').addTo(map);
+
+
+	L.easyButton('<img width="30px" src="img/weather.png">', function(btn, map) {
+
+		$('#weatherModal').modal('show');
+		
+	}, 'Weather', 'weatherButton').addTo(map);
+
+
+	L.easyButton('<img width="30px" src="img/gallery.png">', function(btn, map) {
+
+		$('#galleryModal').modal('show');
+		
+	}, 'Photo Gallery', 'galleryButton').addTo(map);
+
+
+	L.easyButton('<img width="30px" src="img/event.png">', function(btn, map) {
+
+		$('#holidayModal').modal('show');
+		
+	}, 'Public Holidays', 'holidayButton').addTo(map);
+	
+
+	L.easyButton('<img width="30px" src="img/live.png">', function(btn, map) {
+
+		$('#newsModal').modal('show');
+		
+	}, 'Recent News', 'newsButton').addTo(map);
+	
+	
+	L.easyButton('<i class="fa-solid fa-building"></i>', function(btn, map) {
 
 		if(map.hasLayer(citiesMarkers)){
 			map.removeLayer(citiesMarkers)
 		 }
 		 else {map.addLayer(citiesMarkers)}
 		
-	}, 'Hide/Show Citites', 'toggleCitiesButton').addTo(map);
+	}, 'Hide/Show Citites', 'toggleCitiesButton').setPosition('bottomleft').addTo(map);
 
-	L.easyButton('<img width="30px" src="img/plane.png">', function(btn, map) {
+
+	L.easyButton('<i class="fa-solid fa-plane-departure"></i>', function(btn, map) {
 
 		if(map.hasLayer(airportMarkers)){
 			map.removeLayer(airportMarkers)
 		 }
 		 else {map.addLayer(airportMarkers)}
 		
-	}, 'Hide/Show Airports', 'toggleAirportsButton').addTo(map);
+	}, 'Hide/Show Airports', 'toggleAirportsButton').setPosition('bottomleft').addTo(map);
 
-	L.easyButton('<img width="30px" src="img/capitalIcon.png">', function(btn, map) {
+
+	L.easyButton('<i class="fa-solid fa-landmark-flag"></i>', function(btn, map) {
 
 		if(map.hasLayer(capitalMarker)){
 			map.removeLayer(capitalMarker)
 		 }
 		 else {map.addLayer(capitalMarker)}
 		
-	}, 'Hide/Show Capital', 'toggleCapitalButton').addTo(map);
+	}, 'Hide/Show Capital', 'toggleCapitalButton').setPosition('bottomleft').addTo(map);
 
 	map.setView(new L.LatLng(40.52, 34.34), 2);
 
-
-	$('#hideInfoButton').on('click', function() {
-		$('#sidebar').hide(1000);
-		$('#showInfoButton').show(1000);
-
-		//reload the map after hiding sidebar
-		setTimeout(() => {
-			map.invalidateSize();
-		}, 1000);
-		
-	})
 
 	//Loading country list
 	$.ajax({
@@ -97,12 +123,14 @@ $( document ).ready(function() {
 	.then(function getLocation() {
 
 		if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(success, fail);
+			
+			navigator.geolocation.getCurrentPosition(success, fail);
 
 		} else {
 		
-		$('#locationBar').html('Geolocation is not supported by this browser and some features might be disabled. Please choose a country from the dropdow menu or click on the map.');
+			$('.alert').show()
 		}
+		
 		function success(position) {
 
 			let lat = position.coords.latitude;
@@ -111,17 +139,13 @@ $( document ).ready(function() {
 			$('#lat').html(lat);
 			$('#lng').html(lng);
 
-			let locationIcon = L.icon({
-				iconUrl: "https://img.icons8.com/ios-filled/50/000000/user-location.png",
-				iconSize: [25,25],
-				iconAchor: [12.5, 25]
+			// let locationIcon = L.ExtraMarkers.icon({
+			// 	icon: 'fa-person',
+			// 	markerColor: 'red',
+			// 	shape: 'square',
+			// 	prefix: 'fa'
+			//   });
 
-
-			})
-
-			let locationMaker = L.marker([lat, lng], {icon: locationIcon}).addTo(map);
-
-		
 			$.ajax({
 				url: 'libs/php/reverseGeocoding.php',
 				type: 'POST',
@@ -134,11 +158,20 @@ $( document ).ready(function() {
 				success: function(result) {
 		
 					
-					if (result.status.name == "ok") {
-			
+					if (result.status.name == "ok") {			
+
+						let countryCode = result.data.results[0].components["ISO_3166-1_alpha-2"];
+
+						//Changing dropdown value to current country and triggering onchange events
+				
+						$('#countryList').val(countryCode).change();
+
+						L.easyButton('<i class="fa-solid fa-location-arrow"></i>', function(btn, map) {
+		
+						$('#countryList').val(countryCode).change();		
+		
+						}, 'Take me to my country', 'locationyButton').setPosition('bottomleft').addTo(map);
 					
-					$('#city').html(result.data.results[0].components.city);
-					$('#country').html(result.data.results[0].components["ISO_3166-1_alpha-2"]);
 					}
 				
 				},
@@ -147,32 +180,23 @@ $( document ).ready(function() {
 					console.log(jqXHR);
 				}
 		
-			})
-			//Changing dropdown value to current country and triggering onchange events
-			.then( (result) => {
-				let countryCode = result.data.results[0].components["ISO_3166-1_alpha-2"];
-				
-				$('#countryList').val(countryCode).change();
-				$('#radar').on('click', ()=> {
-					$('#countryList').val(countryCode).change();
 				})
+	
+				}
 		
-			})
-			.catch(error => console.log(error));
-				
-		}
-		
-		function fail()
-			{
-				$('#locationBar').html('Could not obtain your location and some features might be disabled. Please choose a country from the dropdow menu or click on the map.');
-			
-			}
+				function fail() {
+
+					$('.alert').show()
+						
+				}
 	})
 	.catch(error => console.log(error));
 
 	
 	//Start of onchange events
+
 	let capitalMarker;
+
 	$('#countryList').on('change', function getCountryInfo() {
 		//Getting country info
 		$.ajax({
@@ -225,9 +249,45 @@ $( document ).ready(function() {
 				console.log(jqXHR);
 			}
 
-		}).then(result => {
+		})
+		.then(result => {	
+
+			$.ajax({
+				url: 'libs/php/getCities.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					countryISO: $('#countryList').val(),
+					north: result.data[0].north,
+					south: result.data[0].south,
+					east: result.data[0].east,
+					west: result.data[0].west
+				},
+	
+				success: function(result) {
+
+										
+					if (result.status.name == "ok") {
+
+													
+					renderCities(result.data.geonames);
+								
+					}
+				
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					
+					console.log(jqXHR);
+				}
+			})
+
+			return result;
+
+		})	
+		.then(result => {
 			
 			let capitalName = result.data[0].capital;
+
 		
 			let capitalString = capitalName.split(' ').length <= 1 ? capitalName : capitalName.split(' ').join('%20');
 			
@@ -249,14 +309,13 @@ $( document ).ready(function() {
 						}
 						let capitalCoordinates = result.data.results[0].geometry;
 
-						let capitalIcon = L.icon({
-							iconUrl: "https://img.icons8.com/ios/50/000000/city.png",
-							iconSize: [50,50],
-							iconAchor: [25, 50]
-				
-				
-						});
-
+						
+						let capitalIcon = L.ExtraMarkers.icon({
+							icon: 'fa-landmark-flag',
+							markerColor: 'orange',
+							shape: 'square',
+							prefix: 'fa'
+						  });
 						
 						capitalMarker = L.marker([capitalCoordinates.lat, capitalCoordinates.lng], {icon: capitalIcon}).addTo(map).bindTooltip(capitalName, 
 							{
@@ -289,7 +348,7 @@ $( document ).ready(function() {
 					success: function(result) {
 						
 						if (result.status.name == "ok") {
-						
+														
 						renderWeather(result.data);
 						return result;
 									
@@ -318,10 +377,7 @@ $( document ).ready(function() {
 						
 						if (result.status.name == "ok") {
 						
-							
-							renderAirports(result.data.response);	
-						
-							
+							renderAirports(result.data.response);						
 							
 						}
 					
@@ -352,7 +408,8 @@ $( document ).ready(function() {
 				success: function(result) {
 								
 					if (result.status.name == "ok") {
-								
+
+														
 					renderCountryPhotos(result.data.hits);
 												
 					}
@@ -394,22 +451,25 @@ $( document ).ready(function() {
 
 	});
 
-	//getting country bounding box
-	$('#countryList').on('change', function getBoundingBox() {
+	$('#countryList').on('change', function getNews() {
 
+		let countryName = $('#countryList option:selected').text()
+		let countryNameString = countryName.split(' ').length <= 1 ? countryName : countryName.split(' ').join('%20');
+		
 		$.ajax({
-			url: 'libs/php/getBoundingBox.php',
+			url: 'libs/php/getNews.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				countryISO: $('#countryList').val()
+				countryName: countryNameString,
 			},
 
 			success: function(result) {
 				
 				if (result.status.name == "ok") {
-
-					return result	
+					
+					
+				renderNews(result.data.articles)
 							
 				}
 			
@@ -418,36 +478,41 @@ $( document ).ready(function() {
 				
 				console.log(jqXHR);
 			}
-		})
-		.then(result => {
-
-			$.ajax({
-				url: 'libs/php/getCities.php',
-				type: 'POST',
-				dataType: 'json',
-				data: {
-					countryISO: $('#countryList').val(),
-					boderBox: result.data[1]
-				},
-	
-				success: function(result) {
-					
-					if (result.status.name == "ok") {
-							
-					renderCities(result.data.geonames);
-								
-					}
-				
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					
-					console.log(jqXHR);
-				}
-			})
-
 		});
 
 	});
+	
+
+	$('#countryList').on('change', function getPublicHolidays() {
+
+		
+		$.ajax({
+			url: 'libs/php/getPublicHolidays.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				
+				countryISO: $('#countryList').val()
+			},
+
+			success: function(result) {
+				
+				if (result.status.name == "ok") {
+
+					renderHolidays(result.data)
+					
+											
+				}
+			
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				
+				console.log(jqXHR);
+			}
+		});
+
+	});
+
 
 	//Choosing country on click
 
@@ -464,7 +529,6 @@ $( document ).ready(function() {
 			},
 
 			success: function(result) {
-
 				
 				if (result.status.name == "ok") {
 											
@@ -492,11 +556,12 @@ $( document ).ready(function() {
 			citiesMarkers.clearLayers()
 		}
 
-		let cityIcon = L.icon({
-			iconUrl: "img/town.png",
-			iconSize: [50,50],
-			iconAchor: [25, 50]
-		});
+		let cityIcon = L.ExtraMarkers.icon({
+			icon: 'fa-building',
+			markerColor: 'green-dark',
+			shape: 'square',
+			prefix: 'fa'
+		  })
 
 
 		citiesMarkers = new L.MarkerClusterGroup();
@@ -515,12 +580,8 @@ $( document ).ready(function() {
 			}
 			
 			let marker = L.marker([element.lat, element.lng], {icon: cityIcon});
-			marker.bindTooltip(element.name, 
-    			{permanent: true, 
-        		direction: 'bottom'
-    			});
-
-			let htmlString = '<a target="_blank" href="http://' + element.wikipedia + '"><img width="50px" style="border-radius: 20px;" src="img/wikipedia.jpg"></a>'
+			
+			let htmlString = '<a target="_blank" href="http://' + element.wikipedia + '"><div class="text-center"><img width="30px" style="border-radius: 20px;" src="img/wikipedia.jpg"></div><p class="text-center">' + element.name + '</p></a>'
 				
 			marker.bindPopup(htmlString);
 			citiesMarkers.addLayer(marker);
@@ -531,9 +592,6 @@ $( document ).ready(function() {
 	}
 
 
-
-
-
 	let airportMarkers;
 	function renderAirports(data) {
 		
@@ -541,11 +599,13 @@ $( document ).ready(function() {
 			airportMarkers.clearLayers()
 		}
 
-		let airportIcon = L.icon({
-			iconUrl: "img/plane.png",
-			iconSize: [30,30],
-			iconAchor: [15, 50]
-		});
+		
+		let airportIcon = L.ExtraMarkers.icon({
+			icon: 'fa-plane-departure',
+			markerColor: 'blue',
+			shape: 'square',
+			prefix: 'fa'
+		  })
 
 
 		airportMarkers = new L.MarkerClusterGroup();
@@ -554,8 +614,7 @@ $( document ).ready(function() {
 
 			let marker = L.marker([element.lat, element.lng], {icon: airportIcon});
 			marker.bindTooltip(element.name, 
-    			{permanent: true, 
-        		direction: 'right'
+    			{direction: 'right'
     			});
 
 			airportMarkers.addLayer(marker);
@@ -583,7 +642,6 @@ $( document ).ready(function() {
 	function renderCountryDetails (data) {
 		
 		$('#country-name-header').html($('#countryList option:selected').text());
-		$('#loader').remove();
 		$('#area').html(Number(data.areaInSqKm).toLocaleString());	
 		$('#capitalCity').html(data.capital);
 	
@@ -622,6 +680,11 @@ $( document ).ready(function() {
 	}
 	
 	function renderCountryPhotos(urlArray) {
+
+		if (urlArray.length === 0 ) {
+			$('#carouselControls').html('No Photos Currently Available');
+			return
+		}
 			
 		$('#carouselControls').html('');
 	
@@ -631,7 +694,7 @@ $( document ).ready(function() {
 	
 				if (index=== 0) {
 	
-				htmlString += '<div class="carousel-item active"><img height="300px" src=' + element.webformatURL + 'class="d-block w-100 img-fluid" alt="..."></div>';
+				htmlString += '<div class="carousel-item active"><div class="text-center"><img src=' + element.webformatURL + 'class="d-block w-100 img-fluid" alt="..."></div></div>';
 	
 			} else {
 				htmlString += '<div class="carousel-item"><img height="300px" src=' + element.webformatURL + ' class="d-block w-100 img-fluid" alt="..."></div>';
@@ -649,13 +712,117 @@ $( document ).ready(function() {
 	
 	
 	function renderWeather(data) {
-	
-		$('#temp').html(Math.round(data.main.temp - 271) + '&#176; C');
-		$('#weatherDescr').html(data.weather[0].main);
-		$('#weather').html('<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" >');
-		$('#humidity').html(data.main.humidity + '%');
-		$('#pressure').html(data.main.pressure+ 'hPa');
+		// removing region and underscore
+		let capitalName = data.timezone.split('/')[1].replace('_', ' ');
+
+		$('#weatherLocation').html(capitalName);
+
+		$('#todayWeatherImage').html('<img src="http://openweathermap.org/img/wn/' + data.daily[0].weather[0].icon + '@2x.png">');
+		$('#todayMax').html(Math.round(data.daily[0].temp.max));
+		$('#todayMin').html(Math.round(data.daily[0].temp.min));
+
+		let htmlString = '';
+
+		for (let i=1; i<5; i ++) {
+			
+			if (i ===1) {
+				
+				htmlString += '<div class="col me-2" style="background-image: url(\'img/darkoverlay.png\')"><div class="text-center"><p>Tomorrow</p><div><img src="http://openweathermap.org/img/wn/' + data.daily[i].weather[0].icon + '.png"></div><div class="text-start"><p><i class="fa-solid fa-temperature-arrow-up"></i>&nbsp;' + Math.round(data.daily[i].temp.max) + '&#176C&nbsp;&nbsp;</p><p><i class="fa-solid fa-temperature-arrow-down"></i>&nbsp;' + Math.round(data.daily[i].temp.min) + '&#176C</p></div></div></div>'
+
+			} else if (i === 4) {
+				//no margin in last background
+				let date = String(new Date(data.daily[i].dt * 1000));
+				htmlString += '<div class="col" style="background-image: url(\'img/darkoverlay.png\')"><div class="text-center"><p>' + date.substring(0,4) + '</p><div><img src="http://openweathermap.org/img/wn/' + data.daily[i].weather[0].icon + '.png"></div><div class="text-start"><p><i class="fa-solid fa-temperature-arrow-up"></i>&nbsp;' + Math.round(data.daily[i].temp.max) + '&#176C&nbsp;</p><p><i class="fa-solid fa-temperature-arrow-down"></i>&nbsp;' + Math.round(data.daily[i].temp.min) + '&#176C</p></div></div></div>'
+
+
+			}
+			
+			
+			else {
+
+				// converting unix time
+				let date = String(new Date(data.daily[i].dt * 1000));
+								
+				htmlString += '<div class="col me-2" style="background-image: url(\'img/darkoverlay.png\')"><div class="text-center"><p>' + date.substring(0,4) + '</p><div><img src="http://openweathermap.org/img/wn/' + data.daily[i].weather[0].icon + '.png"></div><div class="text-start"><p><i class="fa-solid fa-temperature-arrow-up"></i>&nbsp;' + Math.round(data.daily[i].temp.max) + '&#176C&nbsp;</p><p><i class="fa-solid fa-temperature-arrow-down"></i>&nbsp;' + Math.round(data.daily[i].temp.min) + '&#176C</p></div></div></div>'
+			}
+
+		}
+		
+		$('#weatherFollowingDays').html(htmlString);
+
 		
 	}
+
+	function renderNews(array) {
+
+		// filter out duplicates
+		array = array.filter((value, index, self) =>
+		index === self.findIndex((t) => (
+		t.title === value.title ))
+		)
+		
+		$('#carouselExampleCaptions').html('');
+
+		let htmlString = '<div class="carousel-inner">';
+
+			
+		array.forEach((element, index) => {
+
+			if (index === 0 ) {
+
+				htmlString+= '<div class="carousel-item active"><img width="500px" src="' + element.image + '"class="d-block w-100" alt="..."><div class="carousel-caption d-none d-md-block"><a class="text-decoration-none " href="' + element.url + '" target="_blank"><h5>' + element.title + '</h5></a><p></p></div></div>'
+
+			} else  {
+
+				htmlString+= '<div class="carousel-item"><img src="' + element.image + '"class="d-block w-100" alt="..."><div class="carousel-caption d-none d-md-block"><a class="text-decoration-none" href="' + element.url + '" target="_blank"><h5>' + element.title + '</h5></a><p></p></div></div>'
+		
+		}
+
+		});
+
+		htmlString += '</div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span>	<span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
+
+		$('#carouselExampleCaptions').html(htmlString);
+	}
+
+
+
+
+	function renderHolidays(holidaysArray) {
+
+		if (!holidaysArray) {
+			$('#holidayModalBody').html('<p>No data currently available for chosen country</p>');
+			return
+
+		}
+
+		//filtering out duplicate holidays
+		holidaysArray = holidaysArray.filter((value, index, self) =>
+		index === self.findIndex((t) => (
+		t.name === value.name ))
+		)
+
+		
+		$('#holidayModalBody').html('');
+
+		let htmlString = '<table class="table table-striped"><thead><th>Date</th><th>Name</th></thead><tbody>'
+
+
+		for (let i = 0; i < holidaysArray.length; i++) {
+
+			if (holidaysArray[i].name === "Regional Holiday") {continue};
+
+			let formatedDate = String(Date.parse(holidaysArray[i].date)).substring(4,10);
+			
+			htmlString += '<tr><td>' + formatedDate + '</td><td>' + holidaysArray[i].name + '</td></tr>'
+
+		}
+
+		htmlString += '</tbody></table>'
+		$('#holidayModalBody').html(htmlString );
+
+		
+
+}
 
 });

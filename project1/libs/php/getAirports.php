@@ -6,7 +6,7 @@
 
 	$executionStartTime = microtime(true);
     
-	$url= 'https://airlabs.co/api/v9/airports?api_key=823ba80a-768d-49c4-940f-0fc704679d57&country_code=' . $_REQUEST['countryISO'];
+	$url= 'https://airlabs.co/api/v9/airports?api_key=f3a8a5d6-83ee-4cd5-98b1-b89b06d512ab&country_code=' . $_REQUEST['countryISO'];
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

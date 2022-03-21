@@ -1,12 +1,9 @@
-html, body {
-    box-sizing: border-box;
-    padding: 0!important;
-    height: 100%;
-}
-
 #map {
-  height: 95vh;
-       
+    
+        position: absolute;
+        top: 10vh;
+        bottom: 0;
+        width: 100%;  
 }
 
 .row {
@@ -28,56 +25,38 @@ html, body {
     color: #91ca46;
 }
 
-#legend {
-    text-align: center;
-    padding-top: 5vh;
-    margin-bottom: auto;
-}
 
 .singleCol {
     max-width: 750px;
     margin: 0 auto;
 }
-
-.accordion-button {
-    font-size: inherit;
-}
-
-.accordion-button:not(.collapsed) {
-    color: inherit;
-    background: rgba(56, 181, 83, 1)!important;
-    color: white!important;
-}
-
-.accordion-button:not(.collapsed)::after  {
-    filter: brightness(00%) invert(70%);
-}
-
-.accordion-button:focus {
-    box-shadow: inherit;
-}
-
-
-.borderLine {
-    color: red;
-}
-
-.legendBody {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
   
-#showInfoButton {
-    display: none;
-  }
-
-  #showInfoButton, #toggleCitiesButton, #toggleAirportsButton, #toggleCapitalButton {
+#demographicsButton, #geographyButton, #weatherButton, #galleryButton, #newsButton, #holidayButton {
     
     padding-top: 5px;
     height: 40px; 
     width: 40px;  
   }
-  #hideInfoButton {
-      cursor: pointer!important;
+
+.top-bar {
+      min-height: 10vh;
   }
+
+.carousel-caption {
+    position: relative!important;
+    left: 0!important;
+    top: 0!important;
+}
+
+#alert {
+    position: fixed;
+    top: 10vh;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.alert {
+    display: none;
+    padding-left: 60px!important;
+}

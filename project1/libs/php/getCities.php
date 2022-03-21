@@ -6,7 +6,7 @@
 
 	$executionStartTime = microtime(true);
     
-	$url= 'http://api.geonames.org/citiesJSON?north=' . $_REQUEST["boderBox"][3] . '&south=' . $_REQUEST["boderBox"][1] . '&east=' . $_REQUEST["boderBox"][2] . '&west=' . $_REQUEST["boderBox"][0] . '&username=pawelras&style=full&maxRows=20';
+	$url= 'http://api.geonames.org/citiesJSON?north=' . $_REQUEST["north"] . '&south=' . $_REQUEST["south"] . '&east=' . $_REQUEST["east"] . '&west=' . $_REQUEST["west"] . '&username=pawelras&style=full&maxRows=20';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -24,7 +24,7 @@
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
 	$output['data'] = $decode;
-    // $output['data'] = $url;
+    $output['url'] = $url;
 	
 	header('Content-Type: application/json; charset=UTF-8');
 
