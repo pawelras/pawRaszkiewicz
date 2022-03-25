@@ -770,11 +770,11 @@ $( document ).ready(function() {
 
 			if (index === 0 ) {
 
-				htmlString+= '<div class="carousel-item active"><img width="500px" src="' + element.image + '"class="d-block w-100" alt="..."><div class="carousel-caption d-none d-md-block"><a class="text-decoration-none " href="' + element.url + '" target="_blank"><h5>' + element.title + '</h5></a><p></p></div></div>'
+				htmlString+= '<div class="carousel-item active"><img width="500px" src="' + element.image + '"class="d-block w-100" alt="..."><div class="carousel-caption d-md-block"><a class="text-decoration-none " href="' + element.url + '" target="_blank"><h5>' + element.title + '</h5></a><p></p></div></div>'
 
 			} else  {
 
-				htmlString+= '<div class="carousel-item"><img src="' + element.image + '"class="d-block w-100" alt="..."><div class="carousel-caption d-none d-md-block"><a class="text-decoration-none" href="' + element.url + '" target="_blank"><h5>' + element.title + '</h5></a><p></p></div></div>'
+				htmlString+= '<div class="carousel-item"><img src="' + element.image + '"class="d-block w-100" alt="..."><div class="carousel-caption d-md-block"><a class="text-decoration-none" href="' + element.url + '" target="_blank"><h5>' + element.title + '</h5></a><p></p></div></div>'
 		
 		}
 
