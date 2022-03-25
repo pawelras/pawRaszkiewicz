@@ -14,7 +14,7 @@ $(document).ready(() => {
 
             $('#employeesTable').html();
 			
-            let htmlString = '<thead class="thead-dark"><tr><th scope="col">#</th><th scope="col" id="First">First</th><th scope="col" id="Last" >Last</th><th class="d-none d-lg-table-cell"scope="col" id="Job">Job Title</th><th class="d-none d-lg-table-cell" scope="col" id="Email">Email</th><th class="d-none d-lg-table-cell" scope="col" id+"Department">Department</th><th class="d-none d-lg-table-cell" scope="col" id="Location">Location</th><th scope="col">Actions</th></tr></thead><tbody>';
+            let htmlString = '<thead class="thead-dark"><tr><th scope="col">#</th><th scope="col" id="First">First</th><th scope="col" id="Last" >Last</th><th class="d-none d-lg-table-cell"scope="col" id="Job">Job Title</th><th class="d-none d-lg-table-cell" scope="col" id="Email">Email</th><th class="d-none d-lg-table-cell" scope="col" id="Department">Department</th><th class="d-none d-lg-table-cell" scope="col" id="Location">Location</th><th scope="col">Actions</th></tr></thead><tbody>';
 
             let employeesArray = Array.from(result.data);
             
@@ -44,8 +44,7 @@ $(document).ready(() => {
                      
             let selector = '#' + headers[i].innerText.split(' ')[0];
             console.log(selector);
-
-            
+           
 
             $(selector).on('click', function () {
 
