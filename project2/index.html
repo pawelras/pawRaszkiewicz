@@ -8,106 +8,483 @@
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="libs/bootstrap-5.1.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="libs/fontawesome-free-6.1.0-web/css/all.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
 
-    <div class="container-fluid">
-
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-              <img src="img/phone-book.png" width="50" height="50" alt="">Company Directory
+  <header>
+            <a class="navbar-brand" href="">
+              <i class="fa-solid fa-signs-post"></i>&nbsp;Company Directory
+              <!-- <img src="img/phone-book.png" width="50" height="50" alt="">Company Directory -->
             </a>
-        </nav>
+  </header>
 
-        <div class="row ">
+        
+  
+  <div class="container-fluid">
+
+    
+
+    <div class="row ">
            
 
-            <div class="col-12">
-                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+            <div class="col-12 pt-2 mt-3">
+                <ul class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
+                  
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                      <button class="nav-link active" id="employees-tab" data-bs-toggle="tab" data-bs-target="#employees" type="button" role="tab" aria-controls="employees" aria-selected="true">Employees</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                      <button class="nav-link" id="departments-tab" data-bs-toggle="tab" data-bs-target="#departments" type="button" role="tab" aria-controls="departments" aria-selected="false">Departments</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                      <button class="nav-link" id="locations-tab" data-bs-toggle="tab" data-bs-target="#locations" type="button" role="tab" aria-controls="locations" aria-selected="false">Locations</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                  <!-- Employees Content Start -->
+                    <div class="tab-pane fade show active" id="employees" role="tabpanel" aria-labelledby="employees-tab">
 
                         <nav class="navbar navbar-light bg-light">
                            
                             <div class="container-fluid">
                                 <span>Employees</span>
-                                <i class="fa-solid fa-user-plus"></i>
-                                <button id="button">Button</button>
-                                <form class="d-flex">
+                                
+                                <div class="border">
+
+                                  <input class="searchBar"/>
+                                  <span class="bg-white pe-2"><i class="fas fa-search blue"></i></span>
+                                                       
+                                </div>
+                                  <!-- Add Employee Modal -->
+                                  <div class="modal-box">
+                                    <i class="fa-solid fa-user-plus cursor-pointer blue" data-bs-toggle="modal" data-bs-target="#addEmployee"></i>
                                     
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <button class="btn btn-primary" type="submit">Search</button>
-                                </form>
+                                    <div class="modal fade" id="addEmployee" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          <div class="modal-header">
+                                            
+                                          </div>
+                                          <div class="modal-body" id="addEmployeeModalBody">
+
+                                            <div class="icon">
+                                              <i class="fa-solid fa-user-plus"></i>
+                                            </div>
+                                            <div id="addEmployee-alert" class="alert alert-success collapse" role="alert">
+                                              User Successfully Added!
+                                            </div>
+                                            
+                                            
+                                            
+                                            
+                                            <div id="newEmployeeErrors" class="error"></div>
+
+                                            <div class="detailsEditField">
+                                            <h6 id="h6">Adding New Employee</h6>
+                                            <div id="newEmployeeErrors"></div>
+                                            <label>First Name:
+                                              <input type="text" id="newEmployeeFirstName">
+                                            </label>
+                                            <label>Last Name:
+                                              <input type="text" id="newEmployeeLastName">
+                                            </label>
+                                            <label>Job Title:
+                                              <input type="text" id="newEmployeeJobTitle">
+                                            </label>
+                                            <label>Email:
+                                              <input type="text" id="newEmployeeEmail">
+                                            </label>
+                                            <label>Department:
+                                              <select id="newEmployeeDepartment"></select>
+                                            </label>
+                                          </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                                            <button id="addEmployeeButton" class="subscribe submit">Add</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>  
+                                </div>                                                   
+                                  
+                                
                             </div>
                           </nav>
 
-                        <table class="table table-striped table-hover table-responsive-sm" id="employeesTable">
-                            <!-- <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Job Title</th>
-                                <th class="d-none d-lg-table-cell" scope="col">Email</th>
-                                <th class="d-none d-lg-table-cell" scope="col">Departament</th>
-                                <th class="d-none d-lg-table-cell" scope="col">Location</th>
-                                <th scope="col">Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td >Job Title</td>
-                                <td class="d-none d-lg-table-cell">email</td>
-                                <td class="d-none d-lg-table-cell">Departament</td>
-                                <td class="d-none d-lg-table-cell">Location</td>
-                                <td>Actions</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>Job Title</td>
-                                <td class="d-none d-lg-table-cell">email</td>
-                                <td class="d-none d-lg-table-cell">Departament</td>
-                                <td class="d-none d-lg-table-cell">Location</td>
-                                <td>Actions</td>
-
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>Job Title</td>
-                                <td class="d-none d-lg-table-cell">email</td>
-                                <td class="d-none d-lg-table-cell">Departament</td>
-                                <td class="d-none d-lg-table-cell">Location</td>
-                                <td>Actions</td>
-                              </tr>
-                            </tbody> -->
-                          </table>
+                        <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col" id="employeeId">
+                                <span class="cursor-pointer">Id&nbsp;</span>
+                              </th>
+                              
+                              <th scope="col" id="firstName" data-sorting="DESC" title="First Name">
+                                <span class="cursor-pointer"> First&nbsp;<i class="fa-solid fa-sort"></i></span>
+                              </th>
+                              
+                              <th scope="col" id="lastName" data-sorting="DESC" title="Last Name">
+                                <span class="cursor-pointer">Last&nbsp;<i class="fa-solid fa-sort"></i></span>
+                              </th>
+                              
+                              <th class="d-none d-lg-table-cell" scope="col" id="jobTitle" data-sorting="DESC" title="Job Title">
+                                <span class="cursor-pointer">Job Title&nbsp;<i class="fa-solid fa-sort"></i></span>
+                              </th>
+                              
+                              <th class="d-none d-lg-table-cell" scope="col" id="email" data-sorting="DESC" title="Email Address">
+                                <span class="cursor-pointer">Email&nbsp;<i class="fa-solid fa-sort"></i></span>
+                              </th>
+                              <!-- !!!NOTE d.location and departmentLocation id for table heads -->
+                              <th class="d-none d-lg-table-cell" scope="col" id="d.name" data-sorting="DESC" title="Department">
+                                <span class="cursor-pointer">Department&nbsp;<i class="fa-solid fa-sort"></i></span>
+                              </th>
+                              
+                              <th class="d-none d-lg-table-cell" scope="col" id="l.name" data-sorting="DESC" title="Location">
+                                <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
+                              </th>
+                              
+                              <th scope="col">Actions</th>
+                            
+                            </tr>
+                          </thead>
+                          
+                          <tbody id="employeesTableBody">
+                            
+                          </tbody>
+                        </table>
                           
                           
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Profile</div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contact</div>
+                    
+                    <!-- Employee Details Modal -->
+                    <!-- ed - Employee Details id prefix -->
+                    
+                    <div class="modal-box">
+                      <!-- <button data-bs-toggle="modal" data-bs-target="#employeeDetailsModal">See Details</button> -->
+                      <div class="modal fade" id="employeeDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body">
+                              <div class="icon">
+                                <i class="fa-solid fa-user"></i>
+                                
+                              </div>
+                              
+                              <h6 class="fs-2 fw-bold" id="ed-fullName"></h6>
+                              <p>Job title: <span id="ed-jobTitle"></span></p>
+                              <p>Location: <span id="ed-location"></span></p>
+                              <p>Department: <span id="ed-department"></span></p>
+                              <p>Email: <span id="ed-email"></span></p>
+                              <p>Employee Number: <span id="ed-id"></span></p>
+
+                              <p></p>
+                              
+                            </div>
+                            <div class="modal-footer">
+                              <button class="subscribe" data-bs-dismiss="modal">Close</button>
+                              <!-- <button class="subscribe submit" id="addDepartmentButton">Add</button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>   
+                    </div>
+
+                    <!-- Employee Edit Modal -->
+                    <!-- ee - Edit Employee id prefix -->
+                    
+                    <div class="modal-box">
+                      
+                      <!-- <button data-bs-toggle="modal" data-bs-target="#employeeDetailsModal">See Details</button> -->
+                      <div class="modal fade" id="employeeEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body" >
+                              <div class="icon">
+                                <i class="fa-solid fa-user-pen"></i>
+                                
+                              </div>
+                              <div id="ee-alert" class="alert alert-success collapse" role="alert">
+                                User Details Successfully Updated!
+                              </div>
+                              
+                              <h6>Editing Employee Details</h6>
+                                  <div class="error" id="editEmployeeErrors"></div>
+                                    <label>Employee id:
+                                      <input type="text" id="ee-id" disabled>
+                                    </label>
+
+                                    <label>First Name:
+                                      <input type="text" id="ee-firstName">
+                                    </label>
+                                    <label>Last Name:
+                                      <input type="text" id="ee-lastName">
+                                    </label>
+                                    <label>Job Title:
+                                      <input type="text" id="ee-jobTitle">
+                                    </label>
+                                    <label>Email:
+                                      <input type="text" id="ee-email">
+                                    </label>
+                                    <label>Department:
+                                      <select id="ee-department"></select>
+                                    </label>
+                              
+                              
+                            </div>
+                            <div class="modal-footer">
+                              <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                              <button class="subscribe submit" id="editEmployeeButton">Save</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>   
+                    </div>
+
+                    <!-- Employee Delete Modal -->
+                    <div class="modal-box">
+                      
+                        <div class="modal fade" id="employeeDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body" >
+                              <div class="icon">
+                                <i class="fa-solid fa-user-xmark error"></i>
+                                
+                              </div>
+                              <div id="eDel-alert" class="alert alert-success collapse" role="alert">
+                                User Successfully Deleted!
+                              </div>
+                              <div class="detailsEditField">
+                                <p>Are you sure you want to delete this employee? This action cannot be reversed</p>
+
+                                      <h2 id="eDel-fullName"></h2>
+                                    
+                                      <p>Employee id: <span id="eDel-id"></span></p>
+                             
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                              <button class="subscribe " id="employeeDeleteButton">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>   
+                    </div>
+
+
+
+
+                    <!-- Departments Content start -->
+                    <div class="tab-pane fade container" id="departments" role="tabpanel" aria-labelledby="departments-tab">
+
+                      <nav class="navbar navbar-light bg-light">
+                           
+                        <div class="container-fluid">
+                            <span>Departments</span>
+
+                            <!-- Add Department Modal -->
+                            <div class="modal-box">
+                              <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addDepartment">
+                                <i class="fa-solid fa-plus blue"></i>
+                                <i class="fa-solid fa-building blue"></i>
+                              </div>
+
+                              <div class="modal fade" id="addDepartment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div id="newDepartmentModalBody" class="modal-body">
+                                      <div class="icon">
+                                        <i class="fa-solid fa-building"></i>
+                                      </div>
+                                      <div id="newDepartmentErrors" class="error"></div>
+                                      <h6>Adding New Department</h6>
+                                      <div id="newDepartmentErrors"></div>
+                                      <label>Name:
+                                        <input id="newDepartmentName" type="text">
+                                      </label>
+                                      <label>Location:
+                                        <select id="newDepartmentLocationID">
+
+                                        </select>
+                                      </label>
+                                      
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                                      <button class="subscribe submit" id="addDepartmentButton">Add</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>   
+                            </div>
+
+                            <!-- Department Delete Modal -->
+                    <div class="modal-box">
+                      
+                      <div class="modal fade" id="departmentDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="modal-body" >
+                            <div class="icon">
+                              <i class="fa-solid fa-building-circle-xmark error"></i>
+                              
+                            </div>
+                            <div id="eDel-alert" class="alert alert-success collapse" role="alert">
+                              Department Successfully Deleted!
+                            </div>
+                            
+                            <p>Are you sure you want to delete this department? This action cannot be reversed.</p>
+
+                                  <h3 id="depDelName"></h3>
+                                  <div class="collapse" id="delDepartmentId"></div>
+                                                           
+                            
+                          </div>
+                          <div class="modal-footer">
+                            <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                            <button class="subscribe " id="departmentDeleteButton">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+                  </div>
+
+                             
+                           
+                                                                                  
+                          
+                              
+                                 
+                            
+                        </div>
+                      </nav>
+
+                    <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+                      <thead class="thead-dark">
+
+                        <th scope="col" id="departmentId">
+                          <span class="cursor-pointer">Id&nbsp;</span>
+                        </th>
+                                                  
+                          <th scope="col" id="departmentName" title="DESC">
+                            <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
+                          </th>
+                          
+                          <th scope="col" id="departmentLocation" title="DESC">
+                            <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
+                          </th>
+                                                                            
+                          <th scope="col">Actions</th>
+                        
+                        </tr>
+                      </thead>
+                      
+                      <tbody id="departmentsTableBody">
+                        
+                      </tbody>
+                    </table>
+
+
+
+
+                    </div>
+                    <!-- Locations Content Start -->
+                     
+                        <div class="tab-pane fade container" id="locations" role="tabpanel" aria-labelledby="locations-tab">
+                          
+                          <nav class="navbar navbar-light bg-light">
+                              
+                            <div class="container-fluid">
+                                <span>Locations</span>
+
+                                <!-- Add Location Modal -->
+                                <div class="modal-box">
+                                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addLocation">
+                                      <i class="fa-solid fa-plus blue"></i>
+                                      <i class="fa-solid fa-globe blue"></i>
+                                    </div>
+
+                                    <div class="modal fade" id="addLocation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            
+                                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          
+                                          <div class="modal-body">
+                                            <div class="icon">
+                                              <i class="fa-solid fa-globe"></i>
+                                            </div>
+                                            <div id="newLocationErrors" class="error"></div>
+                                            <div id="addLocationAlert" class="alert alert-success collapse" role="alert">
+                                              Location Successfully Added!
+                                            </div>
+                                            <h6>Adding New Location</h6>
+                                            <div class="form-group">
+                                            <label>Location Name:
+                                              <input type="text" id="newLocationName">
+                                            </label>
+                                          </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                                            <button id="addLocationButton" class="subscribe submit">Add</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                
+                              
+                                                                                      
+                              
+                                  
+                                    
+                                
+                            </div>
+                          </nav>
+
+                            <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+                              <thead class="thead-dark">
+
+                                <th scope="col" id="locationId">
+                                  <span class="cursor-pointer">Id&nbsp;</span>
+                                </th>
+                                                          
+                                  <th scope="col" id="locationName" title="DESC">
+                                    <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
+                                  </th>
+                                  
+                                                                                                            
+                                  <th scope="col">Actions</th>
+                                
+                                </tr>
+                              </thead>
+                              
+                              <tbody id="locationsTableBody">
+                                
+                              </tbody>
+                            </table>
+                        
+                        
+                        
+                        </div>
                 </div>
+
+                
+                
             </div>
         </div>
 
-
+        
 
     </div>
  
@@ -115,6 +492,7 @@
 <script src="libs/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
 <script src="libs/fontawesome-free-6.1.0-web/js/all.min.js"></script>
 <script src="libs/js/jquery-3.6.0.min.js"></script>
+<script src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
 <script src="libs/js/script.js"></script>    
 </body>
 </html>
