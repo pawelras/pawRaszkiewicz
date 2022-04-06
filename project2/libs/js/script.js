@@ -373,6 +373,7 @@ $(document).ready(() => {
         let locationID = $('#searchLocation option:selected').val() === '' ? null : $('#searchLocation option:selected').val();
         let departmentID = $('#searchDepartment option:selected').val() === '' ? null : $('#searchDepartment option:selected').val();
         
+        
 
         console.log(locationID);
         console.log(departmentID);
@@ -467,7 +468,7 @@ $(document).ready(() => {
                 })
                 $('#newEmployeeDepartment').html(htmlString);
                 $('#ee-department').html(htmlString);
-                $('#searchDepartment').html('<option value="*">All Departments</option>' + htmlString);
+                $('#searchDepartment').html('<option value="">All Departments</option>' + htmlString);
                 
                
             }
@@ -603,7 +604,7 @@ $(document).ready(() => {
         }
         
         $('#newDepartmentLocationID').html(htmlString);
-        $('#searchLocation').html('<option value="*">All Locations</option>' + htmlString);
+        $('#searchLocation').html('<option value="">All Locations</option>' + htmlString);
         
        
     }
