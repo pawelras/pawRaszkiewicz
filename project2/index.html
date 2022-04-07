@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Directory</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="libs/bootstrap-5.1.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="libs/fontawesome-free-6.1.0-web/css/all.min.css">
@@ -15,7 +16,6 @@
   <header>
             <a class="navbar-brand" href="">
               <i class="fa-solid fa-signs-post"></i>&nbsp;Company Directory
-              <!-- <img src="img/phone-book.png" width="50" height="50" alt="">Company Directory -->
             </a>
   </header>
 
@@ -23,11 +23,8 @@
   
   <div class="container-fluid">
 
-    
-
     <div class="row ">
-           
-
+     
             <div class="col-12 pt-2 mt-3">
                 <ul class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                   
@@ -42,25 +39,29 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-
+                  
                   <!-- Employees Content Start -->
                     <div class="tab-pane fade show active" id="employees" role="tabpanel" aria-labelledby="employees-tab">
 
                         <nav class="navbar navbar-light bg-light">
                            
-                            <div class="container-fluid pe-0">
+                            <div class="container-fluid px-0">
                                                                 
                                 
                                   <div class="input-group input-group-lg">
-                                    <i title="Add New User" class="fa-solid fa-user-plus cursor-pointer blue fs-2 pe-4 pt-2" data-bs-toggle="modal" data-bs-target="#addEmployee"></i>
+                                    <i title="Add New User" class="fa-solid fa-user-plus cursor-pointer blue fs-2 ps-2 pe-3 pt-2" data-bs-toggle="modal" data-bs-target="#addEmployee"></i>
                                     <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-search blue"></i></span>
-                                    <input id="searchBar" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Type First or Last Name to Search" onfocus="this.placeholder=''" 
-                                    onblur="this.placeholder='Type First or Last Name to Search'">
+                                    <input id="searchBar" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Search by First or Last Name" onfocus="this.placeholder=''" 
+                                    onblur="this.placeholder='Search by First or Last Name'">
+                                    <span class="input-group-text cursor-pointer" id="clearSearchButton" title="Clear Search and Filters"><i class="fa-solid fa-xmark"></i></span>
                                     <div>
+                                    <div class="col-xs-12">
                                     <input style="background-color: #00a8ff; display: block; width: 100%; border: none; color: white; text-align: center; font-weight: bold;" type="text" value="Filter by"/>
                                     <select class="d-inline-block float-end" id="searchDepartment"></select>
                                     <select  class="d-inline-block float-end" id="searchLocation"></select>
                                     </div>
+                                    </div>
+                                    
                                   </div>                                                      
                                 
                                   <!-- Add Employee Modal -->
@@ -79,7 +80,7 @@
                                             <div class="icon">
                                               <i class="fa-solid fa-user-plus"></i>
                                             </div>
-                                            <div id="addEmployee-alert" class="alert alert-success collapse" role="alert">
+                                            <div class="alert alert-success collapse" role="alert">
                                               User Successfully Added!
                                             </div>
                                             
@@ -91,20 +92,20 @@
                                             <div class="detailsEditField">
                                             <h6 id="h6">Adding New Employee</h6>
                                             <div id="newEmployeeErrors"></div>
-                                            <label>First Name:
-                                              <input type="text" id="newEmployeeFirstName">
+                                            <label class="form-label">First Name:
+                                              <input class="form-control" type="text" id="newEmployeeFirstName" maxlength="50">
                                             </label>
-                                            <label>Last Name:
-                                              <input type="text" id="newEmployeeLastName">
+                                            <label class="form-label">Last Name:
+                                              <input class="form-control" type="text" id="newEmployeeLastName" maxlength="50">
                                             </label>
-                                            <label>Job Title:
-                                              <input type="text" id="newEmployeeJobTitle">
+                                            <label class="form-label">Job Title:
+                                              <input class="form-control" type="text" id="newEmployeeJobTitle" maxlength="50">
                                             </label>
-                                            <label>Email:
-                                              <input type="text" id="newEmployeeEmail">
+                                            <label class="form-label">Email:
+                                              <input class="form-control" type="text" id="newEmployeeEmail" maxlength="50">
                                             </label>
-                                            <label>Department:
-                                              <select id="newEmployeeDepartment"></select>
+                                            <label class="form-label">Department:
+                                              <select class="form-control" id="newEmployeeDepartment"></select>
                                             </label>
                                           </div>
                                           </div>
@@ -192,7 +193,7 @@
                             </div>
                             <div class="modal-footer">
                               <button class="subscribe" data-bs-dismiss="modal">Close</button>
-                              <!-- <button class="subscribe submit" id="addDepartmentButton">Add</button> -->
+                              
                             </div>
                           </div>
                         </div>
@@ -214,30 +215,30 @@
                                 <i class="fa-solid fa-user-pen"></i>
                                 
                               </div>
-                              <div id="ee-alert" class="alert alert-success collapse" role="alert">
+                              <div class="alert alert-success collapse" role="alert">
                                 User Details Successfully Updated!
                               </div>
                               <div class="detailsEditField">
-                              <h6>Editing Employee Details</h6>
+                              <h3>Editing Employee Details</h3>
                                   <div class="error" id="editEmployeeErrors"></div>
-                                    <label>Employee id:
-                                      <input type="text" id="ee-id" disabled>
+                                    <label class="form-label">Employee id:
+                                      <input class="form-control" type="text" id="ee-id" disabled>
                                     </label>
 
-                                    <label>First Name:
-                                      <input type="text" id="ee-firstName">
+                                    <label class="form-label">First Name:
+                                      <input class="form-control" type="text" id="ee-firstName">
                                     </label>
-                                    <label>Last Name:
-                                      <input type="text" id="ee-lastName">
+                                    <label class="form-label">Last Name:
+                                      <input class="form-control" type="text" id="ee-lastName">
                                     </label>
-                                    <label>Job Title:
-                                      <input type="text" id="ee-jobTitle">
+                                    <label class="form-label">Job Title:
+                                      <input class="form-control" type="text" id="ee-jobTitle">
                                     </label>
-                                    <label>Email:
-                                      <input type="text" id="ee-email">
+                                    <label class="form-label">Email:
+                                      <input class="form-control" type="text" id="ee-email">
                                     </label>
-                                    <label>Department:
-                                      <select id="ee-department"></select>
+                                    <label >Department:
+                                      <select class="form-control" id="ee-department"></select>
                                     </label>
                                 </div>
                               
@@ -260,10 +261,10 @@
                             <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <div class="modal-body" >
                               <div class="icon">
-                                <i class="fa-solid fa-user-xmark error"></i>
+                                <i class="fa-solid fa-user-xmark text-danger"></i>
                                 
                               </div>
-                              <div id="eDel-alert" class="alert alert-success collapse" role="alert">
+                              <div class="alert alert-success collapse" role="alert">
                                 User Successfully Deleted!
                               </div>
                               <div class="detailsEditField">
@@ -298,7 +299,7 @@
                             <!-- Add Department Modal -->
                             <div class="modal-box">
                               <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addDepartment">
-                                <i class="fa-solid fa-plus blue fs-2"></i>
+                                <i class="fa-solid fa-plus blue fs-2 "></i>
                                 <i class="fa-solid fa-building blue fs-2"></i>
                               </div>
 
@@ -311,17 +312,21 @@
                                         <i class="fa-solid fa-building"></i>
                                       </div>
                                       <div id="newDepartmentErrors" class="error"></div>
-                                      <h6>Adding New Department</h6>
-                                      <div id="newDepartmentErrors"></div>
-                                      <label>Name:
-                                        <input id="newDepartmentName" type="text">
-                                      </label>
-                                      <label>Location:
-                                        <select id="newDepartmentLocationID">
+                                      <div class="alert alert-success collapse" role="alert">
+                                        Department Successfully Added!
+                                      </div>
+                                      <div class="detailsEditField">
+                                        <h3>Adding New Department</h3>
+                                        <div id="newDepartmentErrors"></div>
+                                        <label>Name:
+                                          <input class="form-control" id="newDepartmentName" type="text" maxlength="50">
+                                        </label>
+                                        <label>Location:
+                                          <select class="form-control" id="newDepartmentLocationID">
 
-                                        </select>
-                                      </label>
-                                      
+                                          </select>
+                                        </label>
+                                    </div> 
                                     </div>
                                     <div class="modal-footer">
                                       <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
@@ -340,24 +345,68 @@
                         <div class="modal-content">
                           <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
                           <div class="modal-body" >
-                            <div class="icon">
-                              <i class="fa-solid fa-building-circle-xmark error"></i>
-                              
-                            </div>
-                            <div id="eDel-alert" class="alert alert-success collapse" role="alert">
-                              Department Successfully Deleted!
-                            </div>
-                            
-                            <p>Are you sure you want to delete this department? This action cannot be reversed.</p>
+                              <div class="icon">
+                                <i class="fa-solid fa-building-circle-xmark text-danger"></i>
+                                
+                              </div>
+                              <div class="alert alert-success collapse" role="alert">
+                                Department Successfully Deleted!
+                              </div>
+                              <div id="departmentDeleteErrors" class="error"></div>
+                              <div class="detailsEditField">
+                              <p>Are you sure you want to delete this department? This action cannot be reversed.</p>
 
-                                  <h3 id="depDelName"></h3>
-                                  <div class="collapse" id="delDepartmentId"></div>
-                                                           
+                                    <h3 id="depDelName"></h3>
+                                    <div class="collapse" id="delDepartmentId"></div>
+                              </div>                            
                             
                           </div>
                           <div class="modal-footer">
                             <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
                             <button class="subscribe " id="departmentDeleteButton">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+                  </div>
+
+                  <!-- Edit Department Modal -->
+                  <div class="modal-box">
+                    
+                    <div class="modal fade" id="departmentEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div id="departmentEditModalBody" class="modal-body">
+                            <div class="icon">
+                              <i class="fa-solid fa-building"></i>
+                            </div>
+
+                            <div class="alert alert-success collapse" role="alert">
+                              Department Successfully Updated!
+                            </div>
+
+                            <div id="editDepartmentErrors" class="error"></div>
+                            
+                            <div class="detailsEditField">
+                            <h3>Editing Department</h3>
+
+                            
+                            <label>Name:
+                              <input  class="form-control" id="editDepartmentName" type="text">
+                            </label>
+                            <label>Location:
+                              <select class="form-control" id="editDepartmentLocationID">
+                              </select>
+                            </label>
+                            <label>Department Id:
+                              <input class="form-control" id="editDepartmentID" type="text" disabled />
+                            </label>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                            <button class="subscribe submit" id="editDepartmentButton">Save</button>
                           </div>
                         </div>
                       </div>
@@ -374,19 +423,23 @@
                         </div>
                       </nav>
 
-                    <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+                    <table class="table table-striped table-hover table-responsive-sm border" id="departmentsTable">
                       <thead class="thead-dark">
 
                         <th scope="col" id="departmentId">
                           <span class="cursor-pointer">Id&nbsp;</span>
                         </th>
                                                   
-                          <th scope="col" id="departmentName" title="DESC">
+                          <th scope="col" id="departmentName">
                             <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
                           </th>
                           
-                          <th scope="col" id="departmentLocation" title="DESC">
+                          <th scope="col" id="departmentLocation" >
                             <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
+                          </th>
+                          <!-- hidden th with location id -->
+                          <th class="collapse" scope="col" id="departmentLocation">
+                            <span class="cursor-pointer">Location ID</span>
                           </th>
                                                                             
                           <th scope="col">Actions</th>
@@ -430,14 +483,16 @@
                                               <i class="fa-solid fa-globe"></i>
                                             </div>
                                             <div id="newLocationErrors" class="error"></div>
-                                            <div id="addLocationAlert" class="alert alert-success collapse" role="alert">
+                                            <div class="alert alert-success collapse" role="alert">
                                               Location Successfully Added!
                                             </div>
-                                            <h6>Adding New Location</h6>
+                                            <div class="detailsEditField">
+                                            <h3>Adding New Location</h3>
                                             <div class="form-group">
                                             <label>Location Name:
-                                              <input type="text" id="newLocationName">
+                                              <input type="text" id="newLocationName" maxlength="50">
                                             </label>
+                                            </div>
                                           </div>
                                           </div>
                                           <div class="modal-footer">
@@ -448,7 +503,77 @@
                                       </div>
                                     </div>
                                   </div>
+                                    <!-- Location Delete Modal -->
+                                <div class="modal-box">
+                                  
+                                  <div class="modal fade" id="locationDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      <div class="modal-body" >
+                                          <div class="icon">
+                                            <i class="fa-solid fa-solid fa-globe text-danger"></i>
+                                            
+                                          </div>
+                                          <div class="alert alert-success collapse" role="alert">
+                                            Location Successfully Deleted!
+                                          </div>
+                                          <div id="locationDeleteErrors" class="error"></div>
+                                          <div class="detailsEditField">
+                                          <p>Are you sure you want to delete this location? This action cannot be reversed.</p>
+
+                                                <h3 id="delLocationName"></h3>
+                                                <div class="collapse" id="delLocationId"></div>
+                                          </div>                            
+                                        
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                                        <button class="subscribe " id="locationDeleteButton">Delete</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>   
+                              </div>
+                              <!-- Edit Location Modal -->
+                              <div class="modal-box">
                                 
+                                <div class="modal fade" id="locationEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      <div id="locationEditModalBody" class="modal-body">
+                                        <div class="icon">
+                                          <i class="fa-solid fa-globe"></i>
+                                        </div>
+
+                                        <div class="alert alert-success collapse" role="alert">
+                                          Location Successfully Updated!
+                                        </div>
+
+                                        <div id="editLocationErrors" class="error"></div>
+                                        
+                                        <div class="detailsEditField">
+                                        <h3>Editing Location</h3>
+                                      
+                                        
+                                        <label>Name:
+                                          <input class="form-control" id="editLocationName" type="text">
+                                        </label>
+                                        <input class="form-control" id="editLocationID" type="text" hidden>
+                                        
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                                        <button class="subscribe submit" id="editLocationButton">Save</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>   
+                              </div>
+
+                                            
                               
                                                                                       
                               
@@ -458,7 +583,7 @@
                             </div>
                           </nav>
 
-                            <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+                            <table class="table table-striped table-hover table-responsive-sm border" id="locationTable">
                               <thead class="thead-dark">
 
                                 <th scope="col" id="locationId">

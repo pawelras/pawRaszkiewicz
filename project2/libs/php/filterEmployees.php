@@ -1,71 +1,98 @@
 <?php
 
-	// example use from browser
-	// http://localhost/companydirectory/libs/php/getDepartmentByID.php?id=<id>
+ini_set('display_errors', 'On');
+    error_reporting(E_ALL);
 
-	// remove next two lines for production	
+    $executionStartTime = microtime(true);
 
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
+    include("config.php");
 
-	$executionStartTime = microtime(true);
+    header('Content-Type: application/json; charset=UTF-8');
 
-	include("config.php");
+    $conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
-	header('Content-Type: application/json; charset=UTF-8');
+    if (mysqli_connect_errno()) {
+        
+        $output['status']['code'] = "300";
+        $output['status']['name'] = "failure";
+        $output['status']['description'] = "database unavailable";
+        $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+        $output['data'] = [];
 
-	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
+        mysqli_close($conn);
 
-	if (mysqli_connect_errno()) {
+        echo json_encode($output);
+
+        exit;
+
+    }   
+
+
+   $sqlStr = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, 
+            d.name as department, l.name as location 
+            FROM personnel p 
+            LEFT JOIN department d ON (p.departmentID = d.id) 
+            LEFT JOIN location l ON (d.locationID = l.id)
+            WHERE (p.firstName LIKE ? OR p.lastName LIKE ?)";
+   
+   if(isset($_REQUEST["departmentID"]) and strlen($_REQUEST["departmentID"]) > 0){
+        $sqlStr = $sqlStr.' and d.id = ?';
+    }
+ 
+    if(isset($_REQUEST["locationID"]) and strlen($_REQUEST["locationID"]) > 0){
+        $sqlStr = $sqlStr.' and l.id = ?';
+    }
+
+    $query = $conn->prepare($sqlStr);
+
+	$searchString = '%'.$_REQUEST["searchString"].'%';
+
+	if ($_REQUEST["numFilters"] == 0) {
 		
-		$output['status']['code'] = "300";
-		$output['status']['name'] = "failure";
-		$output['status']['description'] = "database unavailable";
-		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-		$output['data'] = [];
+		$query->bind_param("ss", $searchString , $searchString);
 		
-		mysqli_close($conn);
 
-		echo json_encode($output);
-		
-		exit;
+	} elseif ($_REQUEST["numFilters"] == 2) {
+		$query->bind_param("ssii", $searchString , $searchString, $_REQUEST["departmentID"], $_REQUEST["locationID"]);
+	} else {
 
-	}	
-
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
-
-	// $query = $conn->prepare($query = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID)  WHERE p.firstName LIKE ? OR p.lastName LIKE ? WHERE department.id = 1 AND location.id = 1 ORDER BY p.lastName, p.firstName, d.name, l.name');
-
-	$query = $conn->prepare($query = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID)  WHERE (p.firstName LIKE ? OR p.lastName LIKE ?) AND (d.id IS NULL OR d.id = ?) AND (l.id IS NULL l.id = ?) ORDER BY p.lastName, p.firstName, d.name, l.name;');
-
-	
-    $searchString = '%' . $_REQUEST['searchString'] . '%';
-	$location = intval($_REQUEST['locationID']);
-	$dept = intval($_REQUEST['departmentID']);
-	
-	
-
-	$query->bind_param("ssii",$searchString , $searchString, $dept, $location);
-	
-
-	$query->execute();
-	
-	if (false === $query) {
-
-		$output['status']['code'] = "400";
-		$output['status']['name'] = "executed";
-		$output['status']['description'] = "query failed";	
-		$output['data'] = [];
-
-		echo json_encode($output); 
-	
-		mysqli_close($conn);
-		exit;
-
+		if(isset($_REQUEST["departmentID"]) and strlen($_REQUEST["departmentID"]) > 0){
+			$query->bind_param("ssi", $searchString , $searchString, $_REQUEST['departmentID']);
+		} elseif (isset($_REQUEST["locationID"]) and strlen($_REQUEST["locationID"]) >0) {
+			$query->bind_param("ssi", $searchString , $searchString, $_REQUEST['locationID']);
+		}
 	}
+	
+	
 
-	$result = $query->get_result();
+	// if(isset($_REQUEST["departmentID"]) and strlen($_REQUEST["departmentID"]) > 0){
+    //     $query->bind_param("i", $_REQUEST['departmentID']);
+    // }
+ 
+    // if(isset($_REQUEST["locationID"]) and strlen($_REQUEST["locationID"]) > 0){
+    //     $query->bind_param("i", $_REQUEST['locationID']);
+    // }
+	
+	
+	$query->execute();
+    
+    if (!$query) {
+
+        $output['status']['code'] = "400";
+        $output['status']['name'] = "executed";
+        $output['status']['description'] = "query failed";  
+        $output['data'] = [];
+
+        mysqli_close($conn);
+
+        echo json_encode($output); 
+
+        exit;
+
+    }
+    
+
+    $result = $query->get_result();
 
    	$data = [];
 
