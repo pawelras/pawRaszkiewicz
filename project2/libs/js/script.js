@@ -1,4 +1,10 @@
 $(document).ready(() => {
+
+    function preLoaderHandler(){
+		document.getElementById('loader').style.display = 'none';
+		}
+
+	
     
     $('#clearSearchButton').on('click', () => {
         $('#searchBar').val('');
@@ -10,10 +16,7 @@ $(document).ready(() => {
 // Employees Section 
 
     //Fetching Employees Data and Render Table
-    fetchEmployeesDetails();
-
-   
-    
+    fetchEmployeesDetails();   
 
     // Binding on click functions
     $('#addEmployeeButton').on('click', addNewEmployee);
@@ -29,10 +32,11 @@ $(document).ready(() => {
 
       })
     // Clearing Add Employee Modal Fields
-    $('#addEmployee').on('show.bs.modal', () => {
+    $('#addEmployeeModal').on('show.bs.modal', () => {
         
         $('#newEmployeeFirstName, #newEmployeeLastName, #newEmployeeJobTitle, #newEmployeeEmail').val('');
         $('#newEmployeeDepartment').prop("selectedIndex", 0).val();
+        $('#newEmployeeFirstName, #newEmployeeLastName, #newEmployeeEmail').removeClass("redBorder");
 
       })
 
@@ -59,6 +63,8 @@ $(document).ready(() => {
 
     $('#editEmployeeButton').on('click', updateEmployeeDetails);
     $('#employeeEditModal').on('show.bs.modal', function(){
+
+        $('#ee-firstName, #ee-lastName, #ee-emaill').removeClass("redBorder");
  
         let currentRow = $(event.target).closest('tr');
         let employeeId = currentRow.find("th:eq(0)").text();
@@ -98,7 +104,6 @@ $(document).ready(() => {
     $('#searchBar').on('keyup', filterEmployees)
     $('#searchDepartment').on('change', filterEmployees);
     $('#searchLocation').on('change', filterEmployees);
-
     
 
 // Departments Section
@@ -112,19 +117,13 @@ $(document).ready(() => {
     $('#editDepartmentButton').on('click', editDepartment);
 
     $('#addDepartment').on('show.bs.modal', () => {
-        $('#newDepartmentErrors').html('');
+        
         $('#newDepartmentName').val('');
-        $('.detailsEditField').show();
-        $('.modal-footer').show();
-        $('.alert').hide();
         $('#newDepartmentLocationID').prop("selectedIndex", 0).val();
     })
-
+    
     $('#departmentDeleteModal').on('show.bs.modal', () => {
-        $('.detailsEditField').show();
-        $('.modal-footer').show();
-        $('.alert').hide();
-        $('.error').html('')
+        
         let currentRow = $(event.target).closest('tr');
         let departentId = currentRow.find("th:eq(0)").text();
         let departmentName = currentRow.find("td:eq(0)").text();
@@ -135,12 +134,7 @@ $(document).ready(() => {
       });
 
       $('#departmentEditModal').on('show.bs.modal', () => {
-        $('.detailsEditField').show();
-        $('.modal-footer').show();
-        $('.alert').hide();
-        $('.error').html('');
-
-        
+                
         let currentRow = $(event.target).closest('tr');
         let departmentId = currentRow.find("th:eq(0)").text();
         let departmentName = currentRow.find("td:eq(0)").text();
@@ -163,12 +157,7 @@ $(document).ready(() => {
 
     $('#addLocation').on('show.bs.modal', () => {
        
-        $('.alert').hide()
-        $('.detailsEditField').show();
-        $('.modal-footer').show();
-        $('#newLocationErrors').html('');
-        $('#newLocationName').val('')
-        
+        $('#newLocationName').val(''); 
                 
       })
 
@@ -176,23 +165,14 @@ $(document).ready(() => {
         let currentRow = $(event.target).closest('tr');
         let locationId = currentRow.find("th:eq(0)").text();
         let locationName = currentRow.find("td:eq(0)").text();
-        $('#locationDeleteErrors').html('')
-        $('.alert').hide()
-        $('.detailsEditField').show();
-        $('.modal-footer').show();
-        $('#delLocationName').html(locationName);
-        $('#delLocationId').html(locationId);
         
+        $('#delLocationName').html(locationName);
+        $('#delLocationId').html(locationId); 
                 
       })
 
       $('#locationEditModal').on('show.bs.modal', function(){
-
-        $('.modal-footer').show();
-        $('.detailsEditField').show();
-        $('#editEmployeeErrors').html('');
-        $('.alert').hide();
-        
+       
         let currentRow = $(event.target).closest('tr');
         let locationId = currentRow.find("th:eq(0)").text();
         let locationName = currentRow.find("td:eq(0)").text();
@@ -226,9 +206,7 @@ $(document).ready(() => {
                 $('#employeesTableBody').html();
                 
                 
-                renderEmployeesTable(result.data);
-                    
-                    
+                renderEmployeesTable(result.data);                    
                 
                 }
             
@@ -299,8 +277,13 @@ $(document).ready(() => {
         let departmentID = $('#newEmployeeDepartment').val();
         
 
-        if (! firstName || !lastName || !email ) {
+        if (!firstName || !lastName || !email ) {
             $('#newEmployeeErrors').html('Please fill out required fields');
+        }
+        if(!firstName) { $('#newEmployeeFirstName').addClass("redBorder") }
+        if(!lastName) { $('#newEmployeeLastName').addClass("redBorder") }
+        if(!email) { $('#newEmployeeEmail').addClass("redBorder") 
+
         } else {
             $.ajax({
                 url: 'libs/php/insertEmployee.php',
@@ -325,12 +308,8 @@ $(document).ready(() => {
                         $('.detailsEditField').hide();
                         $('.modal-footer').hide();
 
-                        setTimeout(function(){
-                            // hiding modal and clearing form for next use
-                            $('.modal').modal('hide');
-                            
-                          }, 3000);
-                          fetchEmployeesDetails()   
+                       
+                        fetchEmployeesDetails()   
                     
                     }
                 
@@ -352,15 +331,18 @@ $(document).ready(() => {
         let jobTitle = $('#ee-jobTitle').val() || '';
         let email = $('#ee-email').val();
         let departmentID = $('#ee-department').val();
-
-        console.log(firstName);
-        console.log(departmentID);
-        
+      
+        if(!firstName) { $('#ee-firstName').addClass("redBorder") }
+        if(!lastName) { $('#ee-lastName').addClass("redBorder") }
+        if(!email) { $('#ee-email').addClass("redBorder") }
 
         if (! firstName || !lastName || !email ) {
             
             $('#editEmployeeErrors').html('Please fill out required fields');
+            
+            return
         } 
+        
         else {
             $.ajax({
                 url: 'libs/php/editEmployee.php',
@@ -385,11 +367,8 @@ $(document).ready(() => {
                         $('.detailsEditField').hide();
                         $('.modal-footer').hide();
                         // $('#editEmployeeModalBody').html('Details successfully updated.')
-                        setTimeout(function(){
-                            $('.modal').modal('hide');
-                            $('#ee-alert').hide();
-                          }, 3000);
-                          fetchEmployeesDetails()     
+                        
+                        fetchEmployeesDetails()     
                     
                     }
                 
@@ -405,8 +384,7 @@ $(document).ready(() => {
     function deleteEmployee() {
 
         let employeeId = $('#eDel-id').text();
-        console.log(employeeId);
-
+        
         $.ajax({
             url: 'libs/php/deleteEmployeeByID.php',
             type: 'POST',
@@ -421,7 +399,7 @@ $(document).ready(() => {
             success: function(result) {
                     
                 if (result.status.name == "ok") {
-                    console.log(result);
+                    
                     fetchEmployeesDetails()
                     
 
@@ -441,9 +419,7 @@ $(document).ready(() => {
     }
 
     function filterEmployees() {
-        
-        // console.log(event.target.value);
-        
+               
         let searchString = $('#searchBar').val()
         let locationID = $('#searchLocation option:selected').val(); 
         let departmentID = $('#searchDepartment option:selected').val();
@@ -451,8 +427,7 @@ $(document).ready(() => {
         // counting number of parameters
         let counter = 0;
         if (locationID !== '') {counter +=1}
-        if (departmentID !== '') {counter +=1}
-        console.log(counter);            
+        if (departmentID !== '') {counter +=1}         
 
         $.ajax({
             url: 'libs/php/filterEmployees.php',
@@ -471,13 +446,8 @@ $(document).ready(() => {
             
             success: function(result) {
                     
-                
-                    console.log(result);
-                    renderEmployeesTable(result.data);
-                                           
-                
-                
-            
+                    renderEmployeesTable(result.data);            
+        
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -527,7 +497,7 @@ $(document).ready(() => {
          
         // hidden td with location id
         departmentsArray.forEach((element) => {
-            htmlString += '<tr><th scope="row">' + element.id + '</th><td>' + element.name + '</td><td>' + element.lName + '</td><td class="collapse">' + element.locationID + '</td><td><div  class="d-flex justify-content-between"><i data-bs-toggle="modal" data-bs-target="#departmentDeleteModal" class="fa-solid fa-trash text-danger cursor-pointer"></i><i data-bs-toggle="modal" data-bs-target="#departmentEditModal"class="fa-solid fa-pen-to-square cursor-pointer"></i></div></td>';
+            htmlString += '<tr><th scope="row">' + element.id + '</th><td>' + element.name + '</td><td>' + element.lName + '</td><td class="collapse">' + element.locationID + '</td><td><div  class="d-flex justify-content-around"><i data-bs-toggle="modal" data-bs-target="#departmentDeleteModal" class="fa-solid fa-trash text-danger cursor-pointer"></i><i data-bs-toggle="modal" data-bs-target="#departmentEditModal"class="fa-solid fa-pen-to-square cursor-pointer"></i></div></td>';
                     
                 });
                                     
@@ -558,7 +528,7 @@ $(document).ready(() => {
                         
         
                 if (! newDepartmentName ) {
-                    $('#newDepartmentErrors').html('Please fill out required fields');
+                    $('#newDepartmentErrors').html('Please provide department name.');
                 }else if ($('#departmentsTable td:contains(' + newDepartmentName + ')').length) {
 
                     $('#newDepartmentErrors').html('Departments already exists');
@@ -585,11 +555,7 @@ $(document).ready(() => {
                                 $('.detailsEditField').hide();
                                 $('.modal-footer').hide();
                                 $('.alert').show();
-                                
-                                
-                                setTimeout(function(){
-                                    $('.modal').modal('hide')
-                                  }, 3000);          
+                                    
                             
                             }
                         
@@ -606,8 +572,7 @@ $(document).ready(() => {
     function deleteDepartment() {
 
         let departmentId = $('#delDepartmentId').text();
-        console.log(departmentId);
-        
+                
         $.ajax({
                 url: 'libs/php/deleteDepartmentByID.php',
                 type: 'POST',
@@ -627,8 +592,7 @@ $(document).ready(() => {
                             $('.detailsEditField').hide();
                             $('.modal-footer').hide();
                             $('.alert').show();
-                            console.log(result);
-                                                    
+                            
                         }
                     
                     },
@@ -641,14 +605,11 @@ $(document).ready(() => {
     
 
     function editDepartment() {
-        console.log('edit clicked');
 
         let departmentName = $('#editDepartmentName').val();
         let locationID = $('#editDepartmentLocationID').val();
         let departmentID = $('#editDepartmentID').val();   
         
-        console.log(departmentName, departmentLocation, departmentID);
-
         if (!departmentName) {
             $('#editDepartmentErrors').html('Please Provide Department Name');
             return
@@ -675,8 +636,7 @@ $(document).ready(() => {
                         $('.detailsEditField').hide();
                         $('.modal-footer').hide();
                         $('.alert').show();
-                        console.log(result);
-                                                
+                                                                       
                     }
                 
                 },
@@ -715,11 +675,10 @@ $(document).ready(() => {
 
             
             if (result.data[0]["COUNT(id)"] > 0) {
-                console.log('can\'t delete');
-                
+                                
                 $('#departmentDeleteErrors').html('Cannot Delete Department. '  + result.data[0]["COUNT(id)"] + ' employee(s) still assigned.')
             } else {
-                console.log('can delete');
+                
                 deleteDepartment()
             }
         })
@@ -759,14 +718,13 @@ $(document).ready(() => {
 
         
         $('#locationsTableBody').html();
-                
-                
+                    
         let htmlString = ''
         locationsArray = Array.from(locationsArray);
         
                         
         locationsArray.forEach((element) => {
-            htmlString += '<tr><th scope="row">' + element.id + '</th><td>' + element.name + '</td><td><div  class="d-flex justify-content-between"><i data-bs-toggle="modal" data-bs-target="#locationDeleteModal" class="fa-solid fa-trash text-danger cursor-pointer"></i><i data-bs-toggle="modal" data-bs-target="#locationEditModal "class="fa-solid fa-pen-to-square cursor-pointer"></i></div></td>';
+            htmlString += '<tr><th scope="row">' + element.id + '</th><td>' + element.name + '</td><td><div  class="d-flex justify-content-around"><i data-bs-toggle="modal" data-bs-target="#locationDeleteModal" class="fa-solid fa-trash text-danger cursor-pointer"></i><i data-bs-toggle="modal" data-bs-target="#locationEditModal "class="fa-solid fa-pen-to-square cursor-pointer"></i></div></td>';
                     
                 });
                                     
@@ -795,8 +753,7 @@ $(document).ready(() => {
 
     function addLocation() {
         let locationName = $('#newLocationName').val();
-        console.log(locationName);
-
+        
         if (! locationName ) {
             $('#newLocationErrors').html('Please provide location name.');
 
@@ -827,13 +784,7 @@ $(document).ready(() => {
                         $('#newLocationName').val('');
                         $('.detailsEditField').hide();
                         $('.modal-footer').hide();
-
-
-                        setTimeout(function(){
-                            
-                            $('.modal').modal('hide');
-                            
-                      }, 3000);          
+     
                     
                     }
                 
@@ -849,8 +800,7 @@ $(document).ready(() => {
 
     // Check if location can be deleted
     function checkDepartmentCount() {
-        console.log('Counting Departments');
-        console.log($('#delLocationId').text());
+        
         $.ajax({
             url: 'libs/php/checkDepartmentCount.php',
             type: 'POST',
@@ -874,12 +824,12 @@ $(document).ready(() => {
 
             console.log(result);
             if (result.data[0]["COUNT(id)"] > 0) {
-                console.log('can\'t delete');
+                ;
                 $('.error').show();
                 $('#locationDeleteErrors').html('Cannot Delete Location. '  + result.data[0]["COUNT(id)"] + ' department(s) still assigned.');
 
             } else {
-                console.log('can delete');
+                
                 deleteLocation()
             }
         })
@@ -890,8 +840,7 @@ $(document).ready(() => {
     function deleteLocation() {
 
         let locationId = $('#delLocationId').text();
-        console.log(locationId);
-        
+                
         $.ajax({
                 url: 'libs/php/deleteLocationByID.php',
                 type: 'POST',
@@ -969,7 +918,7 @@ $(document).ready(() => {
                                     
             }
 
-
+            preLoaderHandler();
 })
 
 

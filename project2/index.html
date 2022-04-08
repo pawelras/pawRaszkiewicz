@@ -12,354 +12,320 @@
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
+  <div id="loader">
+  </div>
 
   <header>
-            <a class="navbar-brand" href="">
-              <i class="fa-solid fa-signs-post"></i>&nbsp;Company Directory
-            </a>
-  </header>
-
-        
+    <a class="navbar-brand me-0" href=""><i class="fa-solid fa-signs-post"></i>&nbsp;Company Directory</a>
+  </header>   
   
   <div class="container-fluid">
 
     <div class="row ">
      
-            <div class="col-12 pt-2 mt-3">
-                <ul class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
+      <div class="col-12 pt-2 mt-3">
+        <ul class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                   
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="employees-tab" data-bs-toggle="tab" data-bs-target="#employees" type="button" role="tab" aria-controls="employees" aria-selected="true">Employees</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="departments-tab" data-bs-toggle="tab" data-bs-target="#departments" type="button" role="tab" aria-controls="departments" aria-selected="false">Departments</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="locations-tab" data-bs-toggle="tab" data-bs-target="#locations" type="button" role="tab" aria-controls="locations" aria-selected="false">Locations</button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="employees-tab" data-bs-toggle="tab" data-bs-target="#employees" type="button" role="tab" aria-controls="employees" aria-selected="true">Employees</button>
+          </li>
+
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="departments-tab" data-bs-toggle="tab" data-bs-target="#departments" type="button" role="tab" aria-controls="departments" aria-selected="false">Departments</button>
+          </li>
+
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="locations-tab" data-bs-toggle="tab" data-bs-target="#locations" type="button" role="tab" aria-controls="locations" aria-selected="false">Locations</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
                   
-                  <!-- Employees Content Start -->
-                    <div class="tab-pane fade show active" id="employees" role="tabpanel" aria-labelledby="employees-tab">
+          <!-- Employees Content Start -->
+          <div class="tab-pane fade show active" id="employees" role="tabpanel" aria-labelledby="employees-tab">
+                        
+              <div class="container-fluid px-0">                                                                
+                <nav class="navbar navbar-light bg-light">
+                  <div class="input-group input-group-lg">
+                                      
+                    <i title="Add New User" class="fa-solid fa-user-plus cursor-pointer blue fs-2 ps-3 pe-3 pt-3" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"></i>
 
-                        <nav class="navbar navbar-light bg-light">
-                           
-                            <div class="container-fluid px-0">
-                                                                
-                                
-                                  <div class="input-group input-group-lg">
-                                    <i title="Add New User" class="fa-solid fa-user-plus cursor-pointer blue fs-2 ps-2 pe-3 pt-2" data-bs-toggle="modal" data-bs-target="#addEmployee"></i>
-                                    <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-search blue"></i></span>
-                                    <input id="searchBar" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Search by First or Last Name" onfocus="this.placeholder=''" 
-                                    onblur="this.placeholder='Search by First or Last Name'">
-                                    <span class="input-group-text cursor-pointer" id="clearSearchButton" title="Clear Search and Filters"><i class="fa-solid fa-xmark"></i></span>
-                                    <div>
-                                    <div class="col-xs-12">
-                                    <input style="background-color: #00a8ff; display: block; width: 100%; border: none; color: white; text-align: center; font-weight: bold;" type="text" value="Filter by"/>
-                                    <select class="d-inline-block float-end" id="searchDepartment"></select>
-                                    <select  class="d-inline-block float-end" id="searchLocation"></select>
-                                    </div>
-                                    </div>
-                                    
-                                  </div>                                                      
-                                
-                                  <!-- Add Employee Modal -->
-                                  <div class="modal-box">
-                                   
-                                    
-                                    <div class="modal fade" id="addEmployee" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          <div class="modal-header">
-                                            
-                                          </div>
-                                          <div class="modal-body" id="addEmployeeModalBody">
-
-                                            <div class="icon">
-                                              <i class="fa-solid fa-user-plus"></i>
-                                            </div>
-                                            <div class="alert alert-success collapse" role="alert">
-                                              User Successfully Added!
-                                            </div>
-                                            
-                                            
-                                            
-                                            
-                                            <div id="newEmployeeErrors" class="error"></div>
-
-                                            <div class="detailsEditField">
-                                            <h6 id="h6">Adding New Employee</h6>
-                                            <div id="newEmployeeErrors"></div>
-                                            <label class="form-label">First Name:
-                                              <input class="form-control" type="text" id="newEmployeeFirstName" maxlength="50">
-                                            </label>
-                                            <label class="form-label">Last Name:
-                                              <input class="form-control" type="text" id="newEmployeeLastName" maxlength="50">
-                                            </label>
-                                            <label class="form-label">Job Title:
-                                              <input class="form-control" type="text" id="newEmployeeJobTitle" maxlength="50">
-                                            </label>
-                                            <label class="form-label">Email:
-                                              <input class="form-control" type="text" id="newEmployeeEmail" maxlength="50">
-                                            </label>
-                                            <label class="form-label">Department:
-                                              <select class="form-control" id="newEmployeeDepartment"></select>
-                                            </label>
-                                          </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
-                                            <button id="addEmployeeButton" class="subscribe submit">Add</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>  
-                                </div>                                                   
-                                  
-                                
-                            </div>
-                          </nav>
-
-                        <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
-                          <thead class="thead-dark">
-                            <tr>
-                              <th scope="col" id="employeeId">
-                                <span class="cursor-pointer">Id&nbsp;</span>
-                              </th>
-                              
-                              <th scope="col" id="firstName" data-sorting="DESC" title="First Name">
-                                <span class="cursor-pointer"> First&nbsp;<i class="fa-solid fa-sort"></i></span>
-                              </th>
-                              
-                              <th scope="col" id="lastName" data-sorting="DESC" title="Last Name">
-                                <span class="cursor-pointer">Last&nbsp;<i class="fa-solid fa-sort"></i></span>
-                              </th>
-                              
-                              <th class="d-none d-lg-table-cell" scope="col" id="jobTitle" data-sorting="DESC" title="Job Title">
-                                <span class="cursor-pointer">Job Title&nbsp;<i class="fa-solid fa-sort"></i></span>
-                              </th>
-                              
-                              <th class="d-none d-lg-table-cell" scope="col" id="email" data-sorting="DESC" title="Email Address">
-                                <span class="cursor-pointer">Email&nbsp;<i class="fa-solid fa-sort"></i></span>
-                              </th>
-                              <!-- !!!NOTE d.location and departmentLocation id for table heads -->
-                              <th class="d-none d-lg-table-cell" scope="col" id="d.name" data-sorting="DESC" title="Department">
-                                <span class="cursor-pointer">Department&nbsp;<i class="fa-solid fa-sort"></i></span>
-                              </th>
-                              
-                              <th class="d-none d-lg-table-cell" scope="col" id="l.name" data-sorting="DESC" title="Location">
-                                <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
-                              </th>
-                              
-                              <th scope="col">Actions</th>
-                            
-                            </tr>
-                          </thead>
-                          
-                          <tbody id="employeesTableBody">
-                            
-                          </tbody>
-                        </table>
-                          
-                          
-                    </div>
+                    <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-search blue"></i></span>
                     
-                    <!-- Employee Details Modal -->
-                    <!-- ed - Employee Details id prefix -->
+                    <input id="searchBar" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Search by First or Last Name" onfocus="this.placeholder=''" onblur="this.placeholder='Search by First or Last Name'">
                     
-                    <div class="modal-box">
-                      <!-- <button data-bs-toggle="modal" data-bs-target="#employeeDetailsModal">See Details</button> -->
-                      <div class="modal fade" id="employeeDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <div class="modal-body">
-                              <div class="icon">
-                                <i class="fa-solid fa-user"></i>
-                                
-                              </div>
-                              
-                              <h6 class="fs-2 fw-bold" id="ed-fullName"></h6>
-                              <p>Job title: <span id="ed-jobTitle"></span></p>
-                              <p>Location: <span id="ed-location"></span></p>
-                              <p>Department: <span id="ed-department"></span></p>
-                              <p>Email: <span id="ed-email"></span></p>
-                              <p>Employee Number: <span id="ed-id"></span></p>
+                    <span class="input-group-text cursor-pointer" id="clearSearchButton" title="Clear Search and Filters"><i class="fa-solid fa-xmark"></i></span>
+                      <div>
+                        <div class="col-xs-12 rounded">
 
-                              <p></p>
-                              
-                            </div>
-                            <div class="modal-footer">
-                              <button class="subscribe" data-bs-dismiss="modal">Close</button>
-                              
-                            </div>
+                          <input class="form-control" style="background-color: #00a8ff; display: block; width: 100%; border: none; color: white; text-align: center; font-weight: bold;" type="text" value="Filter by"/>
+                          <select class="d-inline-block float-end " id="searchDepartment"></select>
+                          <select  class="d-inline-block float-end " id="searchLocation"></select>
+                        </div>
+                      </div>                                    
+                  </div>                                                      
+                </nav>                
+                <!-- Add Employee Modal -->
+                <div class="modal-box">                                
+                                    
+                  <div class="modal fade" id="addEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                      <div class="modal-content">
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-header"></div>
+                        <div class="modal-body" id="addEmployeeModalBody">
+                          <div class="icon">
+                            <i class="fa-solid fa-user-plus"></i>
+                          </div>
+                          <div class="alert alert-success collapse" role="alert">
+                            User Successfully Added!
+                          </div>
+                          <div id="newEmployeeErrors" class="error"></div>
+                          <div class="detailsEditField">
+
+                            <h3>Adding New Employee</h3>
+
+                            <label class="form-label">First Name:
+                              <input class="form-control" type="text" id="newEmployeeFirstName" maxlength="50">
+                            </label>
+
+                            <label class="form-label">Last Name:
+                              <input class="form-control" type="text" id="newEmployeeLastName" maxlength="50">
+                            </label>
+
+                            <label class="form-label">Job Title:
+                              <input class="form-control" type="text" id="newEmployeeJobTitle" maxlength="50">
+                            </label>
+
+                            <label class="form-label">Email:
+                              <input class="form-control" type="email" id="newEmployeeEmail" maxlength="50">
+                            </label>
+
+                            <label class="form-label">Department:
+                              <select class="form-control" id="newEmployeeDepartment"></select>
+                            </label>
                           </div>
                         </div>
-                      </div>   
-                    </div>
-
-                    <!-- Employee Edit Modal -->
-                    <!-- ee - Edit Employee id prefix -->
-                    
-                    <div class="modal-box">
-                      
-                      <!-- <button data-bs-toggle="modal" data-bs-target="#employeeDetailsModal">See Details</button> -->
-                      <div class="modal fade" id="employeeEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <div class="modal-body" >
-                              <div class="icon">
-                                <i class="fa-solid fa-user-pen"></i>
-                                
-                              </div>
-                              <div class="alert alert-success collapse" role="alert">
-                                User Details Successfully Updated!
-                              </div>
-                              <div class="detailsEditField">
-                              <h3>Editing Employee Details</h3>
-                                  <div class="error" id="editEmployeeErrors"></div>
-                                    <label class="form-label">Employee id:
-                                      <input class="form-control" type="text" id="ee-id" disabled>
-                                    </label>
-
-                                    <label class="form-label">First Name:
-                                      <input class="form-control" type="text" id="ee-firstName">
-                                    </label>
-                                    <label class="form-label">Last Name:
-                                      <input class="form-control" type="text" id="ee-lastName">
-                                    </label>
-                                    <label class="form-label">Job Title:
-                                      <input class="form-control" type="text" id="ee-jobTitle">
-                                    </label>
-                                    <label class="form-label">Email:
-                                      <input class="form-control" type="text" id="ee-email">
-                                    </label>
-                                    <label >Department:
-                                      <select class="form-control" id="ee-department"></select>
-                                    </label>
-                                </div>
-                              
-                            </div>
-                            <div class="modal-footer">
-                              <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
-                              <button class="subscribe submit" id="editEmployeeButton">Save</button>
-                            </div>
-                          </div>
+                        <div class="modal-footer">
+                          <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                          <button id="addEmployeeButton" class="subscribe submit">Add</button>
                         </div>
-                      </div>   
+                      </div>
                     </div>
+                  </div>  
+                </div>
+                <!-- Employee Details Modal -->
+                <!-- ed - Employee Details id prefix -->
+                    
+                <div class="modal-box">
+                  <div class="modal fade" id="employeeDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                      <div class="modal-content">
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-body">
+                          <div class="icon">
+                            <i class="fa-solid fa-user"></i>
+                          </div>
+                          <h6 class="fs-2 fw-bold" id="ed-fullName"></h6>
+                          <p>Job title: <span id="ed-jobTitle"></span></p>
+                          <p>Location: <span id="ed-location"></span></p>
+                          <p>Department: <span id="ed-department"></span></p>
+                          <p>Email: <span id="ed-email"></span></p>
+                          <p>Employee Number: <span id="ed-id"></span></p>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="subscribe" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>   
+                </div>
 
-                    <!-- Employee Delete Modal -->
-                    <div class="modal-box">
-                      
-                        <div class="modal fade" id="employeeDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <div class="modal-body" >
-                              <div class="icon">
-                                <i class="fa-solid fa-user-xmark text-danger"></i>
-                                
-                              </div>
-                              <div class="alert alert-success collapse" role="alert">
-                                User Successfully Deleted!
-                              </div>
-                              <div class="detailsEditField">
-                                <p>Are you sure you want to delete this employee? This action cannot be reversed</p>
+                <!-- Employee Edit Modal -->
+                <!-- ee - Edit Employee id prefix -->
+                    
+                <div class="modal-box">
+                  <div class="modal fade" id="employeeEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                      <div class="modal-content">
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-body" >
+                          <div class="icon">
+                            <i class="fa-solid fa-user-pen"></i>
+                          </div>
+                          <div class="alert alert-success collapse" role="alert">
+                            User Details Successfully Updated!
+                          </div>
+                          <div class="error" id="editEmployeeErrors"></div>
+                          <div class="detailsEditField">
+                            <h3>Editing Employee Details</h3>
 
-                                      <h2 id="eDel-fullName"></h2>
-                                    
-                                      <p>Employee id: <span id="eDel-id"></span></p>
+                            <label class="form-label">Employee id:
+                              <input class="form-control" type="text" id="ee-id" disabled>
+                            </label>
+
+                            <label class="form-label">First Name:
+                              <input class="form-control" type="text" id="ee-firstName">
+                            </label>
+                            
+                            <label class="form-label">Last Name:
+                              <input class="form-control" type="text" id="ee-lastName">
+                            </label>
+                            
+                            <label class="form-label">Job Title:
+                              <input class="form-control" type="text" id="ee-jobTitle">
+                            </label>
+                            
+                            <label class="form-label">Email:
+                              <input class="form-control" type="text" id="ee-email">
+                            </label>
                              
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
-                              <button class="subscribe " id="employeeDeleteButton">Delete</button>
-                            </div>
+                            <label >Department:
+                              <select class="form-control" id="ee-department"></select>
+                            </label>
+                          </div>    
+                        </div>
+                        <div class="modal-footer">
+                          <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                          <button class="subscribe submit" id="editEmployeeButton">Save</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>   
+                </div>
+
+                <!-- Employee Delete Modal -->
+                <div class="modal-box">                      
+                  <div class="modal fade" id="employeeDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                      <div class="modal-content">
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-body" >
+                          <div class="icon">
+                            <i class="fa-solid fa-user-xmark text-danger"></i>  
+                          </div>
+                          <div class="alert alert-success collapse" role="alert">
+                            User Successfully Deleted!
+                          </div>
+                          <div class="detailsEditField">
+                            <p>Are you sure you want to delete this employee? This action cannot be reversed</p>
+                            <h2 id="eDel-fullName"></h2>    
+                            <p>Employee id: <span id="eDel-id"></span></p>
                           </div>
                         </div>
-                      </div>   
+                        <div class="modal-footer">
+                          <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                          <button class="subscribe " id="employeeDeleteButton">Delete</button>
+                        </div>
+                      </div>
                     </div>
+                  </div>   
+                </div>  
 
-
-
-
-                    <!-- Departments Content start -->
-                    <div class="tab-pane fade container" id="departments" role="tabpanel" aria-labelledby="departments-tab">
-
-                      <nav class="navbar navbar-light bg-light">
-                           
-                        <div class="container-fluid">
-                            <!-- <span>Departments</span> -->
-
-                            <!-- Add Department Modal -->
-                            <div class="modal-box">
-                              <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addDepartment">
-                                <i class="fa-solid fa-plus blue fs-2 "></i>
-                                <i class="fa-solid fa-building blue fs-2"></i>
-                              </div>
-
-                              <div class="modal fade" id="addDepartment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                  <div class="modal-content">
-                                    <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    <div id="newDepartmentModalBody" class="modal-body">
-                                      <div class="icon">
-                                        <i class="fa-solid fa-building"></i>
-                                      </div>
-                                      <div id="newDepartmentErrors" class="error"></div>
-                                      <div class="alert alert-success collapse" role="alert">
-                                        Department Successfully Added!
-                                      </div>
-                                      <div class="detailsEditField">
-                                        <h3>Adding New Department</h3>
-                                        <div id="newDepartmentErrors"></div>
-                                        <label>Name:
-                                          <input class="form-control" id="newDepartmentName" type="text" maxlength="50">
-                                        </label>
-                                        <label>Location:
-                                          <select class="form-control" id="newDepartmentLocationID">
-
-                                          </select>
-                                        </label>
-                                    </div> 
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
-                                      <button class="subscribe submit" id="addDepartmentButton">Add</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>   
-                            </div>
-
-                            <!-- Department Delete Modal -->
-                    <div class="modal-box">
+                <!-- Employees Table -->
+                <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col" id="employeeId">
+                        <span class="cursor-pointer">Id&nbsp;</span>
+                      </th>
                       
-                      <div class="modal fade" id="departmentDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered">
+                      <th scope="col" id="firstName" data-sorting="DESC" title="First Name">
+                        <span class="cursor-pointer"> First&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>
+                      
+                      <th scope="col" id="lastName" data-sorting="DESC" title="Last Name">
+                        <span class="cursor-pointer">Last&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>
+                      
+                      <th class="d-none d-lg-table-cell" scope="col" id="jobTitle" data-sorting="DESC" title="Job Title">
+                        <span class="cursor-pointer">Job Title&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>
+                      
+                      <th class="d-none d-lg-table-cell" scope="col" id="email" data-sorting="DESC" title="Email Address">
+                        <span class="cursor-pointer">Email&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>
+                      <!-- !!!NOTE d.location and departmentLocation id for table heads -->
+                      <th class="d-none d-lg-table-cell" scope="col" id="d.name" data-sorting="DESC" title="Department">
+                        <span class="cursor-pointer">Department&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>
+                      
+                      <th class="d-none d-lg-table-cell" scope="col" id="l.name" data-sorting="DESC" title="Location">
+                        <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>
+                      
+                      <th scope="col">Actions</th>
+                    
+                    </tr>
+                  </thead>
+                  <tbody id="employeesTableBody">
+                  </tbody>
+                </table>               
+                                
+              </div>
+            </div>
+            <!-- Departments Content start -->
+            <div class="tab-pane fade container" id="departments" role="tabpanel" aria-labelledby="departments-tab">
+              <nav class="navbar navbar-light bg-light">  
+                <div class="container-fluid">
+                <!-- Add Department Modal -->
+                  <div class="modal-box">
+                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addDepartment">
+                      <i class="fa-solid fa-plus blue fs-2 "></i>
+                      <i class="fa-solid fa-building blue fs-2"></i>
+                    </div>
+                    <div class="modal fade" id="addDepartment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div id="newDepartmentModalBody" class="modal-body">
+                            <div class="icon">
+                              <i class="fa-solid fa-building"></i>
+                            </div>
+                            <div class="alert alert-success collapse" role="alert">
+                              Department Successfully Added!
+                            </div>
+                            <div id="newDepartmentErrors" class="error"></div>
+                            <div class="detailsEditField">
+                              <h3>Adding New Department</h3>
+                              
+                              <label>Name:
+                                <input class="form-control" id="newDepartmentName" type="text" maxlength="50">
+                              </label>
+                              
+                              <label>Location:
+                                <select class="form-control" id="newDepartmentLocationID"></select>
+                              </label>
+                            </div> 
+                          </div>
+                          <div class="modal-footer">
+                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                            <button class="subscribe submit" id="addDepartmentButton">Add</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+                  </div>
+
+                  <!-- Department Delete Modal -->
+                  <div class="modal-box">
+                    <div class="modal fade" id="departmentDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
                         <div class="modal-content">
                           <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
                           <div class="modal-body" >
-                              <div class="icon">
-                                <i class="fa-solid fa-building-circle-xmark text-danger"></i>
-                                
-                              </div>
-                              <div class="alert alert-success collapse" role="alert">
-                                Department Successfully Deleted!
-                              </div>
-                              <div id="departmentDeleteErrors" class="error"></div>
-                              <div class="detailsEditField">
-                              <p>Are you sure you want to delete this department? This action cannot be reversed.</p>
-
-                                    <h3 id="depDelName"></h3>
-                                    <div class="collapse" id="delDepartmentId"></div>
-                              </div>                            
-                            
+                          <div class="icon">
+                            <i class="fa-solid fa-building-circle-xmark text-danger"></i>
+                          </div>
+                          <div class="alert alert-success collapse" role="alert">
+                            Department Successfully Deleted!
+                          </div>
+                          <div id="departmentDeleteErrors" class="error"></div>
+                          <div class="detailsEditField">
+                            <p>Are you sure you want to delete this department? This action cannot be reversed.</p>
+                            <h3 id="depDelName"></h3>
+                            <div class="collapse" id="delDepartmentId"></div>
+                            </div>                            
                           </div>
                           <div class="modal-footer">
                             <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
@@ -372,36 +338,30 @@
 
                   <!-- Edit Department Modal -->
                   <div class="modal-box">
-                    
                     <div class="modal fade" id="departmentEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
                         <div class="modal-content">
                           <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
                           <div id="departmentEditModalBody" class="modal-body">
                             <div class="icon">
                               <i class="fa-solid fa-building"></i>
                             </div>
-
                             <div class="alert alert-success collapse" role="alert">
                               Department Successfully Updated!
                             </div>
-
                             <div id="editDepartmentErrors" class="error"></div>
-                            
                             <div class="detailsEditField">
-                            <h3>Editing Department</h3>
-
-                            
-                            <label>Name:
-                              <input  class="form-control" id="editDepartmentName" type="text">
-                            </label>
-                            <label>Location:
-                              <select class="form-control" id="editDepartmentLocationID">
-                              </select>
-                            </label>
-                            <label>Department Id:
-                              <input class="form-control" id="editDepartmentID" type="text" disabled />
-                            </label>
+                              <h3>Editing Department</h3>                            
+                              <label>Name:
+                                <input  class="form-control" id="editDepartmentName" type="text">
+                              </label>
+                              <label>Location:
+                                <select class="form-control" id="editDepartmentLocationID">
+                                </select>
+                              </label>
+                              <label>Department Id:
+                                <input class="form-control" id="editDepartmentID" type="text" disabled />
+                              </label>
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -412,218 +372,163 @@
                       </div>
                     </div>   
                   </div>
-
-                             
-                           
-                                                                                  
-                          
-                              
-                                 
-                            
-                        </div>
-                      </nav>
-
-                    <table class="table table-striped table-hover table-responsive-sm border" id="departmentsTable">
-                      <thead class="thead-dark">
-
-                        <th scope="col" id="departmentId">
-                          <span class="cursor-pointer">Id&nbsp;</span>
-                        </th>
-                                                  
-                          <th scope="col" id="departmentName">
-                            <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
-                          </th>
-                          
-                          <th scope="col" id="departmentLocation" >
-                            <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
-                          </th>
-                          <!-- hidden th with location id -->
-                          <th class="collapse" scope="col" id="departmentLocation">
-                            <span class="cursor-pointer">Location ID</span>
-                          </th>
-                                                                            
-                          <th scope="col">Actions</th>
-                        
-                        </tr>
-                      </thead>
-                      
-                      <tbody id="departmentsTableBody">
-                        
-                      </tbody>
-                    </table>
-
-
-
-
-                    </div>
-                    <!-- Locations Content Start -->
-                     
-                        <div class="tab-pane fade container" id="locations" role="tabpanel" aria-labelledby="locations-tab">
-                          
-                          <nav class="navbar navbar-light bg-light">
-                              
-                            <div class="container-fluid">
-                                <!-- <span>Locations</span> -->
-
-                                <!-- Add Location Modal -->
-                                <div class="modal-box">
-                                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addLocation">
-                                      <i class="fa-solid fa-plus blue fs-2"></i>
-                                      <i class="fa-solid fa-globe blue fs-2"></i>
-                                    </div>
-
-                                    <div class="modal fade" id="addLocation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            
-                                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          
-                                          <div class="modal-body">
-                                            <div class="icon">
-                                              <i class="fa-solid fa-globe"></i>
-                                            </div>
-                                            <div id="newLocationErrors" class="error"></div>
-                                            <div class="alert alert-success collapse" role="alert">
-                                              Location Successfully Added!
-                                            </div>
-                                            <div class="detailsEditField">
-                                            <h3>Adding New Location</h3>
-                                            <div class="form-group">
-                                            <label>Location Name:
-                                              <input type="text" id="newLocationName" maxlength="50">
-                                            </label>
-                                            </div>
-                                          </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
-                                            <button id="addLocationButton" class="subscribe submit">Add</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                    <!-- Location Delete Modal -->
-                                <div class="modal-box">
-                                  
-                                  <div class="modal fade" id="locationDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      <div class="modal-body" >
-                                          <div class="icon">
-                                            <i class="fa-solid fa-solid fa-globe text-danger"></i>
-                                            
-                                          </div>
-                                          <div class="alert alert-success collapse" role="alert">
-                                            Location Successfully Deleted!
-                                          </div>
-                                          <div id="locationDeleteErrors" class="error"></div>
-                                          <div class="detailsEditField">
-                                          <p>Are you sure you want to delete this location? This action cannot be reversed.</p>
-
-                                                <h3 id="delLocationName"></h3>
-                                                <div class="collapse" id="delLocationId"></div>
-                                          </div>                            
-                                        
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
-                                        <button class="subscribe " id="locationDeleteButton">Delete</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>   
-                              </div>
-                              <!-- Edit Location Modal -->
-                              <div class="modal-box">
-                                
-                                <div class="modal fade" id="locationEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      <div id="locationEditModalBody" class="modal-body">
-                                        <div class="icon">
-                                          <i class="fa-solid fa-globe"></i>
-                                        </div>
-
-                                        <div class="alert alert-success collapse" role="alert">
-                                          Location Successfully Updated!
-                                        </div>
-
-                                        <div id="editLocationErrors" class="error"></div>
-                                        
-                                        <div class="detailsEditField">
-                                        <h3>Editing Location</h3>
-                                      
-                                        
-                                        <label>Name:
-                                          <input class="form-control" id="editLocationName" type="text">
-                                        </label>
-                                        <input class="form-control" id="editLocationID" type="text" hidden>
-                                        
-                                        </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
-                                        <button class="subscribe submit" id="editLocationButton">Save</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>   
-                              </div>
-
-                                            
-                              
-                                                                                      
-                              
-                                  
-                                    
-                                
-                            </div>
-                          </nav>
-
-                            <table class="table table-striped table-hover table-responsive-sm border" id="locationTable">
-                              <thead class="thead-dark">
-
-                                <th scope="col" id="locationId">
-                                  <span class="cursor-pointer">Id&nbsp;</span>
-                                </th>
-                                                          
-                                  <th scope="col" id="locationName" title="DESC">
-                                    <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
-                                  </th>
-                                  
-                                                                                                            
-                                  <th scope="col">Actions</th>
-                                
-                                </tr>
-                              </thead>
-                              
-                              <tbody id="locationsTableBody">
-                                
-                              </tbody>
-                            </table>
-                        
-                        
-                        
-                        </div>
                 </div>
+              </nav>
 
-                
-                
+              <table class="table table-striped table-hover table-responsive-sm border" id="departmentsTable">
+                <thead class="thead-dark">
+                  <th scope="col" id="departmentId">
+                    <span class="cursor-pointer">Id&nbsp;</span>
+                  </th>                                           
+                  <th scope="col" id="departmentName">
+                    <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
+                  </th>
+                  <th scope="col" id="departmentLocation" >
+                    <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
+                  </th>
+                  <!-- hidden th with location id -->
+                  <th class="collapse" scope="col" id="departmentLocation">
+                    <span class="cursor-pointer">Location ID</span>
+                  </th>
+                  <th scope="col" style="text-align:center">Actions</th>
+                </thead>
+                      
+                <tbody id="departmentsTableBody">
+                </tbody>
+              </table>
             </div>
+            
+            
+            <!-- Locations Content Start -->
+                     
+            <div class="tab-pane fade container" id="locations" role="tabpanel" aria-labelledby="locations-tab">     
+              <nav class="navbar navbar-light bg-light">                              
+                <div class="container-fluid">
+                  <!-- Add Location Modal -->
+                  <div class="modal-box">
+                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addLocation">
+                      <i class="fa-solid fa-plus blue fs-2"></i>
+                      <i class="fa-solid fa-globe blue fs-2"></i>
+                    </div>
+
+                    <div class="modal fade" id="addLocation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="modal-body">
+                            <div class="icon">
+                              <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <div class="alert alert-success collapse" role="alert">
+                              Location Successfully Added!
+                            </div>
+                            <div id="newLocationErrors" class="error"></div>              
+                            <div class="detailsEditField">
+                              <h3>Adding New Location</h3>
+                              <div class="form-group">
+                                <label>Location Name:
+                                  <input type="text" id="newLocationName" maxlength="50">
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                            <button id="addLocationButton" class="subscribe submit">Add</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                                    
+                  <!-- Location Delete Modal -->
+                  <div class="modal-box">
+                    <div class="modal fade" id="locationDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="modal-body" >
+                            <div class="icon">
+                              <i class="fa-solid fa-solid fa-globe text-danger"></i>
+                            </div>
+                            <div class="alert alert-success collapse" role="alert">
+                              Location Successfully Deleted!
+                            </div>
+                            <div id="locationDeleteErrors" class="error"></div>
+                            <div class="detailsEditField">
+                              <p>Are you sure you want to delete this location? This action cannot be reversed.</p>
+                              <h3 id="delLocationName"></h3>
+                                <div class="collapse" id="delLocationId"></div>
+                            </div>                            
+                          </div>
+                          <div class="modal-footer">
+                            <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                            <button class="subscribe " id="locationDeleteButton">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+                  </div>
+                  <!-- Edit Location Modal -->
+                  <div class="modal-box">
+                    <div class="modal fade" id="locationEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div id="locationEditModalBody" class="modal-body">
+                            <div class="icon">
+                              <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <div class="alert alert-success collapse" role="alert">
+                              Location Successfully Updated!
+                            </div>
+                            <div id="editLocationErrors" class="error"></div>
+                            <div class="detailsEditField">
+                              <h3>Editing Location</h3>
+                                <label>Name:
+                                  <input class="form-control" id="editLocationName" type="text">
+                                </label>
+                                <input class="form-control" id="editLocationID" type="text" hidden>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="subscribe" data-bs-dismiss="modal">Cancel</button>
+                            <button class="subscribe submit" id="editLocationButton">Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+                  </div>
+                </div>
+              </nav>
+
+              <table class="table table-striped table-hover table-responsive-sm border" id="locationTable">
+                <thead class="thead-dark">
+                  <th scope="col" id="locationId">
+                    <span class="cursor-pointer">Id&nbsp;</span>
+                  </th>
+                                                          
+                  <th scope="col" id="locationName" title="DESC">
+                    <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
+                  </th>
+                                  
+                  <th scope="col" style="text-align:center">Actions</th>
+                </thead>
+                              
+                <tbody id="locationsTableBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-
-        
-
+      </div>
     </div>
  
     
-<script src="libs/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
-<script src="libs/fontawesome-free-6.1.0-web/js/all.min.js"></script>
-<script src="libs/js/jquery-3.6.0.min.js"></script>
-<script src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
-<script src="libs/js/script.js"></script>    
-</body>
+    <script src="libs/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
+    <script src="libs/fontawesome-free-6.1.0-web/js/all.min.js"></script>
+    <script src="libs/js/jquery-3.6.0.min.js"></script>
+    <script src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <script src="libs/js/script.js"></script>    
+  </body>
 </html>

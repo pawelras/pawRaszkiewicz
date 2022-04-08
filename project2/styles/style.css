@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Anybody&display=swap');
 
+
+#loader {
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	background: #ffffff url('../img/loader.gif') no-repeat center;
+	z-index: 999;
+}
+
+
 h2, h3, h6, p, span {
     word-wrap: break-word!important
 }
@@ -17,6 +27,14 @@ input, select {
     outline: none;
     border: none
 }
+
+.redBorder {
+    border: 1px solid red!important;
+}
+
+/* .addUser {
+    padding-left: 2vw!important;
+} */
 
 header {
     padding: 1rem;
@@ -44,6 +62,7 @@ header a:hover {
 
 /* modal */
 .modal-box{ font-family: 'Lato', sans-serif; }
+
 .modal-box .show-modal{
     color: #fff;
     background-color: #00a8ff;
@@ -57,18 +76,22 @@ header a:hover {
     outline: none;
     display: block;
 }
+
 .modal-box .show-modal:hover{
     color: #00a8ff;
     background-color: #fff;
     border: none;
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1) inset;
 }
+
 .modal-backdrop.in{ opacity: 0; }
-.modal-box .modal{ top: 90px !important; }
+/* .modal-box .modal{ top: 90px !important; } */
+
 .modal-box .modal-dialog{
     width: 450px;
-    margin: 20px auto 0;
+    
 }
+
 .modal-box .modal-dialog .modal-content{
     text-align: center;
     border: none;
@@ -178,7 +201,7 @@ header a:hover {
     box-shadow: 0 0 5px #333;
 }
 @media only screen and (max-width: 576px){
-    .modal-dialog{ width: 93% !important; }
+    .modal-dialog{ width: 100% !important; }
 }
 @media only screen and (max-width: 379px){
     .modal-box .modal-dialog .modal-content .modal-body .subscribe{ margin-right: 0; }
@@ -200,3 +223,13 @@ header a:hover {
 #myTab {
     border-bottom: none!important;
 }
+
+/* @media screen and (max-height: 700px) {
+    .modal-dialog {
+        position: fixed!important;
+        top: -50px!important;
+        left: 0!important;
+        width: 100vw!important;
+        height: 100vh!important;
+    }
+} */
