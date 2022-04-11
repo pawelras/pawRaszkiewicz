@@ -77,8 +77,13 @@ $(document).ready(() => {
         $('#ee-id').val(employeeId);
         $('#ee-firstName').val(firstName);
         $('#ee-lastName').val(lastName);
-        $('#ee-jobTitle').val(jobTitle);           
-        $('#ee-department option:selected').html(department);
+        $('#ee-jobTitle').val(jobTitle);      
+        
+        $("#ee-department option").filter(function() {
+            return this.text == department; 
+        }).attr('selected', true);
+
+        // $('# option:selected').text(department);
         $('#ee-email').val(email);
 
        
@@ -150,7 +155,8 @@ $(document).ready(() => {
 // Locations Section
 
     // Fetching Locations and Render Table
-    fetchLocations();   
+    fetchLocations()
+    
     
 
     $('#addLocationButton').on('click', addLocation);
@@ -217,6 +223,7 @@ $(document).ready(() => {
         })
     }
 
+    let firstLoad = true;
     function renderEmployeesTable(employeesArray) {
 
         $('#employeesTableBody').html();
@@ -231,6 +238,13 @@ $(document).ready(() => {
                 });
                                     
                 $('#employeesTableBody').html(htmlString);
+
+                if (firstLoad === true) {
+
+                
+                preLoaderHandler();   
+                firstLoad = false;
+                }
                     
     
     }
@@ -918,7 +932,7 @@ $(document).ready(() => {
                                     
             }
 
-            preLoaderHandler();
+            
 })
 
 
