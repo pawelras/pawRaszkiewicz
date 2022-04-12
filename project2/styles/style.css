@@ -109,25 +109,41 @@ header a:hover {
     white-space: nowrap;
 }
 
-#employeesTable td:nth-child(1), #employeesTable th:nth-child(1)  {
+@media screen and (min-width: 600px) {
 
-   width: calc(var(--cell-width) - 60px)!important;
+    /* remove space from first and last name and add to email for responsiveness*/
 
+    #employeesTable td:nth-child(1), #employeesTable th:nth-child(1)  {
+
+        width: calc(var(--cell-width) - 60px)!important;
+     
+     }     
+     #employeesTable td:nth-child(2), #employeesTable th:nth-child(2)  {
+     
+         width: calc(var(--cell-width) - 60px)!important;
+      
+      }     
+     #employeesTable td:nth-child(3), #employeesTable th:nth-child(3) {
+     
+         width: calc(var(--cell-width) + 120px)!important;
+      
+      }
+      
+      /* remove space from location and add to department for responsiveness */
+
+        #employeesTable td:nth-child(6), #employeesTable th:nth-child(6)  {
+     
+        width: calc(var(--cell-width) - 60px)!important;
+     
+     }     
+        #employeesTable td:nth-child(5), #employeesTable th:nth-child(5) {
+    
+        width: calc(var(--cell-width) + 60px)!important;
+     
+     }
 }
 
-#employeesTable td:nth-child(2), #employeesTable th:nth-child(2)  {
 
-    width: calc(var(--cell-width) - 60px)!important;
- 
- }
-
-
-
-#employeesTable td:nth-child(3), #employeesTable th:nth-child(3) {
-
-    width: calc(var(--cell-width) + 120px)!important;
- 
- }
 
 .header-fixed > tbody > tr:after,
 .header-fixed > thead > tr:after {
