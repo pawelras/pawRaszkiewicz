@@ -4,7 +4,7 @@ html {
     background-color: white;
 }
 
-td {
+td, th {
     cursor: default!important;
 }
 
@@ -87,16 +87,55 @@ header a:hover {
     min-height: 12vh;
 }
 
-.employeeTableHead {
+
+
+/* .employeeTableHead {
     position: sticky;
     top: 27vh;
     background-color: white;
     
+} */
+
+.table-fixed tbody {
+    height: 60vh;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+    float: left;
+    position: relative;
+
+}
+
+.table-fixed tbody td::after
+.table-fixed tbody th::after
+.table-fixed thead > tr > th::after
+{
+    content: '';
+    clear: both;
+    display: block;
 }
 
 @media only screen and (max-width: 480px) {
     
     
+}
+
+.departmentsTab, .locationsTab {
+    position: relative!important;
+    top: 16vh;
 }
 
 
@@ -184,18 +223,18 @@ header a:hover {
     text-transform: uppercase;
     margin: 0 0 15px;
 }
-.modal-box .modal-dialog .modal-content .modal-body .description{
+/* .modal-box .modal-dialog .modal-content .modal-body .description{
     color: #0984e3;
     font-size: 18px;
     margin: 0 0 15px;
-}
-.modal-box .modal-dialog .modal-content .modal-body .form-group{ margin: 0 0 20px; }
-.modal-box .modal-dialog .modal-content .modal-body label{
+} */
+/* .modal-box .modal-dialog .modal-content .modal-body .form-group{ margin: 0 0 20px; } */
+/* .modal-box .modal-dialog .modal-content .modal-body label{
     color: #0984e3;
     font-size: 18px;
     font-weight: 500;
-}
-.modal-box .modal-dialog .modal-content .modal-body .form-control{
+} */
+/* .modal-box .modal-dialog .modal-content .modal-body .form-control{
     color: #0984e3;
     background-color: rgba(0,0,0,0.03);
     font-size: 16px;
@@ -206,14 +245,19 @@ header a:hover {
     border: none;
     display: inline-block;
     transition: all 0.3s;
-}
-.modal-box .modal-dialog .modal-content .modal-body .form-control:focus{
+} */
+/* .modal-box .modal-dialog .modal-content .modal-body .form-control:focus{
     box-shadow: none;
     border: none;
 }
 .modal-box .modal-dialog .modal-content .modal-body .form-control::placeholder{
     color: #909090;
     font-size: 16px;
+} */
+
+label {
+    text-align: left!important;
+    display: block;
 }
  .subscribe{
     color: #fff;
@@ -222,15 +266,17 @@ header a:hover {
     font-weight: 600;
     text-transform: uppercase;
     padding: 7px 12px;
-    margin: 0 10px 10px 0;
+    margin: 5px;
     border: none;
     border-radius: 5px;
     display: inline-block;
     transition: all 0.3s;
+    width: 10vh
 }
 .subscribe.submit{
     background-color: #00a8ff;
     margin-right: 0;
+    width: 10vh;
 }
  .subscribe:hover{
     background-color: #555;

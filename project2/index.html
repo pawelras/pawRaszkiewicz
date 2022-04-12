@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Directory</title>
     <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="libs/bootstrap-5.1.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="libs/fontawesome-free-6.1.0-web/css/all.min.css">
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
   <div id="loader">
   </div>
+
+  
   <div class="header">
     <header>
       <a class="navbar-brand me-0" href=""><i class="fa-solid fa-signs-post"></i>&nbsp;Company Directory</a>
@@ -37,6 +40,8 @@
   </div>  
   <div class="container-fluid">
 
+    
+
     <div class="row ">
      
       <div class="col-12 pt-2 mt-3">
@@ -51,7 +56,7 @@
                 <nav class="navbar navbar-light bg-light employeeSearchTab">
                   <div class="input-group input-group-lg ">
                                       
-                    <i title="Add New User" class="fa-solid fa-user-plus cursor-pointer blue fs-2 ps-3 pe-3 pt-3" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"></i>
+                    <i title="Add New Employee" class="fa-solid fa-user-plus cursor-pointer blue fs-2 ps-3 pe-3 pt-3" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"></i>
 
                     <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-search blue"></i></span>
                     
@@ -86,27 +91,37 @@
                           <div id="newEmployeeErrors" class="error"></div>
                           <div class="detailsEditField">
 
-                            <h3>Adding New Employee</h3>
+                            <h3 class="mb-3">Adding New Employee</h3>
 
-                            <label class="form-label">First Name:
-                              <input class="form-control" type="text" id="newEmployeeFirstName" maxlength="50">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">First Name:
+                                <input class="form-control" type="text" id="newEmployeeFirstName" maxlength="50">
+                              </label>
+                            </div>
 
-                            <label class="form-label">Last Name:
-                              <input class="form-control" type="text" id="newEmployeeLastName" maxlength="50">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">Last Name:
+                                <input class="form-control" type="text" id="newEmployeeLastName" maxlength="50">
+                              </label>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Job Title:
+                                <input class="form-control" type="text" id="newEmployeeJobTitle" maxlength="50">
+                              </label>
+                            </div>
 
-                            <label class="form-label">Job Title:
-                              <input class="form-control" type="text" id="newEmployeeJobTitle" maxlength="50">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">Email:
+                                <input class="form-control" type="email" id="newEmployeeEmail" maxlength="50">
+                              </label>
+                            </div>
 
-                            <label class="form-label">Email:
-                              <input class="form-control" type="email" id="newEmployeeEmail" maxlength="50">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">Department:
+                                <select class="form-control" id="newEmployeeDepartment"></select>
+                              </label>
+                            </div>
 
-                            <label class="form-label">Department:
-                              <select class="form-control" id="newEmployeeDepartment"></select>
-                            </label>
                           </div>
                         </div>
                         <div class="modal-footer">
@@ -129,12 +144,12 @@
                           <div class="icon">
                             <i class="fa-solid fa-user"></i>
                           </div>
-                          <h6 class="fs-2 fw-bold" id="ed-fullName"></h6>
+                          <h3 class="fs-2 fw-bold mb-3" id="ed-fullName"></h6>
                           <p>Job title: <span id="ed-jobTitle"></span></p>
                           <p>Location: <span id="ed-location"></span></p>
                           <p>Department: <span id="ed-department"></span></p>
                           <p>Email: <span id="ed-email"></span></p>
-                          <p>Employee Number: <span id="ed-id"></span></p>
+                          <p class="collapse">Employee Number: <span id="ed-id"></span></p>
                         </div>
                         <div class="modal-footer">
                           <button class="subscribe" data-bs-dismiss="modal">Close</button>
@@ -161,27 +176,37 @@
                           </div>
                           <div class="error" id="editEmployeeErrors"></div>
                           <div class="detailsEditField">
-                            <h3>Editing Employee Details</h3>
+                            <h3 class="mb-5">Editing Employee Details</h3>
 
-                            <label class="form-label">Employee id:
-                              <input class="form-control" type="text" id="ee-id" disabled>
-                            </label>
+                            <div class="mb-3 collapse">
+                              <label class="form-label">Employee id:
+                                <input class="form-control" type="text" id="ee-id" disabled>
+                              </label>
+                            </div>
 
-                            <label class="form-label">First Name:
-                              <input class="form-control" type="text" id="ee-firstName">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">First Name:
+                                <input class="form-control" type="text" id="ee-firstName">
+                              </label>
+                            </div>
                             
-                            <label class="form-label">Last Name:
-                              <input class="form-control" type="text" id="ee-lastName">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">Last Name:
+                                <input class="form-control" type="text" id="ee-lastName">
+                              </label>
+                            </div>
                             
-                            <label class="form-label">Job Title:
-                              <input class="form-control" type="text" id="ee-jobTitle">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">Job Title:
+                                <input class="form-control" type="text" id="ee-jobTitle">
+                              </label>
+                            </div>
                             
-                            <label class="form-label">Email:
-                              <input class="form-control" type="text" id="ee-email">
-                            </label>
+                            <div class="mb-3">
+                              <label class="form-label">Email:
+                                <input class="form-control" type="text" id="ee-email">
+                              </label>
+                            </div>
                              
                             <label >Department:
                               <select class="form-control" id="ee-department"></select>
@@ -213,11 +238,11 @@
                           <div class="detailsEditField">
                             <p>Are you sure you want to delete this employee? This action cannot be reversed</p>
                             <h2 id="eDel-fullName"></h2>    
-                            <p>Employee id: <span id="eDel-id"></span></p>
+                            <p class="collapse">Employee id: <span id="eDel-id"></span></p>
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                          <button class="subscribe submit" data-bs-dismiss="modal">Cancel</button>
                           <button class="subscribe " id="employeeDeleteButton">Delete</button>
                         </div>
                       </div>
@@ -226,39 +251,38 @@
                 </div>  
 
                 <!-- Employees Table -->
-                <table class="table table-striped table-hover table-responsive-sm border" id="employeesTable">
+
+                
+                <table class="table table-striped table-hover table-responsive-sm border table-fixed" id="employeesTable">
                   
                   <thead class="thead-dark employeeTableHead">
                     <tr>
-                      <th scope="col" id="employeeId" class="border-bottom">
-                        <span class="cursor-pointer">Id&nbsp;</span>
-                      </th>
-                      
-                      <th scope="col" id="firstName" data-sorting="DESC" title="First Name">
-                        <span class="cursor-pointer"> First&nbsp;<i class="fa-solid fa-sort"></i></span>
-                      </th>
-                      
-                      <th scope="col" id="lastName" data-sorting="DESC" title="Last Name">
+                                            
+                      <th scope="col" id="lastName" data-sorting="ASC" title="Last Name" class="col-2">
                         <span class="cursor-pointer">Last&nbsp;<i class="fa-solid fa-sort"></i></span>
                       </th>
+
+                      <th scope="col" id="firstName" data-sorting="DESC" title="First Name" class="col">
+                        <span class="cursor-pointer"> First&nbsp;<i class="fa-solid fa-sort"></i></span>
+                      </th>                 
                       
-                      <th class="d-none d-lg-table-cell" scope="col" id="jobTitle" data-sorting="DESC" title="Job Title">
+                      <th class="d-none d-lg-table-cell col-2" scope="col" id="jobTitle" data-sorting="DESC" title="Job Title" >
                         <span class="cursor-pointer">Job Title&nbsp;<i class="fa-solid fa-sort"></i></span>
                       </th>
                       
-                      <th class="d-none d-lg-table-cell" scope="col" id="email" data-sorting="DESC" title="Email Address">
+                      <th class="d-none d-lg-table-cell col-2" scope="col" id="email" data-sorting="DESC" title="Email Address" >
                         <span class="cursor-pointer">Email&nbsp;<i class="fa-solid fa-sort"></i></span>
                       </th>
                       <!-- !!!NOTE d.location and departmentLocation id for table heads -->
-                      <th class="d-none d-lg-table-cell" scope="col" id="d.name" data-sorting="DESC" title="Department">
+                      <th class="d-none d-lg-table-cell col-2" scope="col" id="d.name" data-sorting="DESC" title="Department">
                         <span class="cursor-pointer">Department&nbsp;<i class="fa-solid fa-sort"></i></span>
                       </th>
                       
-                      <th class="d-none d-lg-table-cell" scope="col" id="l.name" data-sorting="DESC" title="Location">
+                      <th class="d-none d-lg-table-cell col-2" scope="col" id="l.name" data-sorting="DESC" title="Location">
                         <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
                       </th>
                       
-                      <th scope="col">Actions</th>
+                      <th scope="col" class="col">Actions</th>
                     
                     </tr>
                   </thead>
@@ -269,12 +293,12 @@
               </div>
             </div>
             <!-- Departments Content start -->
-            <div class="tab-pane fade container" id="departments" role="tabpanel" aria-labelledby="departments-tab">
-              <nav class="navbar navbar-light bg-light">  
+            <div class="tab-pane fade container departmentsTab" id="departments" role="tabpanel" aria-labelledby="departments-tab">
+              <nav class="navbar navbar-light bg-light col-lg-8 mx-auto">  
                 <div class="container-fluid">
                 <!-- Add Department Modal -->
                   <div class="modal-box">
-                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addDepartment">
+                    <div class="cursor-pointer " data-bs-toggle="modal" data-bs-target="#addDepartment">
                       <i class="fa-solid fa-plus blue fs-2 "></i>
                       <i class="fa-solid fa-building blue fs-2"></i>
                     </div>
@@ -332,7 +356,7 @@
                             </div>                            
                           </div>
                           <div class="modal-footer">
-                            <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                            <button class="subscribe submit" data-bs-dismiss="modal">Cancel</button>
                             <button class="subscribe " id="departmentDeleteButton">Delete</button>
                           </div>
                         </div>
@@ -355,17 +379,23 @@
                             </div>
                             <div id="editDepartmentErrors" class="error"></div>
                             <div class="detailsEditField">
-                              <h3>Editing Department</h3>                            
-                              <label>Name:
-                                <input  class="form-control" id="editDepartmentName" type="text">
-                              </label>
-                              <label>Location:
-                                <select class="form-control" id="editDepartmentLocationID">
-                                </select>
-                              </label>
-                              <label>Department Id:
-                                <input class="form-control" id="editDepartmentID" type="text" disabled />
-                              </label>
+                              <h3 class="mb-3">Editing Department</h3>    
+                              <div class="mb-3">                    
+                                <label>Name:
+                                  <input  class="form-control" id="editDepartmentName" type="text">
+                                </label>
+                              </div>    
+                              <div class="mb-3"> 
+                                <label>Location:
+                                  <select class="form-control" id="editDepartmentLocationID">
+                                  </select>
+                                </label>
+                              </div>
+                              <div class="collapse">
+                                <label>Department Id:
+                                  <input class="form-control" id="editDepartmentID" type="text" disabled />
+                                </label>
+                            </div>
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -378,35 +408,31 @@
                   </div>
                 </div>
               </nav>
-
-              <table class="table table-striped table-hover table-responsive-sm border" id="departmentsTable">
-                <thead class="thead-dark">
-                  <th scope="col" id="departmentId">
-                    <span class="cursor-pointer">Id&nbsp;</span>
-                  </th>                                           
-                  <th scope="col" id="departmentName">
-                    <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
-                  </th>
-                  <th scope="col" id="departmentLocation" >
-                    <span class="cursor-pointer">Location&nbsp;<i class="fa-solid fa-sort"></i></span>
-                  </th>
-                  <!-- hidden th with location id -->
-                  <th class="collapse" scope="col" id="departmentLocation">
-                    <span class="cursor-pointer">Location ID</span>
-                  </th>
-                  <th scope="col" style="text-align:center">Actions</th>
-                </thead>
-                      
-                <tbody id="departmentsTableBody">
-                </tbody>
-              </table>
+              <div class="col-lg-8 mx-auto">
+                <table class="table table-striped table-hover table-responsive-sm border" id="departmentsTable">
+                  <thead class="thead-dark">
+                                    
+                    <th scope="col" id="departmentName">
+                      Department
+                    </th>
+                    <th scope="col" id="departmentLocation" >
+                      Location
+                    </th>
+                   
+                    <th scope="col" style="text-align:center">Actions</th>
+                  </thead>
+                        
+                  <tbody id="departmentsTableBody">
+                  </tbody>
+                </table>
+              </div>
             </div>
             
             
             <!-- Locations Content Start -->
                      
-            <div class="tab-pane fade container" id="locations" role="tabpanel" aria-labelledby="locations-tab">     
-              <nav class="navbar navbar-light bg-light">                              
+            <div class="tab-pane fade container locationsTab" id="locations" role="tabpanel" aria-labelledby="locations-tab">     
+              <nav class="navbar navbar-light bg-light col-sm-8 mx-auto">                              
                 <div class="container-fluid">
                   <!-- Add Location Modal -->
                   <div class="modal-box">
@@ -466,7 +492,7 @@
                             </div>                            
                           </div>
                           <div class="modal-footer">
-                            <button class="subscribe submit" data-bs-dismiss="modal">Keep Record</button>
+                            <button class="subscribe submit" data-bs-dismiss="modal">Cancel</button>
                             <button class="subscribe " id="locationDeleteButton">Delete</button>
                           </div>
                         </div>
@@ -488,10 +514,12 @@
                             </div>
                             <div id="editLocationErrors" class="error"></div>
                             <div class="detailsEditField">
-                              <h3>Editing Location</h3>
+                              <h3 class="mb-3">Editing Location</h3>
+                              <div class="mb-3">
                                 <label>Name:
                                   <input class="form-control" id="editLocationName" type="text">
                                 </label>
+                              </div>
                                 <input class="form-control" id="editLocationID" type="text" hidden>
                             </div>
                           </div>
@@ -505,15 +533,12 @@
                   </div>
                 </div>
               </nav>
-
+              <div class="col-sm-8 mx-auto">
               <table class="table table-striped table-hover table-responsive-sm border" id="locationTable">
                 <thead class="thead-dark">
-                  <th scope="col" id="locationId">
-                    <span class="cursor-pointer">Id&nbsp;</span>
-                  </th>
-                                                          
-                  <th scope="col" id="locationName" title="DESC">
-                    <span class="cursor-pointer"> Department &nbsp;<i class="fa-solid fa-sort"></i></span>
+                                                                            
+                  <th scope="col" id="locationName" >
+                    Location
                   </th>
                                   
                   <th scope="col" style="text-align:center">Actions</th>
@@ -522,6 +547,7 @@
                 <tbody id="locationsTableBody">
                 </tbody>
               </table>
+            </div>
             </div>
           </div>
         </div>
