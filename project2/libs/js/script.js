@@ -45,7 +45,7 @@ $(document).ready(() => {
         
         
         $.ajax({
-            url: 'libs/php/getPersonnelById.php',
+            url: 'libs/php/getPersonnelByID.php',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -90,7 +90,7 @@ $(document).ready(() => {
         let employeeId = $(event.target).closest('tr').data("id");
 
         $.ajax({
-            url: 'libs/php/getPersonnelById.php',
+            url: 'libs/php/getPersonnelByID.php',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -359,13 +359,16 @@ $(document).ready(() => {
     function renderEmployeesTable(employeesArray) {
 
         $('#employeesTableBody').html();
-                
+
+                        
                 
         let htmlString = ''
         employeesArray = Array.from(employeesArray);
                         
                 employeesArray.forEach((element, index) => {
-                    htmlString += '<tr data-id=' + element.id  +  '><td class="col-2">' + element.lastName + '</td><td class="col">' + element.firstName + '</td><td class="d-none d-lg-table-cell col-2">' + element.jobTitle + '</td><td class="d-none d-lg-table-cell col-2">' + element.email + '</td><td class="d-none d-lg-table-cell col-2">' + element.department + '</td><td class="d-none d-lg-table-cell col-2">' + element.location + '</td><td class="col"><div class="d-flex justify-content-between"><i title="Details" data-bs-toggle="modal" data-bs-target="#employeeDetailsModal" class="fa-solid fa-user cursor-pointer"></i><i title="Delete" data-bs-toggle="modal" data-bs-target="#employeeDeleteModal" class="fa-solid fa-trash cursor-pointer text-danger" ></i><i title="Edit Details" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="fa-solid fa-pen-to-square cursor-pointer"></i></div></td>';
+
+                    element.jobTitle = element.jobTitle || '&nbsp;'
+                    htmlString += '<tr data-id=' + element.id  +  '><td>' + element.lastName + '</td><td>' + element.firstName + '</td><td class="d-none d-xl-table-cell">' + element.email + '</td><td class="d-none d-xl-table-cell">' + element.jobTitle + '</td><td class="d-none d-xl-table-cell">' + element.department + '</td><td class="d-none d-xl-table-cell">' + element.location + '</td><td><div class="d-inline-block centered"><i title="Details" data-bs-toggle="modal" data-bs-target="#employeeDetailsModal" class="fa-solid fa-user cursor-pointer"></i></div><div class="d-inline-block centered"><i title="Delete" data-bs-toggle="modal" data-bs-target="#employeeDeleteModal" class="fa-solid fa-trash cursor-pointer text-danger" ></i></div><div class="d-inline-block "><i title="Edit Details" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="fa-solid fa-pen-to-square cursor-pointer"></i></div></td>';
                     
                 });
                                     

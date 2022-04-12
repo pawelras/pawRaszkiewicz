@@ -9,6 +9,11 @@ td, th {
 }
 
 
+::-webkit-scrollbar {
+    display: none!important;
+  }
+
+
 #loader {
 	position: fixed;
 	width: 100%;
@@ -18,7 +23,7 @@ td, th {
 }
 
 
-h2, h3, h6, p, span {
+h2, h3, h6, p, span, td {
     word-wrap: break-word!important
 }
 
@@ -39,23 +44,6 @@ input, select {
 .redBorder {
     border: 1px solid red!important;
 }
-
-
-
-#employees {
-    position: relative;
-    top: 13vh;
-    height: 15vh;
-}
-.header {
-    width: 100%;
-    position: fixed!important;
-    top: 0;
-    left: 0;
-    height: 12vh;
-    z-index: 1;
-}
-
 
 header {
     width: 100%;
@@ -79,64 +67,89 @@ header a:hover {
 
 .blue {
     color: #00a8ff;
-}
 
-.employeeSearchTab {
-    position: sticky!important;
-    top: 15vh;
-    min-height: 12vh;
 }
 
 
+.centered {
+    width: 33%;
+    margin: auto;
+}
 
-/* .employeeTableHead {
-    position: sticky;
-    top: 27vh;
-    background-color: white;
+
+:root {
+    --height-height: 70vh;
+    /* cell width has to reserve some space for scrolling. Hence the sum < 100% */
+    --cell-width: calc(100% /7);
+}
+
+@media screen and (max-width: 1200px) {
+    :root {
+    --cell-width: calc(100% /3);
+    }
     
-} */
-
-.table-fixed tbody {
-    height: 60vh;
-    overflow-y: auto;
-    width: 100%;
 }
 
-.table-fixed thead,
-.table-fixed tbody,
-.table-fixed tr,
-.table-fixed td,
-.table-fixed th {
+.header-fixed {
+    width: 100%;    
+}
+
+/* Treat all as divs */
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
     display: block;
 }
 
+/* Prevent header to wrap */
+.header-fixed > thead > tr > th {
+    white-space: nowrap;
+}
 
-.table-fixed tbody td,
-.table-fixed tbody th,
-.table-fixed thead > tr > th {
-    float: left;
-    position: relative;
+#employeesTable td:nth-child(1), #employeesTable th:nth-child(1)  {
+
+   width: calc(var(--cell-width) - 60px)!important;
 
 }
 
-.table-fixed tbody td::after
-.table-fixed tbody th::after
-.table-fixed thead > tr > th::after
-{
-    content: '';
+#employeesTable td:nth-child(2), #employeesTable th:nth-child(2)  {
+
+    width: calc(var(--cell-width) - 60px)!important;
+ 
+ }
+
+
+
+#employeesTable td:nth-child(3), #employeesTable th:nth-child(3) {
+
+    width: calc(var(--cell-width) + 120px)!important;
+ 
+ }
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
     clear: both;
-    display: block;
 }
 
-@media only screen and (max-width: 480px) {
-    
-    
+.header-fixed > tbody {
+    overflow-y: auto;
+    height: var(--height-height);
 }
 
-.departmentsTab, .locationsTab {
-    position: relative!important;
-    top: 16vh;
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+    width: var(--cell-width);
+    float: left;
+
 }
+
+
 
 
 /* modal */
@@ -223,37 +236,6 @@ header a:hover {
     text-transform: uppercase;
     margin: 0 0 15px;
 }
-/* .modal-box .modal-dialog .modal-content .modal-body .description{
-    color: #0984e3;
-    font-size: 18px;
-    margin: 0 0 15px;
-} */
-/* .modal-box .modal-dialog .modal-content .modal-body .form-group{ margin: 0 0 20px; } */
-/* .modal-box .modal-dialog .modal-content .modal-body label{
-    color: #0984e3;
-    font-size: 18px;
-    font-weight: 500;
-} */
-/* .modal-box .modal-dialog .modal-content .modal-body .form-control{
-    color: #0984e3;
-    background-color: rgba(0,0,0,0.03);
-    font-size: 16px;
-    text-align: center;
-    letter-spacing: 1px;
-    height: 40px;
-    padding: 2px 15px;
-    border: none;
-    display: inline-block;
-    transition: all 0.3s;
-} */
-/* .modal-box .modal-dialog .modal-content .modal-body .form-control:focus{
-    box-shadow: none;
-    border: none;
-}
-.modal-box .modal-dialog .modal-content .modal-body .form-control::placeholder{
-    color: #909090;
-    font-size: 16px;
-} */
 
 label {
     text-align: left!important;
@@ -311,12 +293,3 @@ label {
     background-color: white;
 }
 
-/* @media screen and (max-height: 700px) {
-    .modal-dialog {
-        position: fixed!important;
-        top: -50px!important;
-        left: 0!important;
-        width: 100vw!important;
-        height: 100vh!important;
-    }
-} */
