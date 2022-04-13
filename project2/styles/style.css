@@ -31,6 +31,27 @@ input, select {
     color: black!important
 }
 
+@media screen and (max-width: 480px) {
+
+    
+    
+    input {
+        padding-left: 3vw;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        
+    }
+    
+    select {
+        padding-left: 3vw;
+        display: inline-block;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -109,7 +130,7 @@ header a:hover {
     white-space: nowrap;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1200px) {
 
     /* remove space from first and last name and add to email for responsiveness*/
 
